@@ -1,0 +1,19 @@
+{
+  "name": "welcome-bot",
+  "version": "1.0.0",
+  "description": "Back-end service for a Slackbot app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Emir Delić, Haris Mahmutagić",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "slackbots": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
