@@ -16,12 +16,10 @@ const app = express();
 /**
  * Loading routes
  */
-const routes = require('./routes/index');
+const messages = require('./routes/messagesController');
 
-app.use('/', routes);
+app.use('/messages/', messages);
 
 const port = process.env.PORT;
-const env = process.env.NODE_ENV;
-const host = process.env.HOST;
 
 app.listen(port, () => console.log(`Listening port ${port}`));
