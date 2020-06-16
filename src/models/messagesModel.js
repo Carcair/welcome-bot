@@ -60,8 +60,17 @@ const messages = {
    * Delete a message
    */
   deleteMessage(id) {
-    
-  }
+    const db = this.crConn();
+    let sql = `DELETE FROM messages WHERE id='${id}'`;
+    db.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+  },
+
+  /**
+   * Edit message
+   */
 };
 
 module.exports = messages;

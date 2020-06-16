@@ -35,4 +35,13 @@ router.post('/newmessage', (req, res) => {
   res.send('New message created.');
 });
 
+/**
+ * Delete a message
+ */
+router.delete('/deletemessage', (req, res) => {
+  let id = 3;
+  messages.deleteMessage(id);
+  res.send('Message deleted.');
+});
+
 module.exports = router;
