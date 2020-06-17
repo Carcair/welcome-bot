@@ -2,7 +2,7 @@
  * Loading dependencies
  */
 const express = require('express');
-const messages = require('../models/messagesModel');
+const messages = require('../loaders/messagesLoader');
 
 /**
  * Using router middleware
