@@ -1,0 +1,17 @@
+# Node environment
+NODE_ENV=development
+
+# Port variable
+PORT=5000
+
+# DB url
+DATABASE_URL=remotemysql.com:3306
+
+# DB username
+DATABASE_USERNAME=*********
+
+# DB name
+DATABASE_NAME=*********
+
+# DB pass
+DATABASE_PASSWORD=*********
