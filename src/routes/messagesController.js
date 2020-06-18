@@ -2,7 +2,11 @@
  * Loading dependencies
  */
 const express = require('express');
-const messages = require('../loaders/messagesLoader');
+
+/**
+ * Load loader
+ */
+const messages = require('../models/messagesModels');
 
 /**
  * Using router middleware
@@ -13,7 +17,7 @@ const router = express.Router();
  * Get all messages
  */
 router.get('/', (req, res) => {
-  var result = messages.getMessages()
+  const result = messages.getMessages()
     .then((result) => {
       res.end(result);
     })

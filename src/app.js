@@ -17,8 +17,15 @@ const app = express();
  * Loading routes
  */
 const messages = require('./routes/messagesController');
+const schedules = require('./routes/schedulesController.js');
+const triggers = require('./routes/triggersController');
 
-app.use('/messages/', messages);
+/**
+ * Initializing routes
+ */
+app.use('/api/messages/', messages);
+app.use('/api/schedules/', schedules);
+app.use('/api/triggers', triggers);
 
 const port = process.env.PORT;
 
