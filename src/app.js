@@ -7,11 +7,19 @@ require('dotenv').config();
  * loading dependencies
  */
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 /**
  * Initialize express
  */
 const app = express();
+
+/**
+ * Loading middleware
+ */
+app.use(bodyParser.json());
+app.use(cors());
 
 /**
  * Loading routes
@@ -25,7 +33,7 @@ const triggers = require('./routes/triggersController');
  */
 app.use('/api/messages/', messages);
 app.use('/api/schedules/', schedules);
-app.use('/api/triggers', triggers);
+app.use('/api/triggers/', triggers);
 
 const port = process.env.PORT;
 

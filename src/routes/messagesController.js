@@ -4,9 +4,14 @@
 const express = require('express');
 
 /**
- * Load loader
+ * Load methods
  */
-const messages = require('../models/messagesModels');
+const messages = require('../methods/crud/messagesMethods');
+
+/**
+ * Load models
+ */
+const Message = require('../models/Messages');
 
 /**
  * Using router middleware
@@ -29,23 +34,27 @@ router.get('/', (req, res) => {
 /**
  * Insert new message
  */
-router.post('/newmessage', (req, res) => {
-  let message = {
-    title: 'something new',
-    text: 'fucks sake',
-    cr_date: '555444'
-  };
-  messages.insertMessage(message.title, message.text, message.cr_date);
-  res.send('New message created.');
+router.post('/', (req, res) => {
+  const message = new Message(req.body.title, req.body.text, req.body.cr_date);
+  messages.insertMessage(message);
+  res.status(201).send();
 });
 
 /**
  * Delete a message
  */
-router.delete('/deletemessage', (req, res) => {
-  let id = 3;
-  messages.deleteMessage(id);
+router.delete('/:id', (req, res) => {
+  messages.deleteMessage(req.params.id);
   res.send('Message deleted.');
+});
+
+/**
+ * Edit a message
+ */
+router.post('/:id', (req, res) => {
+  const message = new Message(req.body.title, req.body.text);
+  messages.editMessage(req.params.id, message);
+  res.send('Message edited.');
 });
 
 module.exports = router;

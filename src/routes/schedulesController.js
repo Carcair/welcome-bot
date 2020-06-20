@@ -6,7 +6,7 @@ const express = require('express');
 /**
  * Load loader
  */
-const schedules = require('./../models/schedulesModels');
+const schedules = require('../methods/crud/schedulesMethods');
 
 /**
  * Router middleware

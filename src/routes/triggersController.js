@@ -6,7 +6,7 @@ const express = require('express');
 /**
  * Load loader
  */
-const triggers = require('../models/triggersModels');
+const triggers = require('../methods/crud/triggersMethods');
 
 /**
  * Router middleware

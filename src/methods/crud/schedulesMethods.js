@@ -2,7 +2,7 @@
  * Load MySQL
  */
 const mysql = require('mysql');
-const connection = require('../assets/dbConnect');
+const connection = require('../dbConnect');
 
 /**
  * Methods object
