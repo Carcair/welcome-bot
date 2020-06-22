@@ -24,6 +24,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   const result = messages.getMessages()
     .then((result) => {
+      res.status(200);
       res.end(result);
     })
     .catch((err) => {
@@ -45,7 +46,7 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   messages.deleteMessage(req.params.id);
-  res.send('Message deleted.');
+  res.status(202).send();
 });
 
 /**
@@ -54,7 +55,7 @@ router.delete('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
   const message = new Message(req.body.title, req.body.text);
   messages.editMessage(req.params.id, message);
-  res.send('Message edited.');
+  res.status(202).send();
 });
 
 module.exports = router;
