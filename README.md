@@ -10,14 +10,50 @@ Users don’t have much control of the app, but they will be able to use trigger
 
 ## Start
 
-First step is to create a file called `.env` in root directory. Follow instructions in `.env.example` to create its content.
+First step is to create a file called `.env` in root directory. Follow instructions in `envexample` to create its content. DB credentials will be provided on demand.
 
 Run server with:
 `npm run start`
 
-or using nodemon:
+or using nodemon for development run:
 `npm run dev`
 
+Development is running at http://localhost:5000 by default.
+
+Routes:
+`/api/messages`
+`/api/schedules`
+`/api/triggers`
+
+Using postman you can test, e.g. messages:
+
+- Get method for selecting:
+  - all rows:
+    `http://localhost:5000/api/messages`
+  - one row:
+    `http://localhost:5000/api/messages/MESSAGE_TITLE`
+
+- Post method for inserting and editing
+  - insert row:
+    `http://localhost:5000/api/messages`
+  - edit row:
+    `http://localhost:5000/api/messages/MESSAGE_TITLE`
+  - Post expecting JSON object:
+    ```
+    {
+      "title": "sample_title",
+      "text": "sample text",
+      "cr_date": "0123456"
+    }  
+    ```
+  - Edit also needs all three variables.
+
+- Delete method:
+    `http://localhost:5000/api/messages/MESSAGE_TITLE`
+
+Reason it lacks data processing is because it will be done in front-end, before sending, to ease processing burden on back-end.
+
+
 ## Misc
-Follow demonstration at [Link]{https://welcome-bot-slack.herokuapp.com/}
+Follow demonstration at [Link]{https://welcome-bot-slack.herokuapp.com/messages}
 Connection to application might be slow since we've used free package from heroku.

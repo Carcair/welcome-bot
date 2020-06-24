@@ -2,7 +2,15 @@
  * Loading dependencies
  */
 const express = require('express');
-const messages = require('../models/messagesModel');
+
+/**
+ * Load models
+ */
+const Message = require('../models/Messages');
+
+// Load Query model
+const Queries = require('../models/Queries');
+let queries = new Queries('messages');
 
 /**
  * Using router middleware
@@ -13,11 +21,26 @@ const router = express.Router();
  * Get all messages
  */
 router.get('/', (req, res) => {
-  var result = messages.getMessages()
-    .then((result) => {
+  queries.selectAll()
+    .then(result => {
+      res.status(200);
       res.end(result);
     })
-    .catch((err) => {
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+/**
+ * Get one message by title
+ */
+router.get('/:title', (req, res) => {
+  queries.selectOne('title', req.params.title)
+    .then(result => {
+      res.status(200);
+      res.end(result);
+    })
+    .catch(err => {
       console.log(err);
     });
 });
@@ -25,23 +48,27 @@ router.get('/', (req, res) => {
 /**
  * Insert new message
  */
-router.post('/newmessage', (req, res) => {
-  let message = {
-    title: 'something new',
-    text: 'fucks sake',
-    cr_date: '555444'
-  };
-  messages.insertMessage(message.title, message.text, message.cr_date);
-  res.send('New message created.');
+router.post('/', (req, res) => {
+  const message = new Message(req.body.title, req.body.text, req.body.cr_date);
+  queries.insertOne(message);
+  res.status(201).send();
 });
 
 /**
  * Delete a message
  */
-router.delete('/deletemessage', (req, res) => {
-  let id = 3;
-  messages.deleteMessage(id);
-  res.send('Message deleted.');
+router.delete('/:title', (req, res) => {
+  queries.deleteOne('title', req.params.title);
+  res.status(202).send();
+});
+
+/**
+ * Edit a message
+ */
+router.post('/:title', (req, res) => {
+  const message = new Message(req.body.title, req.body.text);
+  queries.editOne('title', req.params.title, message);
+  res.status(202).send();
 });
 
 module.exports = router;
