@@ -1,10 +1,8 @@
 class Messages {
   constructor(title, text, cr_date) {
-    if (title !== undefined)
-      this.title = title;
+    this.title = title;
     
-    if (text !== undefined)
-      this.text = text;
+    this.text = text;
 
     if (cr_date !== undefined)
       this.cr_date = cr_date;
