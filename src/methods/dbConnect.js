@@ -6,7 +6,7 @@ const mysql = require('mysql');
 /**
  * Load connection obj
  */
-const DBConfig = require('../models/DBConfig');
+const DBConfig = require('../models/assets/DBConfig');
 
 const connection = {
   crConn() {

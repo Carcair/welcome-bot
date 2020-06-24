@@ -6,7 +6,7 @@ const express = require('express');
 /**
  * Load models
  */
-const Message = require('../models/Messages');
+const Message = require('../models/assets/Messages');
 
 // Load Query model
 const Queries = require('../models/Queries');
