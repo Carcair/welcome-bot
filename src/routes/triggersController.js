@@ -3,6 +3,11 @@
  */
 const express = require('express');
 
+/**
+ * Load models
+ */
+const Triggers = require('../models/Triggers');
+
 // Load Query model
 const Queries = require('../models/Queries');
 let queries = new Queries('triggers');
@@ -31,7 +36,14 @@ router.get('/', (req, res) => {
 router.get('/:trigger_word', (req, res) => {
   const result = queries.selectOne('trigger_word', req.params.trigger_word)
     .then(result => {
-      res.end(result);
+      // Decode query return
+      let temp = JSON.parse(result);
+      let trigger = new Triggers(temp[0].message, temp[0].trigger_word, temp[0].channel, temp[0].active);
+      temp[0] = trigger.decodeOutput();
+      temp = JSON.stringify(temp);
+
+      res.status(200);
+      res.end(temp);
     })
     .catch(err => {
       console.log(err);
@@ -42,14 +54,16 @@ router.get('/:trigger_word', (req, res) => {
  * Insert trigger
  */
 router.post('/', (req, res) => {
-  const trigger = {
-    message: req.body.message,
-    trigger_word: req.body.trigger_word,
-    channel: req.body.channel,
-    active: req.body.active
-  };
-  queries.insertOne(trigger);
-  res.status(201).send();
+  const trigger = new Triggers(req.body.message, req.body.trigger_word, req.body.channel, req.body.active);
+  
+  // Checking input
+  if (trigger.checkInsert()) {
+    // Encode input before sending
+    queries.insertOne(trigger.encodeInsert());
+    res.status(201).send();
+  } else {
+    res.status(406).send();
+  }
 });
 
 /**
@@ -64,14 +78,13 @@ router.delete('/:trigger_word', (req, res) => {
  * Edit one post by trigger name
  */
 router.post('/:trigger_word', (req, res) => {
-  let obj = {
-    message: req.body.message,
-    trigger_word: req.body.trigger_word,
-    channel: req.body.channel,
-    active: req.body.active
-  };
-  queries.editOne('trigger_word', req.params.trigger_word, obj);
-  res.status(202).send();
+  const trigger = new Triggers(req.body.message, req.body.trigger_word, req.body.channel, req.body.active);
+  if (trigger.checkInsert()) {
+    queries.editOne('trigger_word', req.params.trigger_word, trigger.encodeInsert());
+    res.status(202).send();
+  } else {
+    res.status(406).send();
+  }
 });
 
 module.exports = router;
