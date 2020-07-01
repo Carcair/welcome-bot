@@ -2,8 +2,7 @@ class Messages {
   constructor(title, text, cr_date) {
     this.title = title;
     this.text = text;
-    if (cr_date !== undefined)
-      this.cr_date = cr_date;
+    if (cr_date !== undefined) this.cr_date = cr_date;
   }
 
   /**
@@ -12,11 +11,11 @@ class Messages {
   checkInsert() {
     // Check title
     if (this.title.length < 5 || this.title.length > 30) return false;
-    if (! /^[a-zA-Z0-9]+$/.test(this.title)) return false;
+    if (!/^[a-zA-Z0-9]+$/.test(this.title)) return false;
 
     // Check text
     if (this.text.length < 20 || this.text.length > 300) return false;
-    if (! /^[a-zA-Z0-9.,"'!?@:-_\sšŠđĐžŽćĆčČ]+$/.test(this.text)) return false;
+    if (!/^[a-zA-Z0-9.,"'!?@:-_\sšŠđĐžŽćĆčČ]+$/.test(this.text)) return false;
 
     // Check date format and range
     if (this.cr_date !== undefined) {
@@ -34,9 +33,10 @@ class Messages {
     let temp = {
       title: encodeURIComponent(self.title),
       text: encodeURIComponent(self.text),
-      cr_date: undefined
+      cr_date: undefined,
     };
-    if (this.cr_date !== undefined) temp.cr_date = encodeURIComponent(self.cr_date);
+    if (this.cr_date !== undefined)
+      temp.cr_date = encodeURIComponent(self.cr_date);
 
     return temp;
   }
@@ -49,7 +49,7 @@ class Messages {
     let temp = {
       title: decodeURIComponent(self.title),
       text: decodeURIComponent(self.text),
-      cr_date: decodeURIComponent(self.cr_date)
+      cr_date: decodeURIComponent(self.cr_date),
     };
     return temp;
   }

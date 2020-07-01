@@ -11,7 +11,7 @@ class Schedules {
   checkInsert() {
     // Check message name
     if (this.message.length < 5 || this.message.length > 30) return false;
-    if (! /^[a-zA-Z0-9]+$/.test(this.message)) return false;
+    if (!/^[a-zA-Z0-9]+$/.test(this.message)) return false;
 
     // Check date format and range for date of running
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(this.run_date)) return false;
@@ -31,7 +31,7 @@ class Schedules {
     let temp = {
       message: encodeURIComponent(self.message),
       run_date: encodeURIComponent(self.run_date),
-      repeat_range: encodeURIComponent(self.repeat_range)
+      repeat_range: encodeURIComponent(self.repeat_range),
     };
     return temp;
   }
@@ -44,7 +44,7 @@ class Schedules {
     let temp = {
       message: decodeURIComponent(self.message),
       run_date: decodeURIComponent(self.run_date),
-      repeat_range: decodeURIComponent(self.repeat_range)
+      repeat_range: decodeURIComponent(self.repeat_range),
     };
     return temp;
   }

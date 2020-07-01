@@ -12,15 +12,16 @@ class Triggers {
   checkInsert() {
     // Check message title
     if (this.message.length < 5 || this.message.length > 30) return false;
-    if (! /^[a-zA-Z0-9]+$/.test(this.message)) return false;
+    if (!/^[a-zA-Z0-9]+$/.test(this.message)) return false;
 
     // Check trigger word
-    if (this.trigger_word.length < 5 || this.trigger_word.length > 20) return false;
-    if (! /^[a-zA-Z0-9]+$/.test(this.trigger_word)) return false;
+    if (this.trigger_word.length < 5 || this.trigger_word.length > 20)
+      return false;
+    if (!/^[a-zA-Z0-9]+$/.test(this.trigger_word)) return false;
 
     // Check channel name
     if (this.channel.length < 5 || this.channel.length > 20) return false;
-    if (! /^[a-zA-Z0-9-_\/]+$/.test(this.channel)) return false;
+    if (!/^[a-zA-Z0-9-_\/]+$/.test(this.channel)) return false;
 
     // Check active variable
     if (this.active !== 'true' && this.active !== 'false') return false;
@@ -37,7 +38,7 @@ class Triggers {
       message: encodeURIComponent(self.message),
       trigger_word: encodeURIComponent(self.trigger_word),
       channel: encodeURIComponent(self.channel),
-      active: encodeURIComponent(self.active)
+      active: encodeURIComponent(self.active),
     };
     return temp;
   }
@@ -51,7 +52,7 @@ class Triggers {
       message: decodeURIComponent(self.message),
       trigger_word: decodeURIComponent(self.trigger_word),
       channel: decodeURIComponent(self.channel),
-      active: decodeURIComponent(self.active)
+      active: decodeURIComponent(self.active),
     };
     return temp;
   }

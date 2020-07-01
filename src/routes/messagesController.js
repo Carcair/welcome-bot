@@ -21,8 +21,9 @@ const router = express.Router();
  * Get all messages
  */
 router.get('/', (req, res) => {
-  queries.selectAll()
-    .then(result => {
+  queries
+    .selectAll()
+    .then((result) => {
       let temp = JSON.parse(result);
 
       temp.forEach((obj, index) => {
@@ -32,11 +33,11 @@ router.get('/', (req, res) => {
       });
 
       temp = JSON.stringify(temp);
-      
+
       res.status(200);
       res.end(temp);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
@@ -45,8 +46,9 @@ router.get('/', (req, res) => {
  * Get one message by title
  */
 router.get('/:title', (req, res) => {
-  queries.selectOne('title', req.params.title)
-    .then(result => {
+  queries
+    .selectOne('title', req.params.title)
+    .then((result) => {
       // Decode query return
       let temp = JSON.parse(result);
       let message = new Messages(temp[0].title, temp[0].text, temp[0].cr_date);
@@ -56,7 +58,7 @@ router.get('/:title', (req, res) => {
       res.status(200);
       res.end(temp);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
@@ -66,7 +68,7 @@ router.get('/:title', (req, res) => {
  */
 router.post('/', (req, res) => {
   const message = new Messages(req.body.title, req.body.text, req.body.cr_date);
-  
+
   // Checking input
   if (message.checkInsert()) {
     // Encoding input before sending query
