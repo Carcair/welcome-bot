@@ -6,3 +6,5 @@ patch:
   SNYK-JS-LODASH-567746:
     - slackbots > lodash:
         patched: '2020-06-25T13:15:11.556Z'
+    - sequelize > lodash:
+        patched: '2020-07-04T16:35:17.653Z'
