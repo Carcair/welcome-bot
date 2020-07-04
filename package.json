@@ -9,7 +9,7 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
-  "author": "Emir Delić, Haris Mahmutagić",
+  "author": "Emir Delić, Haris Mahmutagić, Harun Ibrahimović",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -22,7 +22,6 @@
     "express-rate-limit": "^5.1.3",
     "helmet": "^3.23.3",
     "mysql": "^2.18.1",
-<<<<<<< HEAD
     "mysql2": "^2.1.0",
     "sequelize": "^6.2.4",
     "slackbots": "^1.2.0"
@@ -41,15 +40,6 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
-  }
-=======
-    "slackbots": "^1.2.0",
-    "snyk": "^1.348.2"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.2",
-    "nodemon": "^2.0.4"
   },
   "snyk": true
->>>>>>> 7dbd2f0a0f4fcce7f0a0438896c32595d56e0831
 }
