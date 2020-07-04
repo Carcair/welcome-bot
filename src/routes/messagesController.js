@@ -6,7 +6,7 @@ const express = require('express');
 /**
  * Load models
  */
-const Message = require('../models/Messages');
+const Messages = require('../models/Messages');
 
 // Load Query model
 const Queries = require('../models/Queries');
@@ -21,12 +21,23 @@ const router = express.Router();
  * Get all messages
  */
 router.get('/', (req, res) => {
-  queries.selectAll()
-    .then(result => {
+  queries
+    .selectAll()
+    .then((result) => {
+      let temp = JSON.parse(result);
+
+      temp.forEach((obj, index) => {
+        let message = new Messages(obj.title, obj.text, obj.cr_date);
+        // Decode query return
+        temp[index] = message.decodeOutput();
+      });
+
+      temp = JSON.stringify(temp);
+
       res.status(200);
-      res.end(result);
+      res.end(temp);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
@@ -35,12 +46,19 @@ router.get('/', (req, res) => {
  * Get one message by title
  */
 router.get('/:title', (req, res) => {
-  queries.selectOne('title', req.params.title)
-    .then(result => {
+  queries
+    .selectOne('title', req.params.title)
+    .then((result) => {
+      // Decode query return
+      let temp = JSON.parse(result);
+      let message = new Messages(temp[0].title, temp[0].text, temp[0].cr_date);
+      temp[0] = message.decodeOutput();
+      temp = JSON.stringify(temp);
+
       res.status(200);
-      res.end(result);
+      res.end(temp);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
@@ -49,9 +67,16 @@ router.get('/:title', (req, res) => {
  * Insert new message
  */
 router.post('/', (req, res) => {
-  const message = new Message(req.body.title, req.body.text, req.body.cr_date);
-  queries.insertOne(message);
-  res.status(201).send();
+  const message = new Messages(req.body.title, req.body.text, req.body.cr_date);
+
+  // Checking input
+  if (message.checkInsert()) {
+    // Encoding input before sending query
+    queries.insertOne(message.encodeInsert());
+    res.status(201).send();
+  } else {
+    res.status(406).send();
+  }
 });
 
 /**
@@ -66,9 +91,14 @@ router.delete('/:title', (req, res) => {
  * Edit a message
  */
 router.post('/:title', (req, res) => {
-  const message = new Message(req.body.title, req.body.text);
-  queries.editOne('title', req.params.title, message);
-  res.status(202).send();
+  const message = new Messages(req.body.title, req.body.text);
+
+  if (message.checkInsert()) {
+    queries.editOne('title', req.params.title, message.encodeInsert());
+    res.status(202).send();
+  } else {
+    res.status(406).send();
+  }
 });
 
 module.exports = router;

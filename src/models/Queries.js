@@ -21,14 +21,12 @@ class Queries {
       db.query(sql, (err, result) => {
         if (err) throw err;
 
-        if (result === undefined)
-          reject(new Error("Result is undefined."));
-        else
-          resolve(JSON.stringify(result));
+        if (result === undefined) reject(new Error('Result is undefined.'));
+        else resolve(JSON.stringify(result));
       });
 
       // Close connection
-      db.end((err) => console.log("Connection closed"));
+      db.end((err) => console.log('Connection closed'));
     });
   }
 
@@ -43,14 +41,12 @@ class Queries {
       db.query(sql, (err, result) => {
         if (err) throw err;
 
-        if (result === undefined)
-          reject(new Error("Result is undefined"));
-        else
-          resolve(JSON.stringify(result));
+        if (result === undefined) reject(new Error('Result is undefined'));
+        else resolve(JSON.stringify(result));
       });
 
       // Close connection
-      db.end((err) => console.log("Connection closed"));
+      db.end((err) => console.log('Connection closed'));
     });
   }
 
@@ -65,17 +61,17 @@ class Queries {
       case 'messages':
         sql = `INSERT INTO messages(title, text, cr_date) VALUES ('${value_obj.title}', '${value_obj.text}', '${value_obj.cr_date}')`;
         break;
-      
+
       case 'schedules':
         sql = `INSERT INTO schedules(message, run_date, repeat_range) VALUES ('${value_obj.message}', '${value_obj.run_date}', '${value_obj.repeat_range}')`;
         break;
-      
+
       case 'triggers':
         sql = `INSERT INTO triggers(message, trigger_word, channel, active) VALUES ('${value_obj.message}', '${value_obj.trigger_word}', '${value_obj.channel}', '${value_obj.active}')`;
         break;
-    
+
       default:
-        console.log("Incorrect table name.");
+        console.log('Incorrect table name.');
         break;
     }
 
@@ -83,7 +79,7 @@ class Queries {
       if (err) throw err;
     });
 
-    db.end((err) => console.log("Connection closed"));
+    db.end((err) => console.log('Connection closed'));
   }
 
   /**
@@ -97,7 +93,7 @@ class Queries {
       if (err) throw err;
     });
 
-    db.end((err) => console.log("Connection closed"));
+    db.end((err) => console.log('Connection closed'));
   }
 
   /**
@@ -119,9 +115,9 @@ class Queries {
       case 'triggers':
         sql = `UPDATE ${this.table_name} SET message='${value_obj.message}', trigger_word='${value_obj.trigger_word}', channel='${value_obj.channel}', active='${value_obj.active}' WHERE ${filter_name}='${filter_value}'`;
         break;
-    
+
       default:
-        console.log("Incorrect table name.");
+        console.log('Incorrect table name.');
         break;
     }
 
@@ -129,7 +125,7 @@ class Queries {
       if (err) throw err;
     });
 
-    db.end((err) => console.log("Connection closed"));
+    db.end((err) => console.log('Connection closed'));
   }
 }
 
