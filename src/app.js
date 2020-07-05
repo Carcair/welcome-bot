@@ -21,6 +21,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+const db = require('./methods/dbConnect');
+
+db.connection.sync({force : false});
+
 /**
  * Loading routes
  */
@@ -32,8 +36,8 @@ const triggers = require('./routes/triggersController');
  * Initializing routes
  */
 app.use('/api/messages/', messages);
-app.use('/api/schedules/', schedules);
-app.use('/api/triggers/', triggers);
+//app.use('/api/schedules/', schedules);
+//app.use('/api/triggers/', triggers);
 
 const port = process.env.PORT;
 

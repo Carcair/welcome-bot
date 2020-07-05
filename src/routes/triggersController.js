@@ -8,9 +8,9 @@ const express = require('express');
  */
 const Triggers = require('../models/Triggers');
 
-// Load Query model
-const Queries = require('../models/Queries');
-let queries = new Queries('triggers');
+/// Load Sequelize model
+const db = require('../methods/dbConnect');
+const Trg = db.trg;
 
 /**
  * Router middleware

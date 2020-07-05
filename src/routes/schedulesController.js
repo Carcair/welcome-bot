@@ -8,9 +8,9 @@ const express = require('express');
  */
 const Schedules = require('../models/Schedules');
 
-// Load Query model
-const Queries = require('../models/Queries');
-let queries = new Queries('schedules');
+/// Load Sequelize model
+const db = require('../methods/dbConnect');
+const Sch = db.sch;
 
 /**
  * Router middleware
@@ -21,17 +21,17 @@ const router = express.Router();
  * Get schedules
  */
 router.get('/', (req, res) => {
-  queries
-    .selectAll()
-    .then((result) => {
-      let temp = JSON.parse(result);
+    
+  Sch.findAll()
+    .then((results) => {
+      let arr = [...results];
+      let temp =[];
+      arr.forEach((obj)=>{
+        temp.push(obj.dataValues);
+      });
 
       temp.forEach((obj, index) => {
-        const schedule = new Schedules(
-          obj.message,
-          obj.run_date,
-          obj.repeat_range
-        );
+        let schedule = new Schedules(obj.title, obj.text, obj.cr_date);
         // Decode query return
         temp[index] = schedule.decodeOutput();
       });
@@ -44,23 +44,20 @@ router.get('/', (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+
 });
 
 /**
  * Get one schedule by message title
  */
 router.get('/:title', (req, res) => {
-  queries
-    .selectOne('message', req.params.title)
+  Sch
+    .findOne({where:{ title: req.params.title }})
     .then((result) => {
       // Decode query return
-      let temp = JSON.parse(result);
-      let schedule = new Schedules(
-        temp[0].message,
-        temp[0].run_date,
-        temp[0].repeat_range
-      );
-      temp[0] = schedule.decodeOutput();
+      let temp = result.dataValues;
+      let schedule = new Schedules(temp.title, temp.text, temp.cr_date);
+      temp = schedule.decodeOutput();
       temp = JSON.stringify(temp);
 
       res.status(200);
@@ -75,43 +72,51 @@ router.get('/:title', (req, res) => {
  * Insert schedules
  */
 router.post('/', (req, res) => {
-  const schedule = new Schedules(
-    req.body.message,
-    req.body.run_date,
-    req.body.repeat_range
-  );
+  const schedule = new Schedules(req.body.title, req.body.text, req.body.cr_date);
 
   // Checking input
   if (schedule.checkInsert()) {
-    // Encode before sending
-    queries.insertOne(schedule.encodeInsert());
+    // Encoding input before sending query
+    Sch.create(schedule.encodeInsert());
     res.status(201).send();
   } else {
     res.status(406).send();
   }
 });
 
+
 /**
  * Delete a schedule found by message title
  */
 router.delete('/:title', (req, res) => {
-  queries.deleteOne('message', req.params.title);
-  res.status(202).send();
+  Sch.destroy({where: {title: req.params.title} })
+  .then(()=>{
+    res.status(202).send();
+  })
+  .catch((err)=>{
+    throw err;
+  })
 });
 
 /**
  * Edit schedule found by message title
  */
 router.post('/:message', (req, res) => {
-  const schedule = new Schedules(
-    req.body.message,
-    req.body.run_date,
-    req.body.repeat_range
-  );
+  const schedule = new Schedules(req.body.title, req.body.text);
 
   if (schedule.checkInsert()) {
-    queries.editOne('message', req.params.message, schedule.encodeInsert());
-    res.status(402).send();
+    Sch.update(
+      // values to update
+      schedule.encodeInsert(),
+      {
+        where : {title : req.params.title}
+      }
+      ).then(()=>{
+        res.status(202).send();
+      }).catch((err)=>{
+        res.status(404).send();
+      })
+    
   } else {
     res.status(406).send();
   }
