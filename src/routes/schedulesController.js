@@ -21,12 +21,11 @@ const router = express.Router();
  * Get schedules
  */
 router.get('/', (req, res) => {
-    
   Sch.findAll()
     .then((results) => {
       let arr = [...results];
-      let temp =[];
-      arr.forEach((obj)=>{
+      let temp = [];
+      arr.forEach((obj) => {
         temp.push(obj.dataValues);
       });
 
@@ -44,15 +43,13 @@ router.get('/', (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-
 });
 
 /**
  * Get one schedule by message title
  */
 router.get('/:title', (req, res) => {
-  Sch
-    .findOne({where:{ title: req.params.title }})
+  Sch.findOne({ where: { title: req.params.title } })
     .then((result) => {
       // Decode query return
       let temp = result.dataValues;
@@ -72,7 +69,11 @@ router.get('/:title', (req, res) => {
  * Insert schedules
  */
 router.post('/', (req, res) => {
-  const schedule = new Schedules(req.body.title, req.body.text, req.body.cr_date);
+  const schedule = new Schedules(
+    req.body.title,
+    req.body.text,
+    req.body.cr_date
+  );
 
   // Checking input
   if (schedule.checkInsert()) {
@@ -84,18 +85,17 @@ router.post('/', (req, res) => {
   }
 });
 
-
 /**
  * Delete a schedule found by message title
  */
 router.delete('/:title', (req, res) => {
-  Sch.destroy({where: {title: req.params.title} })
-  .then(()=>{
-    res.status(202).send();
-  })
-  .catch((err)=>{
-    throw err;
-  })
+  Sch.destroy({ where: { title: req.params.title } })
+    .then(() => {
+      res.status(202).send();
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 /**
@@ -109,14 +109,15 @@ router.post('/:message', (req, res) => {
       // values to update
       schedule.encodeInsert(),
       {
-        where : {title : req.params.title}
+        where: { title: req.params.title },
       }
-      ).then(()=>{
+    )
+      .then(() => {
         res.status(202).send();
-      }).catch((err)=>{
-        res.status(404).send();
       })
-    
+      .catch((err) => {
+        res.status(404).send();
+      });
   } else {
     res.status(406).send();
   }

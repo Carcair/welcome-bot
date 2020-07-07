@@ -7,7 +7,6 @@ require('dotenv').config();
  * loading dependencies
  */
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
 /**
@@ -18,12 +17,22 @@ const app = express();
 /**
  * Loading middleware
  */
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
+/**
+ * Load DB connection
+ */
 const db = require('./methods/dbConnect');
 
-db.connection.sync({force : false});
+// checking connection
+db.authenticate()
+  .then(() => {
+    console.log('INFO - Database connected.');
+  })
+  .catch((err) => {
+    console.log('ERROR - Unable to connect to the database:', err);
+  });
 
 /**
  * Loading routes
@@ -36,8 +45,8 @@ const triggers = require('./routes/triggersController');
  * Initializing routes
  */
 app.use('/api/messages/', messages);
-//app.use('/api/schedules/', schedules);
-//app.use('/api/triggers/', triggers);
+app.use('/api/schedules/', schedules);
+app.use('/api/triggers/', triggers);
 
 const port = process.env.PORT;
 
