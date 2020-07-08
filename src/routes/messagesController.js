@@ -28,11 +28,10 @@ router.get('/', (req, res) => {
  * Get one message by title
  */
 router.get('/:title', (req, res) => {
-  Messages.findAll({
+  Messages.findOne({
     where: {
       title: req.params.title,
-    },
-    limit: 1,
+    }
   })
     .then((post) => {
       res.status(200).end(JSON.stringify(post));
@@ -68,7 +67,6 @@ router.delete('/:title', (req, res) => {
  * Edit a message
  */
 router.post('/:title', (req, res) => {
-  const message = new Messages(req.body.title, req.body.text);
 
   Messages.update(
     {
