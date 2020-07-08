@@ -8,36 +8,29 @@ const express = require('express');
  */
 const Triggers = require('../models/Triggers');
 
-/// Load Sequelize model
-const db = require('../methods/dbConnect');
-const Trg = db.trg;
-
 /**
  * Router middleware
  */
 const router = express.Router();
 
 /**
- * Get trigger
+ * Get all triggers
  */
 router.get('/', (req, res) => {
-  const result = queries
-    .selectAll()
-    .then((result) => {
-      res.end(result);
+  Triggers.findAll()
+    .then((posts) => {
+      res.status(200).end(JSON.stringify(posts));
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => res.status(406).end(err));
 });
 
 /**
  * Get messages by trigger name
  */
 router.get('/:trigger_word', (req, res) => {
-  const result = queries
-    .selectOne('trigger_word', req.params.trigger_word)
+  Triggers.findOne({ where: { trigger_word: req.params.trigger_word } })
     .then((result) => {
+      /*
       // Decode query return
       let temp = JSON.parse(result);
       let trigger = new Triggers(
@@ -48,9 +41,9 @@ router.get('/:trigger_word', (req, res) => {
       );
       temp[0] = trigger.decodeOutput();
       temp = JSON.stringify(temp);
-
-      res.status(200);
-      res.end(temp);
+*/
+      res.status(200).end(JSON.stringify(result));
+   //   res.end(temp);  
     })
     .catch((err) => {
       console.log(err);
@@ -61,13 +54,15 @@ router.get('/:trigger_word', (req, res) => {
  * Insert trigger
  */
 router.post('/', (req, res) => {
-  const trigger = new Triggers(
-    req.body.message,
-    req.body.trigger_word,
-    req.body.channel,
-    req.body.active
-  );
-
+  Triggers.create({
+    message: req.body.message,
+    trigger_word: req.body.trigger_word,
+    channel: req.body.channel,
+    active: req.body.active
+   })
+   .then((_=>{ res.status(201).send(); }))
+   .catch(_=> { res.status(406).send(); });
+/*
   // Checking input
   if (trigger.checkInsert()) {
     // Encode input before sending
@@ -75,27 +70,38 @@ router.post('/', (req, res) => {
     res.status(201).send();
   } else {
     res.status(406).send();
-  }
+  }*/
 });
 
 /**
  * Delete one post by trigger name
  */
 router.delete('/:trigger_word', (req, res) => {
-  queries.deleteOne('trigger_word', req.params.trigger_word);
-  res.status(202).send();
+ Triggers.destroy({ where: { trigger_word: req.params.trigger_word } })
+  .then(() => {
+    res.status(202).send();
+  })
+  .catch((err) => {
+    throw err;
+  });
 });
 
 /**
  * Edit one post by trigger name
  */
 router.post('/:trigger_word', (req, res) => {
-  const trigger = new Triggers(
-    req.body.message,
-    req.body.trigger_word,
-    req.body.channel,
-    req.body.active
-  );
+  Triggers.update(
+    {
+      message: req.body.message,
+    trigger_word: req.body.trigger_word,
+    channel: req.body.channel,
+    active: req.body.active
+    },
+    { where: { trigger_word: req.params.trigger_word} }
+  )
+    .then(() => res.status(201).end())
+    .catch((err) => res.status(406).end(err));
+/*
   if (trigger.checkInsert()) {
     queries.editOne(
       'trigger_word',
@@ -106,6 +112,7 @@ router.post('/:trigger_word', (req, res) => {
   } else {
     res.status(406).send();
   }
+  */
 });
 
 module.exports = router;
