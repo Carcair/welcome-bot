@@ -13,5 +13,6 @@ const Schedules = db.define(
   },
   { timestamps: false }
 );
+Schedules.removeAttribute('id');
 
 module.exports = Schedules;

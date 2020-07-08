@@ -15,4 +15,6 @@ const Triggers = db.define(
   { timestamps: false }
 );
 
+Triggers.removeAttribute('id');
+
 module.exports = Triggers;
