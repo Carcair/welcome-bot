@@ -15,6 +15,6 @@ const Triggers = db.define(
   { timestamps: false }
 );
 
-Triggers.removeAttribute('id');
+Triggers.removeAttribute('id'); // removes id attribute from model Triggers
 
 module.exports = Triggers;
