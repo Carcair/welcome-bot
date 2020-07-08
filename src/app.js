@@ -8,6 +8,7 @@ require('dotenv').config();
  */
 const express = require('express');
 const cors = require('cors');
+const logger = require('./config/logger');
 
 /**
  * Initialize express
@@ -15,7 +16,14 @@ const cors = require('cors');
 const app = express();
 
 /**
- * Loading middleware
+ * Loading routes
+ */
+const messages = require('./routes/messagesController');
+const schedules = require('./routes/schedulesController.js');
+const triggers = require('./routes/triggersController');
+
+/**
+ * Initialize middleware
  */
 app.use(express.json());
 app.use(cors());
@@ -28,18 +36,14 @@ const db = require('./methods/dbConnect');
 // checking connection
 db.authenticate()
   .then(() => {
-    console.log('INFO - Database connected.');
+    // Connected to database
   })
   .catch((err) => {
-    console.log('ERROR - Unable to connect to the database:', err);
+    // console.log('ERROR - Unable to connect to the database:', err);
+    logger.error(
+      `Error code: ${err.parent.code} || Error message: ${err.parent.sqlMessage} || Error number: ${err.parent.errno}`
+    );
   });
-
-/**
- * Loading routes
- */
-const messages = require('./routes/messagesController');
-const schedules = require('./routes/schedulesController.js');
-const triggers = require('./routes/triggersController');
 
 /**
  * Initializing routes
@@ -50,4 +54,6 @@ app.use('/api/triggers/', triggers);
 
 const port = process.env.PORT;
 
-app.listen(port, () => console.log(`Listening port ${port}`));
+app.listen(port, () => {
+  console.log(`Listening @${port}`);
+});
