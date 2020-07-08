@@ -30,20 +30,7 @@ router.get('/', (req, res) => {
 router.get('/:trigger_word', (req, res) => {
   Triggers.findOne({ where: { trigger_word: req.params.trigger_word } })
     .then((result) => {
-      /*
-      // Decode query return
-      let temp = JSON.parse(result);
-      let trigger = new Triggers(
-        temp[0].message,
-        temp[0].trigger_word,
-        temp[0].channel,
-        temp[0].active
-      );
-      temp[0] = trigger.decodeOutput();
-      temp = JSON.stringify(temp);
-*/
       res.status(200).end(JSON.stringify(result));
-   //   res.end(temp);  
     })
     .catch((err) => {
       console.log(err);
@@ -60,17 +47,8 @@ router.post('/', (req, res) => {
     channel: req.body.channel,
     active: req.body.active
    })
-   .then((_=>{ res.status(201).send(); }))
-   .catch(_=> { res.status(406).send(); });
-/*
-  // Checking input
-  if (trigger.checkInsert()) {
-    // Encode input before sending
-    queries.insertOne(trigger.encodeInsert());
-    res.status(201).send();
-  } else {
-    res.status(406).send();
-  }*/
+   .then((_=>{ res.status(201).end(); }))
+   .catch(_=> { res.status(406).end(); });
 });
 
 /**
@@ -101,18 +79,6 @@ router.post('/:trigger_word', (req, res) => {
   )
     .then(() => res.status(201).end())
     .catch((err) => res.status(406).end(err));
-/*
-  if (trigger.checkInsert()) {
-    queries.editOne(
-      'trigger_word',
-      req.params.trigger_word,
-      trigger.encodeInsert()
-    );
-    res.status(202).send();
-  } else {
-    res.status(406).send();
-  }
-  */
 });
 
 module.exports = router;
