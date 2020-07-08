@@ -1,26 +1,36 @@
 /**
- * Load mysql
+ * Load .env
  */
-const mysql = require('mysql');
+require('dotenv').config();
+
+/**
+ * Load SEQUELIZE
+ */
+const Sequelize = require('sequelize');
 
 /**
  * Load connection obj
  */
-const DBConfig = require('../models/assets/DBConfig');
+const db = new Sequelize(
+  process.env.DATABASE_NAME,
+  // 'test', // Use when testing failed connection
+  process.env.DATABASE_USERNAME,
+  process.env.DATABASE_PASSWORD,
+  {
+    host: process.env.DATABASE_URL,
+    dialect: 'mysql',
+    logging: false,
+    define: {
+      timestamps: false,
+    },
 
-const connection = {
-  crConn() {
-    // Create connection
-    var db = mysql.createConnection(new DBConfig());
+    // pool: {
+    //   max: 100,
+    //   min: 0,
+    //   acquire: 30000,
+    //   idle: 10000,
+    // },
+  }
+);
 
-    // Connect
-    db.connect((err) => {
-      if (err) throw err;
-      console.log('MySQL connected.');
-    });
-
-    return db;
-  },
-};
-
-module.exports = connection;
+module.exports = db;
