@@ -24,7 +24,8 @@
     "mysql2": "^2.1.0",
     "sequelize": "^6.2.4",
     "slackbots": "^1.2.0",
-    "snyk": "^1.360.0"
+    "snyk": "^1.360.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",

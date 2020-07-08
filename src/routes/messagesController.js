@@ -18,8 +18,8 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   Messages.findAll()
-    .then((posts) => {
-      res.status(200).end(JSON.stringify(posts));
+    .then((messages) => {
+      res.status(200).end(JSON.stringify(messages));
     })
     .catch((err) => res.status(406).end(err.parent.sqlMessage));
 });
@@ -68,8 +68,6 @@ router.delete('/:title', (req, res) => {
  * Edit a message
  */
 router.post('/:title', (req, res) => {
-  const message = new Messages(req.body.title, req.body.text);
-
   Messages.update(
     {
       title: req.body.title,
