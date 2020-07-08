@@ -31,8 +31,8 @@ router.get('/', (req, res) => {
 /**
  * Get one schedule by message title
  */
-router.get('/:title', (req, res) => {
-  Schedules.findOne({ where: { message: req.params.title } })
+router.get('/:message', (req, res) => {
+  Schedules.findOne({ where: { message: req.params.message } })
     .then((result) => {
       res.status(200);
       res.end(JSON.stringify(result));
@@ -49,27 +49,17 @@ router.post('/', (req, res) => {
   Schedules.create({
     message: req.body.message,
     run_date:  req.body.run_date,
-    repeat_range: req.body.repeat_range,
+    repeat_range: req.body.repeat_range
    })
    .then(()=>{   res.status(201).send();  })
-   .catch(()=>{  res.status(406).send();  })
-   /*
-  // Checking input
-  if (schedule.checkInsert()) {
-    // Encoding input before sending query
-    Schedules.create(schedule.encodeInsert());
-    res.status(201).send();
-  } else {
-    res.status(406).send();
-  }
-*/
+   .catch(()=>{  res.status(406).send();  });
 });
 
 /**
  * Delete a schedule found by message title
  */
-router.delete('/:title', (req, res) => {
-  Schedules.destroy({ where: { message: req.params.title } })
+router.delete('/:message', (req, res) => {
+  Schedules.destroy({ where: { message: req.params.message } })
     .then(() => {
       res.status(202).send();
     })
@@ -92,27 +82,6 @@ router.post('/:message', (req, res) => {
   )
     .then(() => res.status(201).end())
     .catch((err) => res.status(406).end(err));
-
-
-/*
-  if (schedule.checkInsert()) {
-    Schedules.update(
-      // values to update
-      schedule.encodeInsert(),
-      {
-        where: { title: req.params.title },
-      }
-    )
-      .then(() => {
-        res.status(202).send();
-      })
-      .catch((err) => {
-        res.status(404).send();
-      });
-  } else {
-    res.status(406).send();
-  }
-  */
 });
 
 module.exports = router;
