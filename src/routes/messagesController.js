@@ -28,11 +28,10 @@ router.get('/', (req, res) => {
  * Get one message by title
  */
 router.get('/:title', (req, res) => {
-  Messages.findAll({
+  Messages.findOne({
     where: {
       title: req.params.title,
-    },
-    limit: 1,
+    }
   })
     .then((post) => {
       res.status(200).end(JSON.stringify(post));
