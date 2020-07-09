@@ -18,6 +18,7 @@ const app = express();
 /**
  * Loading routes
  */
+const login = require('./routes/login');
 const messages = require('./routes/messagesController');
 const schedules = require('./routes/schedulesController.js');
 const triggers = require('./routes/triggersController');
@@ -46,6 +47,7 @@ db.authenticate()
 /**
  * Initializing routes
  */
+app.use('/login', login);
 app.use('/api/messages/', messages);
 app.use('/api/schedules/', schedules);
 app.use('/api/triggers/', triggers);
