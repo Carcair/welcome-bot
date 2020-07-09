@@ -1,0 +1,11 @@
+{"level":"error","message":"Attempted login by {\"username\":\"niko\",\"pass\":\"admin\"}","timestamp":"2020-07-09T10:38:40.239Z"}
+{"level":"error","message":"Attempted login with niko | admin","timestamp":"2020-07-09T10:40:54.131Z"}
+{"level":"error","message":"Attempted login by \"niko\"","timestamp":"2020-07-09T10:55:53.897Z"}
+{"level":"error","message":"Attempted login by \"niko\"","timestamp":"2020-07-09T10:56:07.148Z"}
+{"level":"error","message":"Attempted login by \"niko\"","timestamp":"2020-07-09T11:02:43.337Z"}
+{"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:14:25.518Z"}
+{"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:14:40.580Z"}
+{"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:14:53.272Z"}
+{"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:19:51.496Z"}
+{"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:20:15.173Z"}
+{"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:54:14.099Z"}
