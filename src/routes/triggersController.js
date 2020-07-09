@@ -2,6 +2,7 @@
  * Loading dependencies
  */
 const express = require('express');
+const logger = require('../config/logger');
 
 /**
  * Load models
@@ -21,7 +22,10 @@ router.get('/', (req, res) => {
     .then((posts) => {
       res.status(200).end(JSON.stringify(posts));
     })
-    .catch((err) => res.status(406).end(err));
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
 });
 
 /**
@@ -33,7 +37,8 @@ router.get('/:trigger_word', (req, res) => {
       res.status(200).end(JSON.stringify(result));
     })
     .catch((err) => {
-      console.log(err);
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
     });
 });
 
@@ -41,44 +46,63 @@ router.get('/:trigger_word', (req, res) => {
  * Insert trigger
  */
 router.post('/', (req, res) => {
-  Triggers.create({
+  const temp_obj = {
     message: req.body.message,
     trigger_word: req.body.trigger_word,
     channel: req.body.channel,
-    active: req.body.active
-   })
-   .then((_=>{ res.status(201).end(); }))
-   .catch(_=> { res.status(406).end(); });
+    active: req.body.active,
+  };
+  Triggers.create(temp_obj)
+    .then(() => {
+      logger.logInput(JSON.stringify(temp_obj), 'trigger');
+      res.status(201).end();
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
 });
 
 /**
  * Delete one post by trigger name
  */
 router.delete('/:trigger_word', (req, res) => {
- Triggers.destroy({ where: { trigger_word: req.params.trigger_word } })
-  .then(() => {
-    res.status(202).send();
-  })
-  .catch((err) => {
-    throw err;
-  });
+  Triggers.destroy({ where: { trigger_word: req.params.trigger_word } })
+    .then(() => {
+      logger.logDelete(req.params.trigger_word, 'trigger');
+      res.status(202).send();
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
 });
 
 /**
  * Edit one post by trigger name
  */
 router.post('/:trigger_word', (req, res) => {
-  Triggers.update(
-    {
-      message: req.body.message,
+  const temp_obj = {
+    message: req.body.message,
     trigger_word: req.body.trigger_word,
     channel: req.body.channel,
-    active: req.body.active
-    },
-    { where: { trigger_word: req.params.trigger_word} }
-  )
-    .then(() => res.status(201).end())
-    .catch((err) => res.status(406).end(err));
+    active: req.body.active,
+  };
+  Triggers.update(temp_obj, {
+    where: { trigger_word: req.params.trigger_word },
+  })
+    .then(() => {
+      logger.logUpdate(
+        JSON.stringify(temp_obj),
+        req.params.trigger_word,
+        'trigger'
+      );
+      res.status(201).end();
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
 });
 
 module.exports = router;
