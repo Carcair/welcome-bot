@@ -40,9 +40,7 @@ db.authenticate()
   })
   .catch((err) => {
     // console.log('ERROR - Unable to connect to the database:', err);
-    logger.error(
-      `Error code: ${err.parent.code} || Error message: ${err.parent.sqlMessage} || Error number: ${err.parent.errno}`
-    );
+    logger.logSQLError(err);
   });
 
 /**

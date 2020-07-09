@@ -2,12 +2,12 @@
  * Loading dependencies
  */
 const express = require('express');
+const logger = require('../config/logger');
 
 /**
  * Load Schedules models
  */
 const Schedules = require('../models/Schedules');
-
 
 /**
  * Router middleware
@@ -24,7 +24,8 @@ router.get('/', (req, res) => {
       res.end(JSON.stringify(results));
     })
     .catch((err) => {
-      console.log(err);
+      logger.logError(err);
+      res.status(406).end(err.parent.sqlMessage);
     });
 });
 
@@ -38,7 +39,8 @@ router.get('/:message', (req, res) => {
       res.end(JSON.stringify(result));
     })
     .catch((err) => {
-      console.log(err);
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
     });
 });
 
@@ -46,13 +48,20 @@ router.get('/:message', (req, res) => {
  * Insert schedules
  */
 router.post('/', (req, res) => {
-  Schedules.create({
+  const temp_obj = {
     message: req.body.message,
-    run_date:  req.body.run_date,
-    repeat_range: req.body.repeat_range
-   })
-   .then(()=>{   res.status(201).send();  })
-   .catch(()=>{  res.status(406).send();  });
+    run_date: req.body.run_date,
+    repeat_range: req.body.repeat_range,
+  };
+  Schedules.create(temp_obj)
+    .then(() => {
+      logger.logInput(JSON.stringify(temp_obj), 'schedule');
+      res.status(201).send();
+    })
+    .catch(() => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
 });
 
 /**
@@ -61,10 +70,12 @@ router.post('/', (req, res) => {
 router.delete('/:message', (req, res) => {
   Schedules.destroy({ where: { message: req.params.message } })
     .then(() => {
+      logger.logDelete(req.params.message, 'schedule');
       res.status(202).send();
     })
     .catch((err) => {
-      throw err;
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
     });
 });
 
@@ -72,16 +83,24 @@ router.delete('/:message', (req, res) => {
  * Edit schedule found by message title
  */
 router.post('/:message', (req, res) => {
-  Schedules.update(
-    {
-      message: req.body.message,
-      run_date:  req.body.run_date,
-      repeat_range: req.body.repeat_range
-    },
-    { where: { message: req.params.message } }
-  )
-    .then(() => res.status(201).end())
-    .catch((err) => res.status(406).end(err));
+  const temp_obj = {
+    message: req.body.message,
+    run_date: req.body.run_date,
+    repeat_range: req.body.repeat_range,
+  };
+  Schedules.update(temp_obj, { where: { message: req.params.message } })
+    .then(() => {
+      logger.logUpdate(
+        JSON.stringify(temp_obj),
+        req.params.message,
+        'schedule'
+      );
+      res.status(201).end();
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
 });
 
 module.exports = router;
