@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
  * Verify token
  */
 router.post('/test', helpers.getToken, helpers.verifyToken, (req, res) => {
-  res.end('Access granted');
+  res.end('true');
 });
 
 /**
