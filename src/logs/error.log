@@ -9,3 +9,5 @@
 {"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:19:51.496Z"}
 {"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:20:15.173Z"}
 {"level":"error","message":"Attempted access without token","timestamp":"2020-07-09T11:54:14.099Z"}
+{"level":"error","message":"Attempted login by \"niko\"","timestamp":"2020-07-10T08:38:56.767Z"}
+{"level":"error","message":"Attempted login by {\"username\":\"niko\",\"pass\":\"admin\"}","timestamp":"2020-07-10T08:39:56.717Z"}

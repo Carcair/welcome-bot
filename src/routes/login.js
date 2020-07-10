@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
   })
     .then((results) => {
       if (JSON.stringify(results) === '[]') {
-        logger.logLoginDenied(req.body.username, req.body.pass);
+        logger.logLoginDenied(req.body);
         res.status(406).end('Wrong creds');
       } else {
         jwt.sign({ results }, process.env.SK, (err, token) => {
