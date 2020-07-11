@@ -10,6 +10,11 @@ const logger = require('../config/logger');
 const Messages = require('../models/Messages');
 
 /**
+ * Load Messages Schema 
+ */
+const message_schema = require('../models/joiSchema/Mesages.Schema');
+
+/**
  * Using router middleware
  */
 const router = express.Router();
@@ -56,15 +61,23 @@ router.post('/', (req, res) => {
     text: req.body.text,
     cr_date: req.body.cr_date,
   };
-  Messages.create(temp_obj)
-    .then(() => {
-      logger.logInput(JSON.stringify(temp_obj), 'message');
-      res.status(201).end();
-    })
-    .catch((err) => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
+  const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
+  if (error) {
+    res.status(422).end(error.details[0].message);//if err throw validation error
+  } else if (value) {
+    Messages.create(temp_obj)
+      .then(() => {
+        logger.logInput(JSON.stringify(temp_obj), 'message');
+        res.status(201).end();
+      })
+      .catch((err) => {
+        logger.logSQLError(err);
+        res.status(406).end(err.parent.sqlMessage);
+      });
+  
+  }
+
+
 });
 
 /**
@@ -92,15 +105,20 @@ router.post('/:title', (req, res) => {
     title: req.body.title,
     text: req.body.text,
   };
-  Messages.update(temp_obj, { where: { title: req.params.title } })
-    .then(() => {
-      logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
-      res.status(201).end();
-    })
-    .catch((err) => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
+  const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
+  if (error) { 
+    res.status(422).end(error.details[0].message); //if err throw validation error
+  } else if (value) { 
+    Messages.update(temp_obj, { where: { title: req.params.title } })
+      .then(() => {
+        logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
+        res.status(201).end();
+      })
+      .catch((err) => {
+        logger.logSQLError(err);
+        res.status(406).end(err.parent.sqlMessage);
+      });
+  }
 });
 
 module.exports = router;

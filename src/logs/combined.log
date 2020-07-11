@@ -1,0 +1,6 @@
+{"level":"info","message":"New message: {\"title\":\"joiSchema\",\"text\":\"JOI schema is working perfectly\",\"cr_date\":\"25/07/2020\"} sent to the Database successfully.","timestamp":"2020-07-11T12:12:53.429Z"}
+{"level":"info","message":"\"Changedtitle\" in message updated with {\"title\":\"NESTO DRUGO\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:36:08.418Z"}
+{"level":"info","message":"\"NESTO DRUGO\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:38:59.533Z"}
+{"level":"info","message":"\"Changedtitle\" in message updated with {\"title\":\"Changedtitle2\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:40:36.076Z"}
+{"level":"info","message":"\"Changedtitle2\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T14:05:50.642Z"}
+{"level":"info","message":"\"Changedtitle2\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T14:09:52.537Z"}
