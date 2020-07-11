@@ -4,3 +4,6 @@
 {"level":"info","message":"\"Changedtitle\" in message updated with {\"title\":\"Changedtitle2\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:40:36.076Z"}
 {"level":"info","message":"\"Changedtitle2\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T14:05:50.642Z"}
 {"level":"info","message":"\"Changedtitle2\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T14:09:52.537Z"}
+{"level":"info","message":"New schedule: {\"message\":\"JoinD\",\"run_date\":\"12/07/2020\",\"repeat_range\":\"9\"} sent to the Database successfully.","timestamp":"2020-07-11T14:29:15.007Z"}
+{"level":"info","message":"New schedule: {\"message\":\"JoinE\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"3\"} sent to the Database successfully.","timestamp":"2020-07-11T14:29:33.747Z"}
+{"level":"info","message":"\"JoinE\" in schedule updated with {\"message\":\"rejoinE\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"3\"}.","timestamp":"2020-07-11T14:45:09.296Z"}

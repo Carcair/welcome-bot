@@ -10,6 +10,11 @@ const logger = require('../config/logger');
 const Schedules = require('../models/Schedules');
 
 /**
+ * Load Messages Schema 
+ */
+const schedule_schema = require('../models/joiSchema/Schedules.Schema');
+
+/**
  * Router middleware
  */
 const router = express.Router();
@@ -53,15 +58,24 @@ router.post('/', (req, res) => {
     run_date: req.body.run_date,
     repeat_range: req.body.repeat_range,
   };
-  Schedules.create(temp_obj)
-    .then(() => {
-      logger.logInput(JSON.stringify(temp_obj), 'schedule');
-      res.status(201).send();
-    })
-    .catch(() => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
+  const { error, value } = schedule_schema.validate(temp_obj); //joi validation of data sent from frontend
+
+  if (error) {
+    res.status(422).end(error.details[0].message);
+  } else if (value) {
+  
+    Schedules.create(temp_obj)
+      .then(() => {
+        logger.logInput(JSON.stringify(temp_obj), 'schedule');
+        res.status(201).send();
+      })
+      .catch(() => {
+        logger.logSQLError(err);
+        res.status(406).end(err.parent.sqlMessage);
+      });
+  
+  }
+
 });
 
 /**
@@ -88,19 +102,24 @@ router.post('/:message', (req, res) => {
     run_date: req.body.run_date,
     repeat_range: req.body.repeat_range,
   };
-  Schedules.update(temp_obj, { where: { message: req.params.message } })
-    .then(() => {
-      logger.logUpdate(
-        JSON.stringify(temp_obj),
-        req.params.message,
-        'schedule'
-      );
-      res.status(201).end();
-    })
-    .catch((err) => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
+  const { error, value } = schedule_schema.validate(temp_obj);
+  if (error) {
+      res.status(422).end(error.details[0].message);
+    } else if (value) {
+      Schedules.update(temp_obj, { where: { message: req.params.message } })
+        .then(() => {
+          logger.logUpdate(
+            JSON.stringify(temp_obj),
+            req.params.message,
+            'schedule'
+          );
+          res.status(201).end();
+        })
+        .catch((err) => {
+          logger.logSQLError(err);
+          res.status(406).end(err.parent.sqlMessage);
+        });
+    }
 });
 
 module.exports = router;
