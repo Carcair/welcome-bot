@@ -7,3 +7,10 @@
 {"level":"info","message":"New schedule: {\"message\":\"JoinD\",\"run_date\":\"12/07/2020\",\"repeat_range\":\"9\"} sent to the Database successfully.","timestamp":"2020-07-11T14:29:15.007Z"}
 {"level":"info","message":"New schedule: {\"message\":\"JoinE\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"3\"} sent to the Database successfully.","timestamp":"2020-07-11T14:29:33.747Z"}
 {"level":"info","message":"\"JoinE\" in schedule updated with {\"message\":\"rejoinE\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"3\"}.","timestamp":"2020-07-11T14:45:09.296Z"}
+{"level":"info","message":"New trigger: {\"message\":\"JOIisWORKING\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-11T14:57:46.117Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:01:46.333Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:02:30.754Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:06:07.645Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:07:03.779Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:22:10.014Z"}
+{"level":"info","message":"\"joi\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:22:40.124Z"}

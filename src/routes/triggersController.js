@@ -10,6 +10,12 @@ const logger = require('../config/logger');
 const Triggers = require('../models/Triggers');
 
 /**
+ * Load Messages Schema 
+ */
+const trigger_schema = require('../models/joiSchema/Triggers.Schema');
+
+
+/**
  * Router middleware
  */
 const router = express.Router();
@@ -52,15 +58,22 @@ router.post('/', (req, res) => {
     channel: req.body.channel,
     active: req.body.active,
   };
-  Triggers.create(temp_obj)
-    .then(() => {
-      logger.logInput(JSON.stringify(temp_obj), 'trigger');
-      res.status(201).end();
-    })
-    .catch((err) => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
+  const { error, value } = trigger_schema.validate(temp_obj);
+  if (error) {
+      res.status(422).end(error.details[0].message);
+    } else if (value) {
+      Triggers.create(temp_obj)
+        .then(() => {
+          logger.logInput(JSON.stringify(temp_obj), 'trigger');
+          res.status(201).end();
+        })
+        .catch((err) => {
+          logger.logSQLError(err);
+          res.status(406).end(err.parent.sqlMessage);
+        });
+    }
+
+
 });
 
 /**
@@ -88,21 +101,26 @@ router.post('/:trigger_word', (req, res) => {
     channel: req.body.channel,
     active: req.body.active,
   };
-  Triggers.update(temp_obj, {
-    where: { trigger_word: req.params.trigger_word },
-  })
-    .then(() => {
-      logger.logUpdate(
-        JSON.stringify(temp_obj),
-        req.params.trigger_word,
-        'trigger'
-      );
-      res.status(201).end();
-    })
-    .catch((err) => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
+  const { error, value } = trigger_schema.validate(temp_obj);
+  if (error) {
+      res.status(422).end(error.details[0].message);
+    } else if (value) {
+      Triggers.update(temp_obj, {
+        where: { trigger_word: req.params.trigger_word },
+      })
+        .then(() => {
+          logger.logUpdate(
+            JSON.stringify(temp_obj),
+            req.params.trigger_word,
+            'trigger'
+          );
+          res.status(201).end();
+        })
+        .catch((err) => {
+          logger.logSQLError(err);
+          res.status(406).end(err.parent.sqlMessage);
+        });
+    }
 });
 
 module.exports = router;
