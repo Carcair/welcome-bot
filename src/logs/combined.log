@@ -1,2 +1,31 @@
-{"level":"info","message":"New message: {\"title\":\"Hello\",\"text\":\"Hello you industrious little fellow\",\"cr_date\":\"13/07/2020\"} sent to the Database successfully.","timestamp":"2020-07-13T10:25:21.658Z"}
-{"level":"info","message":"New trigger: {\"message\":\"Hello\",\"trigger_word\":\"hello\",\"channel\":\"general\",\"active\":\"active\"} sent to the Database successfully.","timestamp":"2020-07-13T11:10:11.140Z"}
+{"level":"info","message":"New message: {\"title\":\"joiSchema\",\"text\":\"JOI schema is working perfectly\",\"cr_date\":\"25/07/2020\"} sent to the Database successfully.","timestamp":"2020-07-11T12:12:53.429Z"}
+{"level":"info","message":"\"Changedtitle\" in message updated with {\"title\":\"NESTO DRUGO\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:36:08.418Z"}
+{"level":"info","message":"\"NESTO DRUGO\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:38:59.533Z"}
+{"level":"info","message":"\"Changedtitle\" in message updated with {\"title\":\"Changedtitle2\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T12:40:36.076Z"}
+{"level":"info","message":"\"Changedtitle2\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T14:05:50.642Z"}
+{"level":"info","message":"\"Changedtitle2\" in message updated with {\"title\":\"Changedtitle\",\"text\":\"Dobro došli u SPARK tDSKJFDSKLHDLKGHJLHim. Promjena 2\"}.","timestamp":"2020-07-11T14:09:52.537Z"}
+{"level":"info","message":"New schedule: {\"message\":\"JoinD\",\"run_date\":\"12/07/2020\",\"repeat_range\":\"9\"} sent to the Database successfully.","timestamp":"2020-07-11T14:29:15.007Z"}
+{"level":"info","message":"New schedule: {\"message\":\"JoinE\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"3\"} sent to the Database successfully.","timestamp":"2020-07-11T14:29:33.747Z"}
+{"level":"info","message":"\"JoinE\" in schedule updated with {\"message\":\"rejoinE\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"3\"}.","timestamp":"2020-07-11T14:45:09.296Z"}
+{"level":"info","message":"New trigger: {\"message\":\"JOIisWORKING\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-11T14:57:46.117Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:01:46.333Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:02:30.754Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:06:07.645Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:07:03.779Z"}
+{"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:22:10.014Z"}
+{"level":"info","message":"\"joi\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:22:40.124Z"}
+{"level":"info","message":"\"dsfhsjlh\" in message updated with {\"title\":\"Naslov99ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\"}.","timestamp":"2020-07-13T09:32:24.263Z"}
+{"level":"info","message":"New message: {\"title\":\"Naslov9hdj9ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\",\"cr_date\":\"27/12/2020\"} sent to the Database successfully.","timestamp":"2020-07-13T09:56:32.518Z"}
+{"level":"info","message":"\"dsffs\" in message updated with {\"title\":\"Naslov9hdj9ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\"}.","timestamp":"2020-07-13T09:57:58.507Z"}
+{"level":"info","message":"\"dsffs\" in message updated with {\"title\":\"Naslov9hdj9ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\"}.","timestamp":"2020-07-13T10:07:14.472Z"}
+{"level":"info","message":"\"rejoinE\" in schedule updated with {\"message\":\"rejoinEnough\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"1\"}.","timestamp":"2020-07-13T10:31:13.111Z"}
+{"level":"info","message":"\"hello\" in trigger updated with {\"message\":\"Hello2\",\"trigger_word\":\"hello2\",\"channel\":\"general\",\"active\":\"true\"}.","timestamp":"2020-07-13T10:45:28.970Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:46:23.689Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:49:00.441Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:50:39.316Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:51:32.358Z"}
+{"level":"info","message":"trigger: \"hello2\" deleted from the Database.","timestamp":"2020-07-13T10:52:22.826Z"}
+{"level":"info","message":"\"undefined\" in message updated with {\"title\":\"sample_title27\",\"text\":\"sample text27 text has to be at least 20 char long\",\"cr_date\":\"27/04/2020\"}.","timestamp":"2020-07-13T19:12:45.354Z"}
+{"level":"info","message":"message: \"sample_title27\" deleted from the Database.","timestamp":"2020-07-13T19:13:51.738Z"}
+{"level":"info","message":"\"joiSchema\" in message updated with {\"title\":\"sample_title27\",\"text\":\"sample text27 text has to be at least 20 char long\"}.","timestamp":"2020-07-13T19:15:30.728Z"}
+{"level":"info","message":"schedule: \"rejoinEnough\" deleted from the Database.","timestamp":"2020-07-13T19:18:45.324Z"}
