@@ -34,6 +34,24 @@ const logger = {
       message: `Error code: ${err.parent.code} || Error message: ${err.parent.sqlMessage} || Error number: ${err.parent.errno}`,
     });
   },
+  logLoginDenied: (input) => {
+    logger.error.log({
+      level: 'error',
+      message: `Attempted login by ${JSON.stringify(input)}`,
+    });
+  },
+  logDeniedAccess: () => {
+    logger.error.log({
+      level: 'error',
+      message: `Attempted access without token`,
+    });
+  },
+  logAccessExpired: () => {
+    logger.error.log({
+      level: 'error',
+      message: `Attempted access with tampered or expired token`,
+    });
+  },
   logInput: (input, table_name) => {
     logger.info.log({
       level: 'info',

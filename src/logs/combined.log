@@ -1,0 +1,2 @@
+{"level":"info","message":"New message: {\"title\":\"Hello\",\"text\":\"Hello you industrious little fellow\",\"cr_date\":\"13/07/2020\"} sent to the Database successfully.","timestamp":"2020-07-13T10:25:21.658Z"}
+{"level":"info","message":"New trigger: {\"message\":\"Hello\",\"trigger_word\":\"hello\",\"channel\":\"general\",\"active\":\"active\"} sent to the Database successfully.","timestamp":"2020-07-13T11:10:11.140Z"}
