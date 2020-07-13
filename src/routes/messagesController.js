@@ -10,7 +10,7 @@ const logger = require('../config/logger');
 const Messages = require('../models/Messages');
 
 /**
- * Load Messages Schema 
+ * Load Messages Schema
  */
 const message_schema = require('../models/joiSchema/MesagesSchema');
 
@@ -59,16 +59,16 @@ router.post('/', (req, res) => {
   const temp_obj = {
     title: req.body.title,
     text: req.body.text,
-    cr_date : req.body.cr_date,
+    cr_date: req.body.cr_date,
   };
   const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
-  if (error) { 
+  if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
-  } else if (value) { 
+  } else if (value) {
     Messages.create(temp_obj)
       .then(() => {
-          logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
-          res.status(201).end();
+        logger.logInput(JSON.stringify(temp_obj), 'message');
+        res.status(201).end();
       })
       .catch((err) => {
         logger.logSQLError(err);
@@ -85,10 +85,13 @@ router.delete('/:title', (req, res) => {
     where: { title: req.params.title },
   })
     .then((result) => {
-      if(result !== 0){   //checking if the "result" is diffrent then 0 and responding accordingly
-      logger.logDelete(req.params.title, 'message');
-      res.status(202).end();
-      }else{  res.status(406).end()  }
+      if (result !== 0) {
+        //checking if the "result" is diffrent then 0 and responding accordingly
+        logger.logDelete(req.params.title, 'message');
+        res.status(202).end();
+      } else {
+        res.status(406).end();
+      }
     })
     .catch((err) => {
       logger.logSQLError(err);
@@ -105,16 +108,22 @@ router.post('/:title', (req, res) => {
     text: req.body.text,
   };
   const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
-  if (error) { 
+  if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
-  } else if (value) { 
+  } else if (value) {
     Messages.update(temp_obj, { where: { title: req.params.title } })
       .then((result) => {
-        if(result[0] !== 0){  //checking if the "result" is diffrent then 0 and responding accordingly
-        logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
-        res.status(201).end();
+        if (result[0] !== 0) {
+          //checking if the "result" is diffrent then 0 and responding accordingly
+          logger.logUpdate(
+            JSON.stringify(temp_obj),
+            req.params.title,
+            'message'
+          );
+          res.status(201).end();
+        } else {
+          res.status(406).end();
         }
-        else{  res.status(406).end()  }
       })
       .catch((err) => {
         logger.logSQLError(err);
