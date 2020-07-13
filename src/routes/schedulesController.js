@@ -84,7 +84,7 @@ router.post('/', (req, res) => {
 router.delete('/:message', (req, res) => {
   Schedules.destroy({ where: { message: req.params.message } })
     .then((result) => {
-      if(result !== 0 ){   //checking if the result is equal to 0 and responding accordingly
+      if(result !== 0 ){   //checking if the "result" is diffrent then 0 and responding accordingly
       logger.logDelete(req.params.message, 'schedule');
       res.status(202).send();
     }else{    res.status(406).end();    }
@@ -110,7 +110,7 @@ router.post('/:message', (req, res) => {
     } else if (value) {
       Schedules.update(temp_obj, { where: { message: req.params.message } })
         .then((result) => {
-          if(result[0] !== 0){ //checking if the result is equal to 0 and responding accordingly
+          if(result[0] !== 0){ //checking if the "result" is diffrent then 0 and responding accordingly
           logger.logUpdate(
             JSON.stringify(temp_obj),
             req.params.message,

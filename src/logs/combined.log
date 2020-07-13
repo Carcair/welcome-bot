@@ -25,3 +25,7 @@
 {"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:50:39.316Z"}
 {"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:51:32.358Z"}
 {"level":"info","message":"trigger: \"hello2\" deleted from the Database.","timestamp":"2020-07-13T10:52:22.826Z"}
+{"level":"info","message":"\"undefined\" in message updated with {\"title\":\"sample_title27\",\"text\":\"sample text27 text has to be at least 20 char long\",\"cr_date\":\"27/04/2020\"}.","timestamp":"2020-07-13T19:12:45.354Z"}
+{"level":"info","message":"message: \"sample_title27\" deleted from the Database.","timestamp":"2020-07-13T19:13:51.738Z"}
+{"level":"info","message":"\"joiSchema\" in message updated with {\"title\":\"sample_title27\",\"text\":\"sample text27 text has to be at least 20 char long\"}.","timestamp":"2020-07-13T19:15:30.728Z"}
+{"level":"info","message":"schedule: \"rejoinEnough\" deleted from the Database.","timestamp":"2020-07-13T19:18:45.324Z"}

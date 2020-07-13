@@ -55,23 +55,20 @@ router.get('/:title', (req, res) => {
 /**
  * Insert new message
  */
-router.post('/:title', (req, res) => {
+router.post('/', (req, res) => {
   const temp_obj = {
     title: req.body.title,
     text: req.body.text,
+    cr_date : req.body.cr_date,
   };
   const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
   if (error) { 
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) { 
-    Messages.update(temp_obj, { where: { title: req.params.title } })
-      .then((what) => {
-        if(what[0] !== 0){
+    Messages.create(temp_obj)
+      .then(() => {
           logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
           res.status(201).end();
-        } 
-        else{  res.status(406).end('incorect title');   }
-        
       })
       .catch((err) => {
         logger.logSQLError(err);
@@ -87,8 +84,8 @@ router.delete('/:title', (req, res) => {
   Messages.destroy({
     where: { title: req.params.title },
   })
-    .then((what) => {
-      if(what !== 0){   //checking if the result is equal to 0 and responding accordingly
+    .then((result) => {
+      if(result !== 0){   //checking if the "result" is diffrent then 0 and responding accordingly
       logger.logDelete(req.params.title, 'message');
       res.status(202).end();
       }else{  res.status(406).end()  }
@@ -113,7 +110,7 @@ router.post('/:title', (req, res) => {
   } else if (value) { 
     Messages.update(temp_obj, { where: { title: req.params.title } })
       .then((result) => {
-        if(result[0] !== 0){  //checking if the result is equal to 0 and responding accordingly
+        if(result[0] !== 0){  //checking if the "result" is diffrent then 0 and responding accordingly
         logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
         res.status(201).end();
         }

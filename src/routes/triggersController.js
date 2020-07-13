@@ -35,7 +35,7 @@ router.get('/', (req, res) => {
 });
 
 /**
- * Get messages by trigger name
+ * Get messages by trigger_word
  */
 router.get('/:trigger_word', (req, res) => {
   Triggers.findOne({ where: { trigger_word: req.params.trigger_word } })
@@ -82,7 +82,7 @@ router.post('/', (req, res) => {
 router.delete('/:trigger_word', (req, res) => {
   Triggers.destroy({ where: { trigger_word: req.params.trigger_word } })
     .then((result) => {
-      if(result[0] !== 0){   //checking if the result is equal to 0 and responding accordingly
+      if(result[0] !== 0){   //checking if the "result" is diffrent then 0 and responding accordingly
       logger.logDelete(req.params.trigger_word, 'trigger');
       res.status(202).send();
       }
@@ -109,17 +109,17 @@ router.post('/:trigger_word', (req, res) => {
       res.status(422).end(error.details[0].message);
     } else if (value) {
       Triggers.update(temp_obj, {
-        where: { trigger_word: req.params.trigger_word },
+            where: { trigger_word: req.params.trigger_word },
       })
         .then((result) => {
-          if(result[0] !== 0){ //checking if the result is equal to 0 and responding accordingly
+          if(result[0] !== 0){ //checking if the "result" is diffrent then 0 and responding accordingly
           logger.logUpdate(
             JSON.stringify(temp_obj),
             req.params.trigger_word,
             'trigger'
           );
           res.status(201).end();
-        }else{  res.status(406).end('incorect title');   }
+        }else{  res.status(406).end();   }
         })
         .catch((err) => {
           logger.logSQLError(err);
