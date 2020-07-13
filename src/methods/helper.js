@@ -3,7 +3,15 @@
  */
 const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
+const db = require('../methods/dbConnect');
+const { QueryTypes } = require('sequelize');
 require('dotenv').config();
+
+/**
+ * Load Sequelize models
+ */
+const Messages = require('../models/Messages');
+const Triggers = require('../models/Triggers');
 
 /**
  * Load necessary Sequelize models
@@ -86,6 +94,43 @@ const helpers = {
             res.status(406).end(err.parent.sqlMessage);
           });
       }
+    });
+  },
+
+  /**
+   * Get message with selected triggers
+   */
+  getMessage(trigger_word) {
+    return new Promise((resolve, reject) => {
+      db.query(
+        `SELECT messages.text AS text FROM messages JOIN triggers ON messages.title=triggers.message WHERE trigger_word='${trigger_word}'`,
+        {
+          type: QueryTypes.SELECT,
+        }
+      )
+        .then((message) => {
+          resolve(message[0].text);
+        })
+        .catch((err) => {
+          logger.logSQLError(err);
+          reject(err.parent.sqlMessage);
+        });
+    });
+  },
+
+  /**
+   * Get all available commands
+   */
+  getTriggers() {
+    return new Promise((resolve, reject) => {
+      Triggers.findAll()
+        .then((triggers) => {
+          resolve(triggers);
+        })
+        .catch((err) => {
+          logger.logSQLError(err);
+          reject(err.parent.sqlMessage);
+        });
     });
   },
 };
