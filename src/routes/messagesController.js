@@ -12,7 +12,7 @@ const Messages = require('../models/Messages');
 /**
  * Load Messages Schema 
  */
-const message_schema = require('../models/joiSchema/Mesages.Schema');
+const message_schema = require('../models/joiSchema/MesagesSchema');
 
 /**
  * Using router middleware
@@ -55,29 +55,29 @@ router.get('/:title', (req, res) => {
 /**
  * Insert new message
  */
-router.post('/', (req, res) => {
+router.post('/:title', (req, res) => {
   const temp_obj = {
     title: req.body.title,
     text: req.body.text,
-    cr_date: req.body.cr_date,
   };
   const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
-  if (error) {
-    res.status(422).end(error.details[0].message);//if err throw validation error
-  } else if (value) {
-    Messages.create(temp_obj)
-      .then(() => {
-        logger.logInput(JSON.stringify(temp_obj), 'message');
-        res.status(201).end();
+  if (error) { 
+    res.status(422).end(error.details[0].message); //if err throw validation error
+  } else if (value) { 
+    Messages.update(temp_obj, { where: { title: req.params.title } })
+      .then((what) => {
+        if(what[0] !== 0){
+          logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
+          res.status(201).end();
+        } 
+        else{  res.status(406).end('incorect title');   }
+        
       })
       .catch((err) => {
         logger.logSQLError(err);
         res.status(406).end(err.parent.sqlMessage);
       });
-  
   }
-
-
 });
 
 /**
@@ -87,9 +87,11 @@ router.delete('/:title', (req, res) => {
   Messages.destroy({
     where: { title: req.params.title },
   })
-    .then(() => {
+    .then((what) => {
+      if(what !== 0){
       logger.logDelete(req.params.title, 'message');
       res.status(202).end();
+      }else{  res.status(406).end()  }
     })
     .catch((err) => {
       logger.logSQLError(err);

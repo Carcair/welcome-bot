@@ -14,3 +14,14 @@
 {"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:07:03.779Z"}
 {"level":"info","message":"\"JOIisWORKING\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:22:10.014Z"}
 {"level":"info","message":"\"joi\" in trigger updated with {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"}.","timestamp":"2020-07-11T15:22:40.124Z"}
+{"level":"info","message":"\"dsfhsjlh\" in message updated with {\"title\":\"Naslov99ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\"}.","timestamp":"2020-07-13T09:32:24.263Z"}
+{"level":"info","message":"New message: {\"title\":\"Naslov9hdj9ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\",\"cr_date\":\"27/12/2020\"} sent to the Database successfully.","timestamp":"2020-07-13T09:56:32.518Z"}
+{"level":"info","message":"\"dsffs\" in message updated with {\"title\":\"Naslov9hdj9ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\"}.","timestamp":"2020-07-13T09:57:58.507Z"}
+{"level":"info","message":"\"dsffs\" in message updated with {\"title\":\"Naslov9hdj9ad\",\"text\":\"Ovdje%20testiramkhklhlhlkh\"}.","timestamp":"2020-07-13T10:07:14.472Z"}
+{"level":"info","message":"\"rejoinE\" in schedule updated with {\"message\":\"rejoinEnough\",\"run_date\":\"13/07/2020\",\"repeat_range\":\"1\"}.","timestamp":"2020-07-13T10:31:13.111Z"}
+{"level":"info","message":"\"hello\" in trigger updated with {\"message\":\"Hello2\",\"trigger_word\":\"hello2\",\"channel\":\"general\",\"active\":\"true\"}.","timestamp":"2020-07-13T10:45:28.970Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:46:23.689Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:49:00.441Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:50:39.316Z"}
+{"level":"info","message":"trigger: \"hellfds\" deleted from the Database.","timestamp":"2020-07-13T10:51:32.358Z"}
+{"level":"info","message":"trigger: \"hello2\" deleted from the Database.","timestamp":"2020-07-13T10:52:22.826Z"}

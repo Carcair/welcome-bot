@@ -12,7 +12,7 @@ const Triggers = require('../models/Triggers');
 /**
  * Load Messages Schema 
  */
-const trigger_schema = require('../models/joiSchema/Triggers.Schema');
+const trigger_schema = require('../models/joiSchema/TriggersSchema');
 
 
 /**
@@ -81,9 +81,12 @@ router.post('/', (req, res) => {
  */
 router.delete('/:trigger_word', (req, res) => {
   Triggers.destroy({ where: { trigger_word: req.params.trigger_word } })
-    .then(() => {
+    .then((what) => {
+      if(what[0] !== 0){
       logger.logDelete(req.params.trigger_word, 'trigger');
       res.status(202).send();
+      }
+      else{  res.status(406).end();  }
     })
     .catch((err) => {
       logger.logSQLError(err);
@@ -108,13 +111,15 @@ router.post('/:trigger_word', (req, res) => {
       Triggers.update(temp_obj, {
         where: { trigger_word: req.params.trigger_word },
       })
-        .then(() => {
+        .then((what) => {
+          if(what[0] !== 0){
           logger.logUpdate(
             JSON.stringify(temp_obj),
             req.params.trigger_word,
             'trigger'
           );
           res.status(201).end();
+        }else{  res.status(406).end('incorect title');   }
         })
         .catch((err) => {
           logger.logSQLError(err);
