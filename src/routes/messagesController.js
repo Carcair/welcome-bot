@@ -88,7 +88,7 @@ router.delete('/:title', (req, res) => {
     where: { title: req.params.title },
   })
     .then((what) => {
-      if(what !== 0){
+      if(what !== 0){   //checking if the result is equal to 0 and responding accordingly
       logger.logDelete(req.params.title, 'message');
       res.status(202).end();
       }else{  res.status(406).end()  }
@@ -112,9 +112,12 @@ router.post('/:title', (req, res) => {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) { 
     Messages.update(temp_obj, { where: { title: req.params.title } })
-      .then(() => {
+      .then((result) => {
+        if(result[0] !== 0){  //checking if the result is equal to 0 and responding accordingly
         logger.logUpdate(JSON.stringify(temp_obj), req.params.title, 'message');
         res.status(201).end();
+        }
+        else{  res.status(406).end()  }
       })
       .catch((err) => {
         logger.logSQLError(err);

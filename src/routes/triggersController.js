@@ -81,8 +81,8 @@ router.post('/', (req, res) => {
  */
 router.delete('/:trigger_word', (req, res) => {
   Triggers.destroy({ where: { trigger_word: req.params.trigger_word } })
-    .then((what) => {
-      if(what[0] !== 0){
+    .then((result) => {
+      if(result[0] !== 0){   //checking if the result is equal to 0 and responding accordingly
       logger.logDelete(req.params.trigger_word, 'trigger');
       res.status(202).send();
       }
@@ -111,8 +111,8 @@ router.post('/:trigger_word', (req, res) => {
       Triggers.update(temp_obj, {
         where: { trigger_word: req.params.trigger_word },
       })
-        .then((what) => {
-          if(what[0] !== 0){
+        .then((result) => {
+          if(result[0] !== 0){ //checking if the result is equal to 0 and responding accordingly
           logger.logUpdate(
             JSON.stringify(temp_obj),
             req.params.trigger_word,
