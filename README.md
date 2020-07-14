@@ -26,5 +26,5 @@ API endpoints:
   - `http://localhost:5000/api/triggers`
 
 ## Misc
-Follow demonstration at [Link]{ https://welcome-bot-slack.herokuapp.com/messages }
+Follow demonstration at [Link]{ https://welcome-bot-slack.herokuapp.com/api/messages } , or any other endpoint
 Connection to application might be slow since we've used free package from heroku.
