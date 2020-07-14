@@ -12,7 +12,7 @@ const Messages = require('../models/Messages');
 /**
  * Load Messages Schema
  */
-const message_schema = require('../models/joiSchema/MesagesSchema');
+const message_schema = require('../models/joiSchema/MessagesSchema');
 
 /**
  * Using router middleware

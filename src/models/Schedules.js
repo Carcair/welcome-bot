@@ -9,10 +9,11 @@ const Schedules = db.define(
   {
     message: { type: Sequelize.STRING(255) },
     run_date: { type: Sequelize.STRING(255) },
+    active: { type: Sequelize.STRING(255) },
     repeat_range: { type: Sequelize.STRING(255) },
   },
   { timestamps: false }
 );
-Schedules.removeAttribute('id');  // removes id attribute from model Schedules
+Schedules.removeAttribute('id'); // removes id attribute from model Schedules
 
 module.exports = Schedules;
