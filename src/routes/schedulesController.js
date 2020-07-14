@@ -10,7 +10,7 @@ const logger = require('../config/logger');
 const Schedules = require('../models/Schedules');
 
 /**
- * Load Messages Schema 
+ * Load Messages Schema
  */
 const schedule_schema = require('../models/joiSchema/SchedulesSchema');
 
@@ -56,6 +56,7 @@ router.post('/', (req, res) => {
   const temp_obj = {
     message: req.body.message,
     run_date: req.body.run_date,
+    active: req.body.active,
     repeat_range: req.body.repeat_range,
   };
   const { error, value } = schedule_schema.validate(temp_obj); //joi validation of data sent from frontend
@@ -63,7 +64,6 @@ router.post('/', (req, res) => {
   if (error) {
     res.status(422).end(error.details[0].message);
   } else if (value) {
-  
     Schedules.create(temp_obj)
       .then(() => {
         logger.logInput(JSON.stringify(temp_obj), 'schedule');
@@ -73,9 +73,7 @@ router.post('/', (req, res) => {
         logger.logSQLError(err);
         res.status(406).end(err.parent.sqlMessage);
       });
-  
   }
-
 });
 
 /**
@@ -84,10 +82,13 @@ router.post('/', (req, res) => {
 router.delete('/:message', (req, res) => {
   Schedules.destroy({ where: { message: req.params.message } })
     .then((result) => {
-      if(result !== 0 ){   //checking if the "result" is diffrent then 0 and responding accordingly
-      logger.logDelete(req.params.message, 'schedule');
-      res.status(202).send();
-    }else{    res.status(406).end();    }
+      if (result !== 0) {
+        //checking if the "result" is diffrent then 0 and responding accordingly
+        logger.logDelete(req.params.message, 'schedule');
+        res.status(202).send();
+      } else {
+        res.status(406).end();
+      }
     })
     .catch((err) => {
       logger.logSQLError(err);
@@ -102,28 +103,32 @@ router.post('/:message', (req, res) => {
   const temp_obj = {
     message: req.body.message,
     run_date: req.body.run_date,
+    active: req.body.active,
     repeat_range: req.body.repeat_range,
   };
   const { error, value } = schedule_schema.validate(temp_obj);
   if (error) {
-      res.status(422).end(error.details[0].message);
-    } else if (value) {
-      Schedules.update(temp_obj, { where: { message: req.params.message } })
-        .then((result) => {
-          if(result[0] !== 0){ //checking if the "result" is diffrent then 0 and responding accordingly
+    res.status(422).end(error.details[0].message);
+  } else if (value) {
+    Schedules.update(temp_obj, { where: { message: req.params.message } })
+      .then((result) => {
+        if (result[0] !== 0) {
+          //checking if the "result" is diffrent then 0 and responding accordingly
           logger.logUpdate(
             JSON.stringify(temp_obj),
             req.params.message,
             'schedule'
           );
           res.status(201).end();
-          }else{    res.status(406).end();     } //incorect message
-        })
-        .catch((err) => {
-          logger.logSQLError(err);
-          res.status(406).end(err.parent.sqlMessage);
-        });
-    }
+        } else {
+          res.status(406).end();
+        } //incorect message
+      })
+      .catch((err) => {
+        logger.logSQLError(err);
+        res.status(406).end(err.parent.sqlMessage);
+      });
+  }
 });
 
 module.exports = router;
