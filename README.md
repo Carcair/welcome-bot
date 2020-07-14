@@ -20,40 +20,11 @@ or using nodemon for development run:
 
 Development is running at http://localhost:5000 by default.
 
-Routes:
-`/api/messages`
-`/api/schedules`
-`/api/triggers`
-
-Using postman you can test, e.g. messages:
-
-- Get method for selecting:
-  - all rows:
-    `http://localhost:5000/api/messages`
-  - one row:
-    `http://localhost:5000/api/messages/MESSAGE_TITLE`
-
-- Post method for inserting and editing
-  - insert row:
-    `http://localhost:5000/api/messages`
-  - edit row:
-    `http://localhost:5000/api/messages/MESSAGE_TITLE`
-  - Post expecting JSON object:
-    ```
-    {
-      "title": "sample_title",
-      "text": "sample text",
-      "cr_date": "0123456"
-    }  
-    ```
-  - Edit also needs all three variables.
-
-- Delete method:
-    `http://localhost:5000/api/messages/MESSAGE_TITLE`
-
-Reason it lacks data processing is because it will be done in front-end, before sending, to ease processing burden on back-end.
-
+API endpoints:
+  - `http://localhost:5000/api/messages`
+  - `http://localhost:5000/api/schedules`
+  - `http://localhost:5000/api/triggers`
 
 ## Misc
-Follow demonstration at [Link]{https://welcome-bot-slack.herokuapp.com/messages}
+Follow demonstration at [Link]{ https://welcome-bot-slack.herokuapp.com/messages }
 Connection to application might be slow since we've used free package from heroku.
