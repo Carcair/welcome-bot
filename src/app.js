@@ -1,5 +1,5 @@
 /**
- * Loading env file
+ * Loading env file / to be replaced with Transcrypt
  */
 require('dotenv').config();
 
@@ -8,8 +8,22 @@ require('dotenv').config();
  */
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
+/**
+ * Loading helper files
+ */
 const logger = require('./config/logger');
 const bot = require('./handlers/botHandler');
+
+/**
+ * Config for limiter
+ */
+const limiter = rateLimit({
+  windowMs: 60 * 100,
+  max: 100,
+});
 
 /**
  * Initialize express
@@ -27,8 +41,10 @@ const triggers = require('./routes/triggersController');
 /**
  * Initialize middleware
  */
-app.use(express.json());
+app.use(express.json({ limit: '500kb' }));
 app.use(cors());
+app.use(helmet());
+app.use(limiter);
 
 /**
  * Load DB connection
