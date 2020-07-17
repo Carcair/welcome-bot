@@ -58,7 +58,7 @@ bot.on('message', (data) => {
       helper
         .getMessage(temp[1])
         .then((message) => {
-          bot.postMessageToChannel('slackbot-test', message);
+          bot.postMessageToChannel(message.channel, message.text);
         })
         .catch((err) => {
           bot.postMessageToChannel('slackbot-test', err);

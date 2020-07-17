@@ -103,13 +103,13 @@ const helpers = {
   getMessage(trigger_word) {
     return new Promise((resolve, reject) => {
       db.query(
-        `SELECT messages.text AS text FROM messages JOIN triggers ON messages.title=triggers.message WHERE trigger_word='${trigger_word}'`,
+        `SELECT messages.text AS text, triggers.channel AS channel FROM messages JOIN triggers ON messages.title=triggers.message WHERE trigger_word='${trigger_word}'`,
         {
           type: QueryTypes.SELECT,
         }
       )
         .then((message) => {
-          resolve(message[0].text);
+          resolve(message[0]);
         })
         .catch((err) => {
           logger.logSQLError(err);
