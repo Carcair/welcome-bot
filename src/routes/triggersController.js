@@ -12,7 +12,7 @@ const Triggers = require('../models/Triggers');
 /**
  * Load Triggers Schema 
  */
-const trigger_schema = require('../models/joiSchema/TriggersSchema');
+const TriggerSchema = require('../models/joiSchema/TriggersSchema');
 
 /**
  * Load helpers
@@ -71,7 +71,7 @@ router.post('/', (req, res) => {
     channel: req.body.channel,
     active: req.body.active,
   };
-  const { error, value } = trigger_schema.validate(temp_obj);
+  const { error, value } = TriggerSchema.validate(temp_obj);
   if (error) {
       res.status(422).end(error.details[0].message);
     } else if (value) {
@@ -120,7 +120,7 @@ router.post('/:trigger_word', (req, res) => {
     channel: req.body.channel,
     active: req.body.active,
   };
-  const { error, value } = trigger_schema.validate(temp_obj);
+  const { error, value } = TriggerSchema.validate(temp_obj);
   if (error) {
       res.status(422).end(error.details[0].message);
     } else if (value) {

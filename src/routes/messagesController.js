@@ -12,7 +12,7 @@ const Messages = require('../models/Messages');
 /**
  * Load Messages Schema
  */
-const message_schema = require('../models/joiSchema/MessagesSchema');
+const MessageSchema = require('../models/joiSchema/MessagesSchema');
 
 /**
  * Load helpers
@@ -77,7 +77,7 @@ router.post('/', (req, res) => {
     text: req.body.text,
     cr_date: req.body.cr_date,
   };
-  const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
+  const { error, value } = MessageSchema.validate(temp_obj); //joi validation of data sent from frontend
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
@@ -126,7 +126,7 @@ router.post('/:title', (req, res) => {
     text: req.body.text,
   };
   const titleToUpdate =encodeURIComponent(req.params.title); //encoding
-  const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
+  const { error, value } = MessageSchema.validate(temp_obj); //joi validation of data sent from frontend
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {

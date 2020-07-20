@@ -12,7 +12,7 @@ const Schedules = require('../models/Schedules');
 /**
  * Load Schedule Schema
  */
-const schedule_schema = require('../models/joiSchema/SchedulesSchema');
+const ScheduleSchema = require('../models/joiSchema/SchedulesSchema');
 
 /**
  * Load helpers
@@ -73,7 +73,7 @@ router.post('/', (req, res) => {
     active: req.body.active,
     repeat_range: req.body.repeat_range,
   };
-  const { error, value } = schedule_schema.validate(temp_obj); //joi validation of data sent from frontend
+  const { error, value } = ScheduleSchema.validate(temp_obj); //joi validation of data sent from frontend
 
   if (error) {
     res.status(422).end(error.details[0].message);
@@ -123,7 +123,7 @@ router.post('/:message', (req, res) => {
     active: req.body.active,
     repeat_range: req.body.repeat_range,
   };
-  const { error, value } = schedule_schema.validate(temp_obj);
+  const { error, value } = ScheduleSchema.validate(temp_obj);
   if (error) {
     res.status(422).end(error.details[0].message);
   } else if (value) {

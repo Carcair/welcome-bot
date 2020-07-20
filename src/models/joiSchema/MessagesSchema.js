@@ -3,7 +3,7 @@ const JoiBase = require('@hapi/joi');
 const JoiDate = require('@hapi/joi-date');
 const Joi = JoiBase.extend(JoiDate); // extend Joi with Joi Date
 
-const message_schema = Joi.object({
+const MessageSchema = Joi.object({
   title: Joi.string().regex(/^\S+$/) // from the start to the end, everything has to be a None whitespace 
   .min(5)
   .max(30)
@@ -14,4 +14,4 @@ const message_schema = Joi.object({
     .raw(),
 });
 
-module.exports = message_schema;
+module.exports = MessageSchema;
