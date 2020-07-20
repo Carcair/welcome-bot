@@ -22,29 +22,26 @@ const helpers = {
   /**
    * Encode input
    */
-  encodeInsert() {
-    const self = this;
-    let temp = {
-      message: encodeURIComponent(self.message),
-      run_date: encodeURIComponent(self.run_date),
-      repeat_range: encodeURIComponent(self.repeat_range),
-    };
-    return temp;
+  encodeInsert(obj) {
+    Object.keys(obj).forEach(key => {
+      obj[key] = encodeURIComponent(obj[key]);
+    });
+  return obj;
   },
 
   /**
    * Decode output
    */
-  decodeOutput() {
-    let self = this;
-    let temp = {
-      message: decodeURIComponent(self.message),
-      run_date: decodeURIComponent(self.run_date),
-      repeat_range: decodeURIComponent(self.repeat_range),
-    };
-    return temp;
-  },
-
+    decodeOutput(arrOfObj) {
+      if(!Array.isArray(arrOfObj)){ arrOfObj = [arrOfObj]} //checks if "arrOfObj"  is array 
+    arrOfObj.forEach(obj =>{    
+    Object.keys(obj).forEach(key => {
+      obj[key] = decodeURIComponent(obj[key]);
+    });
+       });
+  return arrOfObj;
+  }
+,
   /**
    * Token format / Authorization: Bearer <access_token>
    */
