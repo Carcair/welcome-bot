@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
     //Other parameters 
     })
     .then((messages) => {
-      decodeOutput(messages); //decoding 
+      messages = decodeOutput(messages); //decoding 
       res.status(200).end(JSON.stringify(messages));
     })
     .catch((err) => {
@@ -55,8 +55,12 @@ router.get('/:title', (req, res) => {
     raw: true,
   })
     .then((post) => {
+      if(post !== null){
      post =  decodeOutput(post); //decoding 
       res.status(200).end(JSON.stringify(post));
+      }else{
+        res.end('[]');
+      }
     })
     .catch((err) => {
       logger.logSQLError(err);
@@ -68,7 +72,7 @@ router.get('/:title', (req, res) => {
  * Insert new message
  */
 router.post('/', (req, res) => {
-  let temp_obj = {
+  const temp_obj = {
     title: req.body.title,
     text: req.body.text,
     cr_date: req.body.cr_date,
@@ -77,8 +81,8 @@ router.post('/', (req, res) => {
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
-      temp_obj = encodeInsert(temp_obj); //encoding
-    Messages.create(temp_obj)
+    let encoded = encodeInsert(temp_obj); //encoding
+    Messages.create(encoded)
       .then(() => {
         logger.logInput(JSON.stringify(temp_obj), 'message');
         res.status(201).end();
@@ -117,7 +121,7 @@ router.delete('/:title', (req, res) => {
  * Edit a message
  */
 router.post('/:title', (req, res) => {
-  let temp_obj = {
+  const temp_obj = {
     title: req.body.title,
     text: req.body.text,
   };
@@ -126,8 +130,8 @@ router.post('/:title', (req, res) => {
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
-    temp_obj = encodeInsert(temp_obj); //encoding
-    Messages.update(temp_obj, { where: { title: titleToUpdate } })
+    let encoded = encodeInsert(temp_obj); //encoding
+    Messages.update(encoded, { where: { title: titleToUpdate } })
       .then((result) => {
         if (result[0] !== 0) {
           //checking if the "result" is diffrent then 0 and responding accordingly
