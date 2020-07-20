@@ -15,6 +15,11 @@ const Messages = require('../models/Messages');
 const message_schema = require('../models/joiSchema/MessagesSchema');
 
 /**
+ * Load helpers
+ */
+const { encodeInsert , decodeOutput } = require('../methods/helper');
+
+/**
  * Using router middleware
  */
 const router = express.Router();
@@ -23,8 +28,12 @@ const router = express.Router();
  * Get all messages
  */
 router.get('/', (req, res) => {
-  Messages.findAll()
+  Messages.findAll({
+    raw: true, //will return just the data and not the model instance
+    //Other parameters 
+    })
     .then((messages) => {
+      decodeOutput(messages); //decoding 
       res.status(200).end(JSON.stringify(messages));
     })
     .catch((err) => {
@@ -37,13 +46,16 @@ router.get('/', (req, res) => {
  * Get one message by title
  */
 router.get('/:title', (req, res) => {
+  let titleToFind = encodeURIComponent(req.params.title) ; //encoding
   Messages.findOne({
     where: {
-      title: req.params.title,
+      title: titleToFind,
       // keks: 'dzeks' // For testing errors
     },
+    raw: true,
   })
     .then((post) => {
+     post =  decodeOutput(post); //decoding 
       res.status(200).end(JSON.stringify(post));
     })
     .catch((err) => {
@@ -56,7 +68,7 @@ router.get('/:title', (req, res) => {
  * Insert new message
  */
 router.post('/', (req, res) => {
-  const temp_obj = {
+  let temp_obj = {
     title: req.body.title,
     text: req.body.text,
     cr_date: req.body.cr_date,
@@ -65,6 +77,7 @@ router.post('/', (req, res) => {
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
+      temp_obj = encodeInsert(temp_obj); //encoding
     Messages.create(temp_obj)
       .then(() => {
         logger.logInput(JSON.stringify(temp_obj), 'message');
@@ -81,8 +94,9 @@ router.post('/', (req, res) => {
  * Delete a message
  */
 router.delete('/:title', (req, res) => {
+  let titleToDelete = encodeURIComponent(req.params.title); //encoding
   Messages.destroy({
-    where: { title: req.params.title },
+    where: { title: titleToDelete },
   })
     .then((result) => {
       if (result !== 0) {
@@ -103,15 +117,17 @@ router.delete('/:title', (req, res) => {
  * Edit a message
  */
 router.post('/:title', (req, res) => {
-  const temp_obj = {
+  let temp_obj = {
     title: req.body.title,
     text: req.body.text,
   };
+  const titleToUpdate =encodeURIComponent(req.params.title); //encoding
   const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
-    Messages.update(temp_obj, { where: { title: req.params.title } })
+    temp_obj = encodeInsert(temp_obj); //encoding
+    Messages.update(temp_obj, { where: { title: titleToUpdate } })
       .then((result) => {
         if (result[0] !== 0) {
           //checking if the "result" is diffrent then 0 and responding accordingly
