@@ -2,19 +2,14 @@
  * Loading dependencies
  */
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const logger = require('../config/logger');
-require('dotenv').config();
 
 /**
- * Load Users model
+ * Load helpers and callbacks
  */
-const Users = require('../models/Users');
-
-/**
- * Load helper methods
- */
-const helpers = require('../methods/helper');
+const { getBearerToken, verifyToken } = require('../methods/helper');
+const { getToken } = require('../controllers/loginCtr');
+// Helper for registering, to be kept commented
+// const { regAdmin } = require('../controllers/login');
 
 /**
  * Initialize router middleware
@@ -24,39 +19,24 @@ const router = express.Router();
 /**
  * Get token
  */
-router.post('/', (req, res) => {
-  Users.findAll({
-    where: {
-      username: req.body.username,
-      pass: req.body.pass,
-    },
-  })
-    .then((results) => {
-      if (JSON.stringify(results) === '[]') {
-        logger.logLoginDenied(req.body);
-        res.status(406).end('Wrong creds');
-      } else {
-        jwt.sign({ results }, process.env.SK, (err, token) => {
-          res.json({
-            token,
-          });
-        });
-      }
-    })
-    .catch((err) => {
-      logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
-    });
-});
+router.post('/', getToken);
 
 /**
  * Verify token
  */
-router.post('/test', helpers.getToken, helpers.verifyToken, (req, res) => {
-  res.end('true');
-});
+router.post(
+  '/test',
+  getBearerToken,
+  verifyToken,
+  (req, res) => {
+    res.end('true');
+  }
+);
 
 /**
- * Export endpoints
+ * Helper endpoint for registering admin
+ * To be kept commented unless needed in emergency
  */
+// router.post('/hidden/reg', regAdmin);
+
 module.exports = router;

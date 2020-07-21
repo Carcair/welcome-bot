@@ -1,3 +1,11 @@
+//////////////////////////////////////
+//                                  //
+//      Welcome Bot Application     //
+//            Entry Point           //
+//                                  //
+//////////////////////////////////////
+
+// TODO: Check logger output for UDPATING
 /**
  * Loading env file / to be replaced with Transcrypt
  */
@@ -8,6 +16,7 @@ require('dotenv').config();
  */
 const express = require('express');
 const cors = require('cors');
+const cronJob = require('node-cron');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
@@ -15,7 +24,20 @@ const rateLimit = require('express-rate-limit');
  * Loading helper files
  */
 const logger = require('./config/logger');
-const bot = require('./handlers/botHandler');
+// const bot = require('./handlers/botHandler');
+
+// /**
+//  * Schedule test
+//  */
+// let job = cronJob.schedule(
+//   '00 41 14 * * 0-6',
+//   () => {
+//     console.log('Test');
+//   },
+//   {
+//     scheduled: true,
+//   }
+// );
 
 /**
  * Config for limiter
@@ -34,9 +56,9 @@ const app = express();
  * Loading routes
  */
 const login = require('./routes/login');
-const messages = require('./routes/messagesController');
-const schedules = require('./routes/schedulesController.js');
-const triggers = require('./routes/triggersController');
+const messages = require('./routes/messages');
+const schedules = require('./routes/schedules');
+const triggers = require('./routes/triggers');
 
 /**
  * Initialize middleware
@@ -49,7 +71,7 @@ app.use(limiter);
 /**
  * Load DB connection
  */
-const db = require('./methods/dbConnect');
+const db = require('./config/dbConfig');
 
 // checking connection
 db.authenticate()

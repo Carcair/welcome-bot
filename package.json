@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
+    "node-cron": "^2.0.3",
     "sequelize": "^6.2.4",
     "slackbots": "^1.2.0",
     "snyk": "^1.360.0",
