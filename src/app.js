@@ -1,3 +1,10 @@
+//////////////////////////////////////
+//                                  //
+//      Welcome Bot Application     //
+//            Entry Point           //
+//                                  //
+//////////////////////////////////////
+
 /**
  * Loading env file
  */
@@ -8,8 +15,22 @@ require('dotenv').config();
  */
 const express = require('express');
 const cors = require('cors');
+const cronJob = require('node-cron');
 const logger = require('./config/logger');
-const bot = require('./handlers/botHandler');
+// const bot = require('./handlers/botHandler');
+
+// /**
+//  * Schedule test
+//  */
+// let job = cronJob.schedule(
+//   '00 41 14 * * 0-6',
+//   () => {
+//     console.log('Test');
+//   },
+//   {
+//     scheduled: true,
+//   }
+// );
 
 /**
  * Initialize express
@@ -33,7 +54,7 @@ app.use(cors());
 /**
  * Load DB connection
  */
-const db = require('./methods/dbConnect');
+const db = require('./config/dbConfig');
 
 // checking connection
 db.authenticate()
