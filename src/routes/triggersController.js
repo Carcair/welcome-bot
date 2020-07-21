@@ -25,8 +25,6 @@ const { encodeInsert , decodeOutput } = require('../methods/helper');
 const router = express.Router();
 
 
-Triggers.sync({force : false });   // it tells sequelize if it should forcefully make changes 
-
 /**
  * Get all triggers
  */
