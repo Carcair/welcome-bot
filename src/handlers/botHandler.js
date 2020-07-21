@@ -1,5 +1,6 @@
 const SlackBot = require('slackbots');
 const helper = require('../methods/helper');
+const cron = require('node-cron');
 
 const bot = new SlackBot({
   token: 'xoxb-846778013510-1222657554999-FBOzVZeDfFhgND3QYjzOjhL3',
@@ -58,7 +59,7 @@ bot.on('message', (data) => {
       helper
         .getMessage(temp[1])
         .then((message) => {
-          bot.postMessageToChannel('slackbot-test', message);
+          bot.postMessageToChannel('slackbot-test', message.text);
         })
         .catch((err) => {
           bot.postMessageToChannel('slackbot-test', err);
@@ -68,4 +69,11 @@ bot.on('message', (data) => {
   }
 });
 
+let task = cron.schedule(
+  '00 45 14 * * 0-6',
+  () => {
+    bot.postMessageToChannel('slackbot-test', 'Scheduled message test');
+  },
+  { scheduled: true }
+);
 module.exports = bot;

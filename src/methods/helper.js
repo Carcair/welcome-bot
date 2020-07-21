@@ -3,14 +3,14 @@
  */
 const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
-const db = require('../methods/dbConnect');
+const db = require('../config/dbConfig');
 const { QueryTypes } = require('sequelize');
 require('dotenv').config();
 
 /**
  * Load Sequelize models
  */
-const Messages = require('../models/Messages');
+// const Messages = require('../models/Messages');
 const Triggers = require('../models/Triggers');
 
 /**
@@ -52,7 +52,7 @@ const helpers = {
   /**
    * Callback fn for getting token out of the header
    */
-  getToken(req, res, next) {
+  getBearerToken(req, res, next) {
     // get authorization header value
     const bearerHeader = req.headers.authorization;
     // Check if header is undefined
@@ -78,7 +78,7 @@ const helpers = {
       } else {
         Users.findAll({
           where: {
-            id: data.results[0].id,
+            id: data.user.id,
           },
         })
           .then((result) => {

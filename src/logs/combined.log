@@ -29,3 +29,6 @@
 {"level":"info","message":"message: \"sample_title27\" deleted from the Database.","timestamp":"2020-07-13T19:13:51.738Z"}
 {"level":"info","message":"\"joiSchema\" in message updated with {\"title\":\"sample_title27\",\"text\":\"sample text27 text has to be at least 20 char long\"}.","timestamp":"2020-07-13T19:15:30.728Z"}
 {"level":"info","message":"schedule: \"rejoinEnough\" deleted from the Database.","timestamp":"2020-07-13T19:18:45.324Z"}
+{"level":"info","message":"\"Test22\" in message updated with {\"title\":\"Test223\",\"text\":\"test test test test test test\"}.","timestamp":"2020-07-17T16:44:57.516Z"}
+{"level":"info","message":"\"Test223\" in message updated with {\"title\":\"Test223\",\"text\":\"test test test test test test promjena\"}.","timestamp":"2020-07-17T16:46:38.622Z"}
+{"level":"info","message":"\"Test223\" in message updated with {\"title\":\"Test2234\",\"text\":\"test test test test test test promjena\"}.","timestamp":"2020-07-17T16:47:41.433Z"}
