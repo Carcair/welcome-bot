@@ -3,14 +3,14 @@
  */
 const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
-const db = require('../methods/dbConnect');
+const db = require('../config/dbConfig');
 const { QueryTypes } = require('sequelize');
 require('dotenv').config();
 
 /**
  * Load Sequelize models
  */
-const Messages = require('../models/Messages');
+// const Messages = require('../models/Messages');
 const Triggers = require('../models/Triggers');
 
 /**
@@ -22,29 +22,26 @@ const helpers = {
   /**
    * Encode input
    */
-  encodeInsert() {
-    const self = this;
-    let temp = {
-      message: encodeURIComponent(self.message),
-      run_date: encodeURIComponent(self.run_date),
-      repeat_range: encodeURIComponent(self.repeat_range),
-    };
-    return temp;
+  encodeInsert(obj) {
+    Object.keys(obj).forEach(key => {
+      obj[key] = encodeURIComponent(obj[key]);
+    });
+  return obj;
   },
 
   /**
    * Decode output
    */
-  decodeOutput() {
-    let self = this;
-    let temp = {
-      message: decodeURIComponent(self.message),
-      run_date: decodeURIComponent(self.run_date),
-      repeat_range: decodeURIComponent(self.repeat_range),
-    };
-    return temp;
-  },
-
+    decodeOutput(arrOfObj) {
+      if(!Array.isArray(arrOfObj)){ arrOfObj = [arrOfObj]} //checks if "arrOfObj"  is array 
+    arrOfObj.forEach(obj =>{    
+    Object.keys(obj).forEach(key => {
+      obj[key] = decodeURIComponent(obj[key]);
+    });
+       });
+  return arrOfObj;
+  }
+,
   /**
    * Token format / Authorization: Bearer <access_token>
    */
@@ -52,7 +49,7 @@ const helpers = {
   /**
    * Callback fn for getting token out of the header
    */
-  getToken(req, res, next) {
+  getBearerToken(req, res, next) {
     // get authorization header value
     const bearerHeader = req.headers.authorization;
     // Check if header is undefined
@@ -78,7 +75,7 @@ const helpers = {
       } else {
         Users.findAll({
           where: {
-            id: data.results[0].id,
+            id: data.user.id,
           },
         })
           .then((result) => {
@@ -103,13 +100,13 @@ const helpers = {
   getMessage(trigger_word) {
     return new Promise((resolve, reject) => {
       db.query(
-        `SELECT messages.text AS text FROM messages JOIN triggers ON messages.title=triggers.message WHERE trigger_word='${trigger_word}'`,
+        `SELECT messages.text AS text, triggers.channel AS channel FROM messages JOIN triggers ON messages.title=triggers.message WHERE trigger_word='${trigger_word}'`,
         {
           type: QueryTypes.SELECT,
         }
       )
         .then((message) => {
-          resolve(message[0].text);
+          resolve(message[0]);
         })
         .catch((err) => {
           logger.logSQLError(err);

@@ -1,5 +1,12 @@
+//////////////////////////////////////
+//                                  //
+//      Welcome Bot Application     //
+//            Entry Point           //
+//                                  //
+//////////////////////////////////////
+
 /**
- * Loading env file
+ * Loading env file / to be replaced with Transcrypt
  */
 require('dotenv').config();
 
@@ -8,8 +15,36 @@ require('dotenv').config();
  */
 const express = require('express');
 const cors = require('cors');
+const cronJob = require('node-cron');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
+/**
+ * Loading helper files
+ */
 const logger = require('./config/logger');
-const bot = require('./handlers/botHandler');
+// const bot = require('./handlers/botHandler');
+
+// /**
+//  * Schedule test
+//  */
+// let job = cronJob.schedule(
+//   '00 41 14 * * 0-6',
+//   () => {
+//     console.log('Test');
+//   },
+//   {
+//     scheduled: true,
+//   }
+// );
+
+/**
+ * Config for limiter
+ */
+const limiter = rateLimit({
+  windowMs: 60 * 100,
+  max: 100,
+});
 
 /**
  * Initialize express
@@ -27,13 +62,15 @@ const triggers = require('./routes/triggersController');
 /**
  * Initialize middleware
  */
-app.use(express.json());
+app.use(express.json({ limit: '500kb' }));
 app.use(cors());
+app.use(helmet());
+app.use(limiter);
 
 /**
  * Load DB connection
  */
-const db = require('./methods/dbConnect');
+const db = require('./config/dbConfig');
 
 // checking connection
 db.authenticate()

@@ -12,7 +12,12 @@ const Messages = require('../models/Messages');
 /**
  * Load Messages Schema
  */
-const message_schema = require('../models/joiSchema/MessagesSchema');
+const MessageSchema = require('../models/joiSchema/MessagesSchema');
+
+/**
+ * Load helpers
+ */
+const { encodeInsert , decodeOutput } = require('../methods/helper');
 
 /**
  * Using router middleware
@@ -23,8 +28,12 @@ const router = express.Router();
  * Get all messages
  */
 router.get('/', (req, res) => {
-  Messages.findAll()
+  Messages.findAll({
+    raw: true, //will return just the data and not the model instance
+    //Other parameters 
+    })
     .then((messages) => {
+      messages = decodeOutput(messages); //decoding 
       res.status(200).end(JSON.stringify(messages));
     })
     .catch((err) => {
@@ -37,14 +46,21 @@ router.get('/', (req, res) => {
  * Get one message by title
  */
 router.get('/:title', (req, res) => {
+  let titleToFind = encodeURIComponent(req.params.title) ; //encoding
   Messages.findOne({
     where: {
-      title: req.params.title,
+      title: titleToFind,
       // keks: 'dzeks' // For testing errors
     },
+    raw: true,
   })
     .then((post) => {
+      if(post !== null){
+     post =  decodeOutput(post); //decoding 
       res.status(200).end(JSON.stringify(post));
+      }else{
+        res.end('[]');
+      }
     })
     .catch((err) => {
       logger.logSQLError(err);
@@ -61,11 +77,12 @@ router.post('/', (req, res) => {
     text: req.body.text,
     cr_date: req.body.cr_date,
   };
-  const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
+  const { error, value } = MessageSchema.validate(temp_obj); //joi validation of data sent from frontend
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
-    Messages.create(temp_obj)
+    let encoded = encodeInsert(temp_obj); //encoding
+    Messages.create(encoded)
       .then(() => {
         logger.logInput(JSON.stringify(temp_obj), 'message');
         res.status(201).end();
@@ -81,8 +98,9 @@ router.post('/', (req, res) => {
  * Delete a message
  */
 router.delete('/:title', (req, res) => {
+  let titleToDelete = encodeURIComponent(req.params.title); //encoding
   Messages.destroy({
-    where: { title: req.params.title },
+    where: { title: titleToDelete },
   })
     .then((result) => {
       if (result !== 0) {
@@ -107,11 +125,13 @@ router.post('/:title', (req, res) => {
     title: req.body.title,
     text: req.body.text,
   };
-  const { error, value } = message_schema.validate(temp_obj); //joi validation of data sent from frontend
+  const titleToUpdate =encodeURIComponent(req.params.title); //encoding
+  const { error, value } = MessageSchema.validate(temp_obj); //joi validation of data sent from frontend
   if (error) {
     res.status(422).end(error.details[0].message); //if err throw validation error
   } else if (value) {
-    Messages.update(temp_obj, { where: { title: req.params.title } })
+    let encoded = encodeInsert(temp_obj); //encoding
+    Messages.update(encoded, { where: { title: titleToUpdate } })
       .then((result) => {
         if (result[0] !== 0) {
           //checking if the "result" is diffrent then 0 and responding accordingly
