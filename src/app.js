@@ -5,6 +5,7 @@
 //                                  //
 //////////////////////////////////////
 
+// TODO: Check logger output for UDPATING
 /**
  * Loading env file / to be replaced with Transcrypt
  */
@@ -55,9 +56,9 @@ const app = express();
  * Loading routes
  */
 const login = require('./routes/login');
-const messages = require('./routes/messagesController');
-const schedules = require('./routes/schedulesController.js');
-const triggers = require('./routes/triggersController');
+const messages = require('./routes/messages');
+const schedules = require('./routes/schedules');
+const triggers = require('./routes/triggers');
 
 /**
  * Initialize middleware
