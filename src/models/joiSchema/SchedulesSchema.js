@@ -3,7 +3,7 @@ const JoiBase = require('@hapi/joi');
 const JoiDate = require('@hapi/joi-date');
 const Joi = JoiBase.extend(JoiDate); // extend Joi with Joi Date
 
-const schedule_Schema = Joi.object({
+const ScheduleSchema = Joi.object({
   message: Joi.string().required(),
   run_date: Joi.date()
     .format('DD/MM/YYYY') // set desired date format here
@@ -14,4 +14,4 @@ const schedule_Schema = Joi.object({
   repeat_range: Joi.string(),
 });
 
-module.exports = schedule_Schema;
+module.exports = ScheduleSchema;

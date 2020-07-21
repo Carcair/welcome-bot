@@ -51,3 +51,7 @@
 {"level":"error","message":"Error code: ER_BAD_FIELD_ERROR || Error message: Unknown column 'user.usernmae' in 'where clause' || Error number: 1054","timestamp":"2020-07-21T07:51:06.175Z"}
 {"level":"error","message":"Attempted access without token","timestamp":"2020-07-21T08:11:01.591Z"}
 {"level":"error","message":"Attempted login by {\"username\":\"admssin\",\"pass\":\"admin\"}","timestamp":"2020-07-21T08:14:17.165Z"}
+{"level":"error","message":"Error code: ER_CANT_CREATE_THREAD || Error message: Can't create a new thread (errno 11); if you are not out of available memory, you can consult the manual for a possible OS-dependent bug || Error number: 1135","timestamp":"2020-07-21T07:24:34.390Z"}
+{"level":"error","message":"Error code: ER_DUP_ENTRY || Error message: Duplicate entry 'test2' for key 'message' || Error number: 1062","timestamp":"2020-07-21T09:22:11.825Z"}
+{"level":"error","message":"Error code: ER_DUP_ENTRY || Error message: Duplicate entry 'test2' for key 'message' || Error number: 1062","timestamp":"2020-07-21T09:22:40.245Z"}
+{"level":"error","message":"Error code: ER_DUP_ENTRY || Error message: Duplicate entry 'test1' for key 'message' || Error number: 1062","timestamp":"2020-07-21T09:23:07.651Z"}
