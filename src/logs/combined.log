@@ -31,3 +31,13 @@
 {"level":"info","message":"schedule: \"rejoinEnough\" deleted from the Database.","timestamp":"2020-07-13T19:18:45.324Z"}
 {"level":"info","message":"New message: {\"title\":\"sampletitle12\",\"text\":\"joi doesnt allow whitespace \",\"cr_date\":\"12/09/2020\"} sent to the Database successfully.","timestamp":"2020-07-16T14:08:23.093Z"}
 {"level":"info","message":"New trigger: {\"message\":\"White space\",\"trigger_word\":\"whitespace\",\"channel\":\"general\",\"active\":\"true\"} sent to the Database successfully.","timestamp":"2020-07-16T14:17:57.445Z"}
+{"level":"info","message":"schedule: \"fsdgsdgsdg\" deleted from the Database.","timestamp":"2020-07-21T07:07:35.777Z"}
+{"level":"info","message":"New schedule: {\"message\":\"test1\",\"run_date\":\"22%2F07%2F2020\",\"active\":\"false\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-07-21T09:13:23.029Z"}
+{"level":"info","message":"New schedule: {\"message\":\"test2\",\"run_date\":\"22%2F07%2F2020\",\"active\":\"true\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-07-21T09:13:37.872Z"}
+{"level":"info","message":"New schedule: {\"message\":\"test3\",\"run_date\":\"22%2F07%2F2020\",\"active\":\"false\",\"repeat_range\":\"9\"} sent to the Database successfully.","timestamp":"2020-07-21T09:22:58.794Z"}
+{"level":"info","message":"New trigger: {\"message\":\"testing7\",\"trigger_word\":\"test7\",\"channel\":\"general\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-21T09:26:53.907Z"}
+{"level":"info","message":"New trigger: {\"message\":\"joicanEdit\",\"trigger_word\":\"joi\",\"channel\":\"something\",\"active\":\"true\"} sent to the Database successfully.","timestamp":"2020-07-21T09:27:11.332Z"}
+{"level":"info","message":"New trigger: {\"message\":\"test2\",\"trigger_word\":\"hello\",\"channel\":\"Private\",\"active\":\"true\"} sent to the Database successfully.","timestamp":"2020-07-21T09:27:27.347Z"}
+{"level":"info","message":"New trigger: {\"message\":\"White%20space\",\"trigger_word\":\"whitespace\",\"channel\":\"general\",\"active\":\"true\"} sent to the Database successfully.","timestamp":"2020-07-21T09:27:46.903Z"}
+{"level":"info","message":"New trigger: {\"message\":\"test3\",\"trigger_word\":\"Test2%2F3%2F\",\"channel\":\"Select3\",\"active\":\"true\"} sent to the Database successfully.","timestamp":"2020-07-21T09:28:55.239Z"}
+{"level":"info","message":"New trigger: {\"message\":\"test122\",\"trigger_word\":\"dfhdf\",\"channel\":\"Slackbot-Test\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-21T09:29:30.666Z"}

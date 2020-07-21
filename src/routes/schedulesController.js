@@ -24,6 +24,10 @@ const { encodeInsert , decodeOutput } = require('../methods/helper');
  */
 const router = express.Router();
 
+
+Schedules.sync({force : false });   // it tells sequelize if it should forcefully make changes 
+
+
 /**
  * Get all schedules
  */
@@ -84,7 +88,7 @@ router.post('/', (req, res) => {
         logger.logInput(JSON.stringify(temp_obj), 'schedule');
         res.status(201).send();
       })
-      .catch(() => {
+      .catch((err) => {
         logger.logSQLError(err);
         res.status(406).end(err.parent.sqlMessage);
       });
