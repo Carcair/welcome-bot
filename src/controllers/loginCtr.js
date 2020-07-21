@@ -3,8 +3,11 @@
  */
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+/**
+ * Loading logger configuration
+ */
 const logger = require('../config/logger');
-const db = require('../config/dbConfig');
 
 /**
  * Load config file
@@ -15,12 +18,7 @@ require('dotenv').config();
  * Load Sequelize and JOI schema models
  */
 const Users = require('../models/Users');
-const UsersSchema = require('../models/joiSchema/UsersSchema');
-
-/**
- * Loading helpers
- */
-const helpers = require('../methods/helper');
+const UsersSchema = require('../models/validation/UsersSchema');
 
 /**
  * Callback for Admin Login endpoint
@@ -37,7 +35,7 @@ exports.getToken = (req, res) => {
   if (error) {
     // Logger output
     res.sendStatus(406);
-  } else {
+  } else if (value) {
     Users.findOne({
       where: { username: temp.username },
     })

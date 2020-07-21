@@ -1,5 +1,5 @@
 const SlackBot = require('slackbots');
-const helper = require('../methods/helper');
+const { getMessage, getTriggers } = require('../methods/helper');
 const cron = require('node-cron');
 
 const bot = new SlackBot({
@@ -40,8 +40,8 @@ bot.on('message', (data) => {
       /**
        * Sends back list of commands available for users
        */
-      helper
-        .getTriggers()
+
+      getTriggers()
         .then((result) => {
           let temp = JSON.stringify(result);
           temp_array = JSON.parse(temp);
@@ -56,8 +56,8 @@ bot.on('message', (data) => {
       return;
     } else {
       let temp = data.text.split(' ');
-      helper
-        .getMessage(temp[1])
+
+      getMessage(temp[1])
         .then((message) => {
           bot.postMessageToChannel('slackbot-test', message.text);
           // bot.postMessageToChannel(message.channel, message.text);

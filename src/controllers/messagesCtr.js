@@ -1,0 +1,151 @@
+/**
+ * Loading logger configuration
+ */
+const logger = require('../config/logger');
+
+/**
+ * Load message model and validation schema
+ */
+const Messages = require('../models/Messages');
+const MessageSchema = require('../models/validation/MessagesSchema');
+
+/**
+ * Load helpers
+ */
+const { encodeInsert, decodeOutput } = require('../methods/helper');
+
+/**
+ * Get messages
+ */
+exports.getMessages = (req, res) => {
+  Messages.findAll({ raw: true })
+    .then((messages) => {
+      // Decode output
+      messages = decodeOutput(messages);
+      res.status(200).end(JSON.stringify(messages));
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
+};
+
+/**
+ * Get one message depending on title
+ */
+exports.getOneMessage = (req, res) => {
+  let title = encodeURIComponent(req.params.title);
+  Messages.findOne({
+    where: { title },
+    raw: true,
+  })
+    .then((message) => {
+      // Check if there is existing title
+
+      if (message !== null) {
+        // Decode output before sending
+        message = decodeOutput(message);
+        res.status(200).end(JSON.stringify(message));
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
+};
+
+/**
+ * Insert new message
+ */
+exports.insertNewMessage = (req, res) => {
+  let temp_obj = {
+    title: req.body.title,
+    text: req.body.text,
+    cr_date: req.body.cr_date,
+  };
+
+  const { error, value } = MessageSchema.validate(temp_obj);
+
+  if (error) {
+    // Loger output
+    res.status(406).end(error.details[0].message);
+  } else if (value) {
+    // Encode input
+    temp_obj = encodeInsert(temp_obj);
+
+    Messages.create(temp_obj)
+      .then(() => {
+        logger.logInput(JSON.stringify(temp_obj), 'message');
+        res.sendStatus(201);
+      })
+      .catch((err) => {
+        logger.logSQLError(err);
+        res.status(406).end(err.parent.sqlMessage);
+      });
+  }
+};
+
+/**
+ * Delete a message
+ */
+exports.deleteMessage = (req, res) => {
+  // Encode title before checking
+  let title = encodeURIComponent(req.params.title);
+
+  Messages.destroy({ where: { title } })
+    .then((deleted) => {
+      if (deleted !== 0) {
+        //checking if the "result" is diffrent then 0 and responding accordingly
+        logger.logDelete(req.params.title, 'message');
+        res.sendStatus(202);
+      } else {
+        res.sendStatus(406);
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(406).end(err.parent.sqlMessage);
+    });
+};
+
+/**
+ * Edit a message
+ */
+exports.editMessage = (req, res) => {
+  let temp_obj = {
+    title: req.body.title,
+    text: req.body.text,
+  };
+
+  const title = encodeURIComponent(req.params.title);
+
+  // Validate obj according to schema
+  const { error, value } = MessageSchema.validate(temp_obj);
+
+  if (error) {
+    // Loger output
+    res.status(406).end(error.details[0].message);
+  } else if (value) {
+    // Encode insert
+    Messages.update(encodeInsert(temp_obj), { where: { title } })
+      .then((updated) => {
+        if (updated[0] !== 0) {
+          //checking if the "result" is diffrent then 0 and responding accordingly
+          logger.logUpdate(
+            JSON.stringify(temp_obj),
+            req.params.title,
+            'message'
+          );
+          res.status(201).end();
+        } else {
+          res.status(406).end();
+        }
+      })
+      .catch((err) => {
+        logger.logSQLError(err);
+        res.status(406).end(err.parent.sqlMessage);
+      });
+  }
+};
