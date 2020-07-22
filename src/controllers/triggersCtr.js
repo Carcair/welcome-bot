@@ -118,7 +118,7 @@ exports.editTrigger = (req, res) => {
   // Encode before comparing
   let trigger_word = encodeURIComponent(req.params.trigger_word);
 
-  let temp_obj = {
+  const temp_obj = {
     message: req.body.message,
     trigger_word: req.body.trigger_word,
     channel: req.body.channel,
@@ -131,10 +131,7 @@ exports.editTrigger = (req, res) => {
   if (error) {
     res.status(406).end(error.details[0].message);
   } else if (value) {
-    // Encode before input
-    temp_obj = encodeInsert(temp_obj);
-
-    Triggers.update(temp_obj, { where: { trigger_word } })
+    Triggers.update(encodeInsert(temp_obj), { where: { trigger_word } })
       .then((updated) => {
         if (updated[0] !== 0) {
           //checking if the "result" is diffrent then 0 and responding accordingly
@@ -145,7 +142,7 @@ exports.editTrigger = (req, res) => {
           );
           res.status(201).end();
         } else {
-          res.status(406).end();
+          res.status(304).end();
         }
       })
       .catch((err) => {
