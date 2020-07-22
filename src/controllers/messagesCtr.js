@@ -114,7 +114,7 @@ exports.deleteMessage = (req, res) => {
  * Edit a message
  */
 exports.editMessage = (req, res) => {
-  let temp_obj = {
+  const temp_obj = {
     title: req.body.title,
     text: req.body.text,
   };
@@ -140,7 +140,7 @@ exports.editMessage = (req, res) => {
           );
           res.status(201).end();
         } else {
-          res.status(406).end();
+          res.status(304).end();
         }
       })
       .catch((err) => {

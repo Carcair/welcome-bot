@@ -116,7 +116,7 @@ exports.editSchedule = (req, res) => {
   // Encode message title before comparing
   let message = encodeURIComponent(req.params.message);
 
-  let temp_obj = {
+  const temp_obj = {
     message: req.body.message,
     run_date: req.body.run_date,
     active: req.body.active,
@@ -144,7 +144,7 @@ exports.editSchedule = (req, res) => {
           );
           res.status(201).end();
         } else {
-          res.status(406).end();
+          res.status(304).end();
         }
       })
       .catch((err) => {

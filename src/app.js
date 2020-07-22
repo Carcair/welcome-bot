@@ -5,7 +5,8 @@
 //                                  //
 //////////////////////////////////////
 
-// TODO: Check logger output for UDPATING
+// TODO: Check logger output for UDPATING, Finish error handling
+// FIXME:
 /**
  * Loading env file / to be replaced with Transcrypt
  */
