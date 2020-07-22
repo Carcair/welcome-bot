@@ -22,9 +22,10 @@ const Users = require('../models/Users');
  * Encode input
  */
 exports.encodeInsert = (obj) => {
-  Object.keys(obj).forEach((key) => {
+  let key;
+  for (key in obj) {
     obj[key] = encodeURIComponent(obj[key]);
-  });
+  }
   return obj;
 };
 
@@ -36,9 +37,10 @@ exports.decodeOutput = (arrOfObj) => {
     arrOfObj = [arrOfObj];
   } //checks if "arrOfObj"  is array
   arrOfObj.forEach((obj) => {
-    Object.keys(obj).forEach((key) => {
+    let key;
+    for (key in obj) {
       obj[key] = decodeURIComponent(obj[key]);
-    });
+    }
   });
   return arrOfObj;
 };

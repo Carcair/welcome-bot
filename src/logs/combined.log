@@ -59,3 +59,5 @@
 {"level":"info","message":"trigger: \"testiranje\" deleted from the Database.","timestamp":"2020-07-21T13:44:45.751Z"}
 {"level":"info","message":"New trigger: {\"message\":\"NoviNaslov2\",\"trigger_word\":\"testiranje\",\"channel\":\"general\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-21T13:44:55.031Z"}
 {"level":"info","message":"\"testiranje\" in trigger updated with {\"message\":\"NoviNaslov2\",\"trigger_word\":\"testiranje\",\"channel\":\"slackbot-test\",\"active\":\"true\"}.","timestamp":"2020-07-21T13:54:04.713Z"}
+{"level":"info","message":"New trigger: {\"message\":\"NoviNaslov3\",\"trigger_word\":\"testiranje\",\"channel\":\"general\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-22T10:18:27.202Z"}
+{"level":"info","message":"New trigger: {\"message\":\"NoviNaslov4\",\"trigger_word\":\"testiranje%C5%A1%C5%A1%C5%A1%C5%A1%C5%A1%C5%A1%C5%A1\",\"channel\":\"general\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-07-22T10:18:49.113Z"}
