@@ -34,7 +34,7 @@ exports.getToken = (req, res) => {
 
   if (error) {
     // Logger output
-    res.sendStatus(406);
+    res.sendStatus(403);
   } else if (value) {
     Users.findOne({
       where: { username: temp.username },
@@ -43,7 +43,7 @@ exports.getToken = (req, res) => {
         // Checking if there is such admin
         if (JSON.stringify(user) === 'null') {
           logger.logLoginDenied(req.body);
-          res.sendStatus(401);
+          res.sendStatus(403);
         } else {
           // If admin is found, check it's password
           bcrypt.compare(temp.pass, user.pass, (err, result) => {
@@ -52,7 +52,7 @@ exports.getToken = (req, res) => {
                 res.json({ token });
               });
             } else {
-              res.sendStatus(401);
+              res.sendStatus(403);
             }
           });
         }
