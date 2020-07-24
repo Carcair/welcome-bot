@@ -11,6 +11,9 @@
  * Loading env file / to be replaced with Transcrypt
  */
 require('dotenv').config();
+const { port } = require('../config');
+
+// const port = process.env.PORT;
 
 /**
  * loading dependencies
@@ -91,8 +94,6 @@ app.use('/login', login);
 app.use('/api/messages/', messages);
 app.use('/api/schedules/', schedules);
 app.use('/api/triggers/', triggers);
-
-const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Listening @${port}`);
