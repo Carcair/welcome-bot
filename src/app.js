@@ -10,7 +10,7 @@
 /**
  * Loading env file / to be replaced with Transcrypt
  */
-require('dotenv').config();
+// require('dotenv').config();
 const { port } = require('../config');
 
 // const port = process.env.PORT;
@@ -20,28 +20,21 @@ const { port } = require('../config');
  */
 const express = require('express');
 const cors = require('cors');
-const cronJob = require('node-cron');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 /**
+ * Initialize cron tasks
+ */
+const cronTasks = require('./methods/cronTasks');
+/**
+ * Initialize slack bot
+ */
+const bot = require('./handlers/botHandler');
+/**
  * Loading helper files
  */
 const logger = require('./config/logger');
-// const bot = require('./handlers/botHandler');
-
-// /**
-//  * Schedule test
-//  */
-// let job = cronJob.schedule(
-//   '00 41 14 * * 0-6',
-//   () => {
-//     console.log('Test');
-//   },
-//   {
-//     scheduled: true,
-//   }
-// );
 
 /**
  * Config for limiter
@@ -63,6 +56,7 @@ const login = require('./routes/login');
 const messages = require('./routes/messages');
 const schedules = require('./routes/schedules');
 const triggers = require('./routes/triggers');
+const channels = require('./routes/channels');
 
 /**
  * Initialize middleware
@@ -94,6 +88,7 @@ app.use('/login', login);
 app.use('/api/messages/', messages);
 app.use('/api/schedules/', schedules);
 app.use('/api/triggers/', triggers);
+app.use('/api/channels', channels);
 
 app.listen(port, () => {
   console.log(`Listening @${port}`);
