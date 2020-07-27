@@ -1,26 +1,31 @@
+/**
+ * Load dependencies
+ */
 const SlackBot = require('slackbots');
 const { getMessage, getTriggers } = require('../methods/helper');
-const cron = require('node-cron');
 
-const bot = new SlackBot({
-  token: 'xoxb-846778013510-1222657554999-FBOzVZeDfFhgND3QYjzOjhL3',
-  name: 'Welcome Bot',
-});
+/**
+ * Load secret variables
+ */
+const { botConfig } = require('../../config');
 
+const bot = new SlackBot(botConfig);
+
+const CronJob = require('cron').CronJob;
 /**
  * Test slackbot connection
  * general chat can be changed to whatever chat bot joins
  * then we can use it as reusable
  */
-// bot.on('start', () => {
-//   // var params = {};
+bot.on('start', () => {
+  // var params = {};
 
-//   // Post a message to general channel
-//   bot.postMessageToChannel(
-//     'general',
-//     'What does Marsellus Wallace look like?!'
-//   );
-// });
+  // Post a message to general channel
+  bot.postMessageToChannel(
+    'slackbot-test',
+    'What does Marsellus Wallace look like?!'
+  );
+});
 
 /**
  * Error handler
@@ -59,22 +64,30 @@ bot.on('message', (data) => {
 
       getMessage(temp[1])
         .then((message) => {
-          bot.postMessageToChannel('slackbot-test', message.text);
+          bot.postMessageToChannel(
+            'slackbot-test',
+            decodeURIComponent(message.text)
+          );
           // bot.postMessageToChannel(message.channel, message.text);
         })
         .catch((err) => {
-          bot.postMessageToChannel('slackbot-test', err);
+          bot.postMessageToChannel(
+            'slackbot-test',
+            'Can not connect to database.'
+          );
         });
       return;
     }
   }
 });
 
-let task = cron.schedule(
-  '00 45 14 * * 0-6',
+const job = new CronJob(
+  '22 13 * * *',
   () => {
-    bot.postMessageToChannel('slackbot-test', 'Scheduled message test');
+    console.log('Testing');
   },
-  { scheduled: true }
+  null,
+  true
 );
+
 module.exports = bot;
