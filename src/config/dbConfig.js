@@ -1,7 +1,8 @@
 /**
- * Load .env
+ * Load .env / changed to transcrypt
  */
-require('dotenv').config();
+// require('dotenv').config();
+const config = require('../../config');
 
 /**
  * Load SEQUELIZE
@@ -12,12 +13,16 @@ const Sequelize = require('sequelize');
  * Load connection obj
  */
 const db = new Sequelize(
-  process.env.DATABASE_NAME,
-  // 'test', // Use when testing failed connection
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
+  // process.env.DATABASE_NAME,
+  // // 'test', // Use when testing failed connection
+  // process.env.DATABASE_USERNAME,
+  // process.env.DATABASE_PASSWORD,
+  config.dbName,
+  config.dbUsername,
+  config.dbPass,
   {
-    host: process.env.DATABASE_URL,
+    // host: process.env.DATABASE_URL,
+    host: config.dbUrl,
     dialect: 'mysql',
     logging: false,
     define: {

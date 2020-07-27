@@ -10,9 +10,10 @@ const bcrypt = require('bcrypt');
 const logger = require('../config/logger');
 
 /**
- * Load config file
+ * Load config file / changed to transcrypt
  */
-require('dotenv').config();
+// require('dotenv').config();
+const { encKey } = require('../../config');
 
 /**
  * Load Sequelize and JOI schema models
@@ -48,7 +49,7 @@ exports.getToken = (req, res) => {
           // If admin is found, check it's password
           bcrypt.compare(temp.pass, user.pass, (err, result) => {
             if (result === true) {
-              jwt.sign({ user }, process.env.SK, (err, token) => {
+              jwt.sign({ user }, encKey, (err, token) => {
                 res.json({ token });
               });
             } else {
