@@ -5,7 +5,12 @@ const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
 const db = require('../config/dbConfig');
 const { QueryTypes } = require('sequelize');
-require('dotenv').config();
+// require('dotenv').config();
+
+/**
+ * Load secret variables
+ */
+const { encKey } = require('../../config');
 
 /**
  * Load Sequelize models
@@ -70,7 +75,7 @@ exports.getBearerToken = (req, res, next) => {
  * Callback fn for token verification
  */
 exports.verifyToken = (req, res, next) => {
-  jwt.verify(req.token, process.env.SK, (err, data) => {
+  jwt.verify(req.token, encKey, (err, data) => {
     if (err) {
       logger.logDeniedAccess();
       res.sendStatus(403);
