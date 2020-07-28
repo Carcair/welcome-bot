@@ -3,5 +3,5 @@ node_modules
 
 # Files
 .jshintrc
-src/logs/combined.log
-src/logs/error.log
+/src/logs
+*.log
