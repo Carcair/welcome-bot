@@ -43,6 +43,4 @@ let cronTasks = {
   },
 };
 
-cronTasks.setTasks();
-
 module.exports = cronTasks;

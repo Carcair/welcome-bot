@@ -27,6 +27,7 @@ const rateLimit = require('express-rate-limit');
  * Initialize cron tasks
  */
 const cronTasks = require('./methods/cronTasks');
+cronTasks.setTasks();
 /**
  * Initialize slack bot
  */

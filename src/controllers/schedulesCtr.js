@@ -10,9 +10,10 @@ const Schedules = require('../models/Schedules');
 const ScheduleSchema = require('../models/validation/SchedulesSchema');
 
 /**
- * Load helpers
+ * Load helpers and callbacks
  */
 const { encodeInsert, decodeOutput } = require('../methods/helper');
+const cronTasks = require('../methods/cronTasks');
 
 /**
  * Get schedules
@@ -76,6 +77,7 @@ exports.insertNewSchedule = (req, res) => {
     temp_obj = encodeInsert(temp_obj);
     Schedules.create(temp_obj)
       .then(() => {
+        cronTasks.setTasks();
         logger.logInput(JSON.stringify(temp_obj), 'schedule');
         res.sendStatus(201);
       })
@@ -136,7 +138,7 @@ exports.editSchedule = (req, res) => {
       .then((updated) => {
         if (updated[0] !== 0) {
           //checking if the "result" is diffrent then 0 and responding accordingly
-
+          cronTasks.setTasks();
           logger.logUpdate(
             JSON.stringify(temp_obj),
             req.params.message,
