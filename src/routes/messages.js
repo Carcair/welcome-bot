@@ -14,6 +14,8 @@ const {
   editMessage,
 } = require('../controllers/messagesCtr');
 
+const { getBearerToken, verifyToken } = require('../methods/helper');
+
 /**
  * Using router middleware
  */
@@ -22,26 +24,26 @@ const router = express.Router();
 /**
  * Get all messages
  */
-router.get('/', getMessages);
+router.get('/', getBearerToken, verifyToken, getMessages);
 
 /**
  * Get one message by title
  */
-router.get('/:title', getOneMessage);
+router.get('/:title', getBearerToken, verifyToken, getOneMessage);
 
 /**
  * Insert new message
  */
-router.post('/', insertNewMessage);
+router.post('/', getBearerToken, verifyToken, insertNewMessage);
 
 /**
  * Delete a message
  */
-router.delete('/:title', deleteMessage);
+router.delete('/:title', getBearerToken, verifyToken, deleteMessage);
 
 /**
  * Edit a message
  */
-router.post('/:title', editMessage);
+router.post('/:title', getBearerToken, verifyToken, editMessage);
 
 module.exports = router;
