@@ -66,7 +66,6 @@ bot.on('error', (err) => logger.logBotError(err));
 bot.on('message', (data) => {
   // Continue only if user sent a MESSAGE directed at BOT
   if (data.type === 'message' && data.username !== 'Welcome Bot') {
-    console.log(data);
     /**
      * Check input for some defaults
      */
