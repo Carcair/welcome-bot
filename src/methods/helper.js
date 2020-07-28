@@ -88,7 +88,7 @@ exports.verifyToken = (req, res, next) => {
         .then((result) => {
           if (JSON.stringify(result) === '[]') {
             logger.logAccessExpired();
-            res.status(406).end('false');
+            res.status(406).end('Session expired');
           } else {
             next();
           }
