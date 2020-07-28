@@ -13,7 +13,11 @@ const {
   deleteTrigger,
   editTrigger,
 } = require('../controllers/triggersCtr');
-const { getBearerToken, verifyToken } = require('../methods/helper');
+const {
+  getBearerToken,
+  verifyToken,
+  checkTrigerWord,
+} = require('../methods/helper');
 
 /**
  * Router middleware
@@ -33,7 +37,13 @@ router.get('/:trigger_word', getBearerToken, verifyToken, getOneTrigger);
 /**
  * Insert trigger
  */
-router.post('/', getBearerToken, verifyToken, insertNewTrigger);
+router.post(
+  '/',
+  getBearerToken,
+  verifyToken,
+  checkTrigerWord,
+  insertNewTrigger
+);
 
 /**
  * Delete one post by trigger name

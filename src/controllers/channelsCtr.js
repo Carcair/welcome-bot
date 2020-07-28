@@ -25,6 +25,6 @@ exports.getChannels = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(406).end('Not acceptable');
+      res.status(400).end('Bad Request');
     });
 };

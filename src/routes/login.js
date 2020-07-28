@@ -7,7 +7,7 @@ const express = require('express');
  * Load helpers and callbacks
  */
 const { getBearerToken, verifyToken } = require('../methods/helper');
-const { getToken } = require('../controllers/loginCtr');
+const { setToken } = require('../controllers/loginCtr');
 // Helper for registering, to be kept commented
 // const { regAdmin } = require('../controllers/login');
 
@@ -19,19 +19,14 @@ const router = express.Router();
 /**
  * Get token
  */
-router.post('/', getToken);
+router.post('/', setToken);
 
 /**
  * Verify token
  */
-router.post(
-  '/test',
-  getBearerToken,
-  verifyToken,
-  (req, res) => {
-    res.end('true');
-  }
-);
+router.post('/test', getBearerToken, verifyToken, (req, res) => {
+  res.end('true');
+});
 
 /**
  * Helper endpoint for registering admin

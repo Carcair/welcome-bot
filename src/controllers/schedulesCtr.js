@@ -27,7 +27,7 @@ exports.getSchedules = (req, res) => {
     })
     .catch((err) => {
       logger.logError(err);
-      res.status(406).end(err.parent.sqlMessage);
+      res.status(400).end('SQL Error');
     });
 };
 
@@ -46,12 +46,12 @@ exports.getSchedulesByMessage = (req, res) => {
         schedules = decodeOutput(schedules);
         res.status(200).end(JSON.stringify(schedules));
       } else {
-        res.sendStatus(204);
+        res.status(404).end('Not Found');
       }
     })
     .catch((err) => {
       logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
+      res.status(400).end('SQL Error');
     });
 };
 
@@ -70,8 +70,7 @@ exports.insertNewSchedule = (req, res) => {
   const { error, value } = ScheduleSchema.validate(temp_obj);
 
   if (error) {
-    // Loger output
-    res.status(406).end(error.details[0].message);
+    res.status(417).end('Validation Error');
   } else if (value) {
     // Encode input
     temp_obj = encodeInsert(temp_obj);
@@ -79,11 +78,11 @@ exports.insertNewSchedule = (req, res) => {
       .then(() => {
         cronTasks.setTasks();
         logger.logInput(JSON.stringify(temp_obj), 'schedule');
-        res.sendStatus(201);
+        res.status(201).end('Created');
       })
       .catch((err) => {
         logger.logSQLError(err);
-        res.status(406).end(err.parent.sqlMessage);
+        res.status(400).end('SQL Error');
       });
   }
 };
@@ -100,14 +99,14 @@ exports.deleteSchedule = (req, res) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
         logger.logDelete(req.params.message, 'schedule');
-        res.sendStatus(202);
+        res.status(200).end('Deleted');
       } else {
-        res.sendStatus(406);
+        res.status(404).end('Not Found');
       }
     })
     .catch((err) => {
       logger.logSQLError(err);
-      res.status(406).end(err.parent.sqlMessage);
+      res.status(400).end('SQL Error');
     });
 };
 
@@ -129,8 +128,7 @@ exports.editSchedule = (req, res) => {
   const { error, value } = ScheduleSchema.validate(temp_obj);
 
   if (error) {
-    // Loger output
-    res.status(406).end(error.details[0].message);
+    res.status(417).end('Validation Error');
   } else if (value) {
     Schedules.update(encodeInsert(temp_obj), {
       where: { message },
@@ -144,14 +142,14 @@ exports.editSchedule = (req, res) => {
             req.params.message,
             'schedule'
           );
-          res.status(201).end();
+          res.status(201).end('Edited');
         } else {
-          res.status(304).end();
+          res.status(404).end('Not Found');
         }
       })
       .catch((err) => {
         logger.logSQLError(err);
-        res.status(406).end(err.parent.sqlMessage);
+        res.status(400).end('SQL Error');
       });
   }
 };

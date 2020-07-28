@@ -5,15 +5,12 @@
 //                                  //
 //////////////////////////////////////
 
-// TODO: Check logger output for UDPATING, Finish error handling
+// TODO:
 // FIXME:
 /**
  * Loading env file / to be replaced with Transcrypt
  */
-// require('dotenv').config();
 const { port } = require('../config');
-
-// const port = process.env.PORT;
 
 /**
  * loading dependencies

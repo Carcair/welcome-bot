@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
 const db = require('../config/dbConfig');
 const { QueryTypes } = require('sequelize');
-// require('dotenv').config();
 
 /**
  * Load secret variables
@@ -15,7 +14,6 @@ const { encKey } = require('../../config');
 /**
  * Load Sequelize models
  */
-// const Messages = require('../models/Messages');
 const Triggers = require('../models/Triggers');
 
 /**
@@ -77,8 +75,8 @@ exports.getBearerToken = (req, res, next) => {
 exports.verifyToken = (req, res, next) => {
   jwt.verify(req.token, encKey, (err, data) => {
     if (err) {
-      logger.logDeniedAccess();
-      res.sendStatus(403);
+      logger.logDeniedAccess(err);
+      res.status(403).end('Denied Access');
     } else {
       Users.findAll({
         where: {
@@ -88,14 +86,14 @@ exports.verifyToken = (req, res, next) => {
         .then((result) => {
           if (JSON.stringify(result) === '[]') {
             logger.logAccessExpired();
-            res.status(406).end('Session expired');
+            res.status(406).end('Session Expired');
           } else {
             next();
           }
         })
         .catch((err) => {
           logger.logSQLError(err);
-          res.status(406).end(err.parent.sqlMessage);
+          res.status(400).end('SQL Error');
         });
     }
   });
@@ -116,8 +114,7 @@ exports.getMessage = (trigger_word) => {
         resolve(message[0]);
       })
       .catch((err) => {
-        logger.logSQLError(err);
-        reject(err.parent.sqlMessage);
+        reject('SQL Error');
       });
   });
 };
@@ -132,15 +129,51 @@ exports.getTriggers = () => {
         resolve(triggers);
       })
       .catch((err) => {
-        logger.logSQLError(err);
-        reject(err.parent.sqlMessage);
+        reject('SQL Error');
       });
   });
 };
+
 /**
  * Check if there's a message with some title
  */
+exports.checkTitle = (req, res, next) => {
+  Messages.findAll({
+    where: { title: req.body.title },
+    raw: true,
+  })
+    .then((result) => {
+      if (result[0] === undefined) {
+        next();
+      } else {
+        // 'title already exists'
+        res.status(302).end('Message with that title exists');
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(400).end('SQL Error');
+    });
+};
 
 /**
  * Check if there's a trigger with some trigger_word
  */
+exports.checkTrigerWord = (req, res, next) => {
+  Triggers.findAll({
+    where: { trigger_word: req.body.trigger_word },
+    raw: true,
+  })
+    .then((result) => {
+      if (result[0] === undefined) {
+        next();
+      } else {
+        // 'Trigger_word already exists'
+        res.status(302).end('Trigger with that trigger word exists');
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(400).end('SQL Error');
+    });
+};

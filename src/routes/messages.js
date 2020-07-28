@@ -14,7 +14,11 @@ const {
   editMessage,
 } = require('../controllers/messagesCtr');
 
-const { getBearerToken, verifyToken } = require('../methods/helper');
+const {
+  getBearerToken,
+  verifyToken,
+  checkTitle,
+} = require('../methods/helper');
 
 /**
  * Using router middleware
@@ -34,7 +38,7 @@ router.get('/:title', getBearerToken, verifyToken, getOneMessage);
 /**
  * Insert new message
  */
-router.post('/', getBearerToken, verifyToken, insertNewMessage);
+router.post('/', getBearerToken, verifyToken, checkTitle, insertNewMessage);
 
 /**
  * Delete a message

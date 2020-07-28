@@ -21,7 +21,7 @@ const { botConfig } = require('../../../config');
 const Schedules = require('../Schedules');
 
 /**
- * Configure bot
+ * Configure and initialize bot
  */
 const bot = new SlackBot(botConfig);
 
@@ -127,10 +127,10 @@ class Task {
 
     // Send message to Slack
     this.sendMessage = () => {
-      // Testin on channel slackbot-test
-      bot.postMessageToChannel('slackbot-test', this.text);
-      // Production
-      // bot.postMessageToChannel('general', this.text);
+      // // Testin on channel slackbot-test
+      // bot.postMessageToChannel('slackbot-test', this.text);
+      // Production;
+      bot.postMessageToChannel('general', this.text);
     };
 
     this.job = new CronJob(
@@ -161,10 +161,8 @@ class Task {
           self.sendMessage();
         }
       },
-      () => {
-        // On complete
-        // console.log(`Task ${this.message} has been completed`);
-      },
+      // Message completed
+      null,
       // True or False, defines if task is started after creation
       this.active()
     );

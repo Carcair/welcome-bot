@@ -12,7 +12,6 @@ const logger = require('../config/logger');
 /**
  * Load config file / changed to transcrypt
  */
-// require('dotenv').config();
 const { encKey } = require('../../config');
 
 /**
@@ -24,7 +23,7 @@ const UsersSchema = require('../models/validation/UsersSchema');
 /**
  * Callback for Admin Login endpoint
  */
-exports.getToken = (req, res) => {
+exports.setToken = (req, res) => {
   let temp = {
     username: req.body.username,
     pass: req.body.pass,
@@ -34,8 +33,8 @@ exports.getToken = (req, res) => {
   const { error, value } = UsersSchema.validate(temp);
 
   if (error) {
-    // Logger output
-    res.sendStatus(406);
+    logger.logLoginDenied(req.body);
+    res.status(406).end('Login Denied');
   } else if (value) {
     Users.findOne({
       where: { username: temp.username },
@@ -44,7 +43,7 @@ exports.getToken = (req, res) => {
         // Checking if there is such admin
         if (JSON.stringify(user) === 'null') {
           logger.logLoginDenied(req.body);
-          res.sendStatus(406);
+          res.status(406).end('Login Denied');
         } else {
           // If admin is found, check it's password
           bcrypt.compare(temp.pass, user.pass, (err, result) => {
@@ -53,7 +52,8 @@ exports.getToken = (req, res) => {
                 res.json({ token });
               });
             } else {
-              res.sendStatus(406);
+              logger.logLoginDenied(req.body);
+              res.status(406).end('Login Denied');
             }
           });
         }
