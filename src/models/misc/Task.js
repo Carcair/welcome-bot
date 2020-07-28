@@ -135,7 +135,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `9 0 ${this.initDay()} ${this.initMonth()} *`,
+      `0 9 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
 
@@ -155,7 +155,7 @@ class Task {
         } else {
           // Update task tick date
           const tempArray = self.updateDate(self.repeat_range);
-          const tempString = `9 0 ${tempArray[0]} ${tempArray[1]} *`;
+          const tempString = `0 9 ${tempArray[0]} ${tempArray[1]} *`;
           self.job.setTime(new CronTime(tempString));
           // Send message to Slack
           self.sendMessage();
