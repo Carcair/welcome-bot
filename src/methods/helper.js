@@ -15,6 +15,7 @@ const { encKey } = require('../../config');
  * Load Sequelize models
  */
 const Triggers = require('../models/Triggers');
+const Messages = require('../models/Messages');
 
 /**
  * Load necessary Sequelize models
