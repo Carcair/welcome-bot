@@ -45,7 +45,11 @@ bot.on('error', (err) => logger.logBotError(err));
  */
 bot.on('message', (data) => {
   // Continue only if user sent a MESSAGE directed at BOT
-  if (data.type === 'message' && data.username !== 'Welcome Bot') {
+  if (
+    data.type === 'message' &&
+    data.username !== 'Welcome Bot' &&
+    data.text.includes('<@U016JKBGAVD>')
+  ) {
     /**
      * Username is contained in metadata only if the sender is Bot
      * In other cases metadata contains only user ID's and channel ID's
@@ -184,7 +188,7 @@ bot.on('message', (data) => {
           }
         })
         .catch((err) => {
-          logger.logSQLError(err);
+          // logger.logSQLError(err);
           bot.postMessageToChannel(
             'slackbot-test',
             'Can not connect to database.'
