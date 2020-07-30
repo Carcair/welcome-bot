@@ -1,3 +1,8 @@
+# Folders
 node_modules
-npm-debug.log
+mysql
+
+# Files
 .jshintrc
+/src/logs
+*.log
