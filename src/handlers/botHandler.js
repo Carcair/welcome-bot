@@ -21,19 +21,19 @@ const bot = new SlackBot(botConfig);
  * general chat can be changed to whatever chat bot joins
  * then we can use it as reusable
  */
-// bot.on('start', () => {
-//   const test = new CronJob(
-//     '* * * * *',
-//     () => {
-//       bot.postMessageToChannel(
-//         'slackbot-test',
-//         'Testing message sent every minute. :punch:'
-//       );
-//     },
-//     null,
-//     true
-//   );
-// });
+bot.on('start', () => {
+  const test = new CronJob(
+    '* * * * *',
+    () => {
+      bot.postMessageToChannel(
+        'slackbot-test',
+        'Testing message sent every minute. :punch:'
+      );
+    },
+    null,
+    true
+  );
+});
 
 /**
  * Error handler
@@ -68,27 +68,31 @@ bot.on('message', (data) => {
         .then((result) => {
           let temp = JSON.stringify(result);
           temp_array = JSON.parse(temp);
-          temp_array.forEach((obj) => {
-            let temp_output = `\`\`\`Command: ${obj.trigger_word}, posts on channel: ${obj.channel}, active: ${obj.active}\`\`\``;
 
-            /**
-             * Comparing channel id where message to bot was sent
-             * with all channels
-             * then sending response in apropriate channel
-             */
-            bot
-              .getChannels()
-              .then((results) => {
-                results.channels.forEach((obj) => {
-                  if (data.channel === obj.id) {
-                    bot.postMessageToChannel(obj.name, temp_output);
-                  }
-                });
-              })
-              .catch((err) => {
-                logger.logBotError(err);
+          /**
+           * Comparing channel id where message to bot was sent
+           * with all channels
+           * then sending response in apropriate channel
+           */
+          bot
+            .getChannels()
+            .then((results) => {
+              results.channels.forEach((channelObj) => {
+                if (data.channel === channelObj.id) {
+                  bot.postMessageToChannel(
+                    channelObj.name,
+                    `\`\`\`Command: robot-about | Gives list of members on this channel.\`\`\``
+                  );
+                  temp_array.forEach((obj) => {
+                    let temp_output = `\`\`\`Command: ${obj.trigger_word}, posts on channel: ${obj.channel}, active: ${obj.active}\`\`\``;
+                    bot.postMessageToChannel(channelObj.name, temp_output);
+                  });
+                }
               });
-          });
+            })
+            .catch((err) => {
+              logger.logBotError(err);
+            });
         })
         .catch((err) => {
           logger.logSQLError(err);
