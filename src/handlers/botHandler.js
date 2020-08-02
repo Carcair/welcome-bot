@@ -193,10 +193,7 @@ bot.on('message', (data) => {
         })
         .catch((err) => {
           // logger.logSQLError(err);
-          bot.postMessageToChannel(
-            'slackbot-test',
-            'Can not connect to database.'
-          );
+          bot.postMessageToChannel('slackbot-test', 'No such command');
         });
       return;
     }
