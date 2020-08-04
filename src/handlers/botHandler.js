@@ -21,19 +21,19 @@ const bot = new SlackBot(botConfig);
  * general chat can be changed to whatever chat bot joins
  * then we can use it as reusable
  */
-bot.on('start', () => {
-  const test = new CronJob(
-    '* * * * *',
-    () => {
-      bot.postMessageToChannel(
-        'slackbot-test',
-        'Testing message sent every minute. :punch:'
-      );
-    },
-    null,
-    true
-  );
-});
+// bot.on('start', () => {
+//   const test = new CronJob(
+//     '* * * * *',
+//     () => {
+//       bot.postMessageToChannel(
+//         'slackbot-test',
+//         'Testing message sent every minute. :punch:'
+//       );
+//     },
+//     null,
+//     true
+//   );
+// });
 
 /**
  * Error handler
@@ -45,6 +45,7 @@ bot.on('error', (err) => logger.logBotError(err));
  */
 bot.on('message', (data) => {
   // Continue only if user sent a MESSAGE directed at BOT
+  // Blocks message sent back by bot from being registered
   if (
     data.type === 'message' &&
     data.username !== 'Welcome Bot' &&
@@ -108,14 +109,14 @@ bot.on('message', (data) => {
        */
 
       // Get all channels
-      bot.channels.forEach((channelObj) => {
+      let channelsArray = bot.getChannels()._value.channels;
+      channelsArray.forEach((channel) => {
         /**
          * Comparing all channel ID's with channel ID where message was sent
          */
-
-        if (channelObj.id === data.channel) {
-          // Ourput
-          let tempOutput = `Channel \`\`\`${channelObj.name}\`\`\` | Members: `;
+        if (channel.id == data.channel) {
+          // Output
+          let tempOutput = `Channel \`\`\`${channel.name}\`\`\` | Members: `;
 
           // Get all users from workspace
           bot.users.forEach((userObj) => {
@@ -123,12 +124,12 @@ bot.on('message', (data) => {
             // we need only users which belong to the channel we are requesting info from
             if (
               userObj.real_name !== undefined &&
-              channelObj.members.includes(userObj.id)
+              channel.members.includes(userObj.id)
             ) {
               tempOutput += ` \`\`\` ${userObj.real_name} \`\`\` `;
             }
           });
-          bot.postMessageToChannel(channelObj.name, tempOutput);
+          bot.postMessageToChannel(channel.name, tempOutput);
         }
       });
 
@@ -165,35 +166,38 @@ bot.on('message', (data) => {
            * Message must be sent to user in PM
            */
           if (message.channel !== 'private') {
-            // Message sent to channel
+            // In case of no found messages under sent command
             bot.postMessageToChannel(
               message.channel.toLowerCase(),
               decodeURIComponent(message.text)
             );
           } else {
             /**
-             * Comparing user id from metadata with all users id
-             * and getting username from that comparison
+             * If message should be sent to channel where it is triggered
+             * as oppossed to predefined channel
              */
-            bot
-              .getUsers()
-              .then((results) => {
-                results.members.forEach((obj) => {
-                  if (obj.real_name !== undefined) {
-                    if (data.user === obj.id) {
-                      bot.postMessageToUser(obj.name, temp_output);
-                    }
-                  }
-                });
-              })
-              .catch((err) => {
-                logger.logBotError(err);
-              });
+            let channelsArray = bot.getChannels()._value.channels;
+            channelsArray.forEach((channel) => {
+              if (channel.id == data.channel) {
+                bot.postMessageToChannel(channel.name, temp_output);
+              }
+            });
           }
         })
         .catch((err) => {
-          // logger.logSQLError(err);
-          bot.postMessageToChannel('slackbot-test', 'No such command');
+          /**
+           * We need response only in channel
+           * where command is sent
+           */
+          let channelsArray = bot.getChannels()._value.channels;
+          channelsArray.forEach((channel) => {
+            if (channel.id == data.channel) {
+              bot.postMessageToChannel(
+                channel.name,
+                `No such command. Type '@Mean BMF help' to list all commands.`
+              );
+            }
+          });
         });
       return;
     }
