@@ -115,7 +115,7 @@ exports.getMessage = (trigger_word) => {
         resolve(message[0]);
       })
       .catch((err) => {
-        reject('SQL Error');
+        reject(err);
       });
   });
 };

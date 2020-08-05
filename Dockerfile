@@ -1,13 +1,5 @@
-FROM node:latest
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-EXPOSE 3000
-
-CMD ["npm", "start"]
+U2FsdGVkX1+E3WY1buT1Y3JWox0KatJvj245uZXhFukdKlXjfXeYNOQJlL2chSFk
+Sw69sJO//oqYoXmpCq8AuN9t9S8Tl3fAwRBLbg9xEO3TmoQQha6Z8a1GaMHiUpsO
++/gZ7CYAnMMUCB/ZTgAUygxtH+zu7N3b8FhR5IvVxFjXFk2qjG37/0UZec4Nc6QR
+S4nrCfIje92EylZ2tKg9QzfFocZI276ASmYbJWr4xQw7REuJ+TrQ6KY4BRQkgPP6
+1JOLOjHWMPF8jNfTz3xcBwtwtH05ko2OE9OIRBA9wYcJn4dGGHcdxM0v05Rr3cmD
