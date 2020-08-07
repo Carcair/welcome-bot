@@ -17,6 +17,7 @@ const { encKey } = require('../../config');
 const Triggers = require('../models/Triggers');
 const Messages = require('../models/Messages');
 const BotCalls = require('../models/BotCalls');
+const Reports = require('../models/Reports');
 
 /**
  * Load necessary Sequelize models
@@ -219,11 +220,50 @@ exports.setBotCall = () => {
             where: { date: dateString },
           }
         )
-          .then((jedan) => {
+          .then((result) => {
             // Successful update
           })
           .catch((err) => logger.logSQLError(err));
       }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+    });
+};
+
+/**
+ * Update report deleted value
+ */
+exports.setValueDeleted = (report_name) => {
+  /**
+   * Create current date string
+   * for usage input
+   */
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const dateString = `${day}.${month}.${year}`;
+
+  Reports.findOne({
+    where: { report_name },
+    raw: true,
+  })
+    .then((result) => {
+      let temp = parseInt(result[0].report_value) + 1;
+      Reports.update(
+        {
+          report_value: temp,
+          last_update: dateString,
+        },
+        {
+          where: { report_name },
+        }
+      )
+        .then((result) => {
+          // Successful update
+        })
+        .catch((err) => logger.logSQLError(err));
     })
     .catch((err) => {
       logger.logSQLError(err);

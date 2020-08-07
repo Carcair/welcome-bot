@@ -6,13 +6,18 @@ const logger = require('../config/logger');
 /**
  * Load message model and validation schema
  */
+const Reports = require('../models/Reports');
 const Messages = require('../models/Messages');
 const MessageSchema = require('../models/validation/MessagesSchema');
 
 /**
  * Load helpers
  */
-const { encodeInsert, decodeOutput } = require('../methods/helper');
+const {
+  encodeInsert,
+  decodeOutput,
+  setValueDeleted,
+} = require('../methods/helper');
 const { setReportCount } = require('../handlers/reportHandler');
 
 /**
@@ -101,6 +106,7 @@ exports.deleteMessage = (req, res) => {
         //checking if the "result" is diffrent then 0 and responding accordingly
         logger.logDelete(req.params.title, 'message');
         setReportCount('Messages count', 'messages');
+        setValueDeleted('Messages deleted');
         res.status(200).end('Deleted');
       } else {
         res.status(404).end('Not Found');
