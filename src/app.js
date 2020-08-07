@@ -33,6 +33,14 @@ const bot = require('./handlers/botHandler');
  * Loading helper files
  */
 const logger = require('./config/logger');
+const { setReportCount } = require('./handlers/reportHandler');
+
+/**
+ * Initializing report info
+ */
+setReportCount('Messages count', 'messages');
+setReportCount('Schedules count', 'schedules');
+setReportCount('Triggers count', 'triggers');
 
 /**
  * Config for limiter
@@ -55,6 +63,7 @@ const messages = require('./routes/messages');
 const schedules = require('./routes/schedules');
 const triggers = require('./routes/triggers');
 const channels = require('./routes/channels');
+const reports = require('./routes/reports');
 
 /**
  * Initialize middleware
@@ -75,7 +84,6 @@ db.authenticate()
     // Connected to database
   })
   .catch((err) => {
-    // console.log('ERROR - Unable to connect to the database:', err);
     logger.logSQLError(err);
   });
 
@@ -87,6 +95,7 @@ app.use('/api/messages/', messages);
 app.use('/api/schedules/', schedules);
 app.use('/api/triggers/', triggers);
 app.use('/api/channels', channels);
+app.use('/api/reports', reports);
 
 app.listen(port, () => {
   console.log(`Listening @${port}`);

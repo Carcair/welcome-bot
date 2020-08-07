@@ -3,7 +3,7 @@
  */
 const SlackBot = require('slackbots');
 const CronJob = require('cron').CronJob;
-const { getMessage, getTriggers } = require('../methods/helper');
+const { getMessage, getTriggers, setBotCall } = require('../methods/helper');
 const logger = require('../config/logger');
 
 /**
@@ -56,6 +56,11 @@ bot.on('message', (data) => {
      * In other cases metadata contains only user ID's and channel ID's
      * Necessary comparisons to get username and channel names
      */
+
+    /**
+     * Update bot usage
+     */
+    setBotCall();
 
     /**
      * Check input for some defaults

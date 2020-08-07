@@ -16,6 +16,7 @@ const { encKey } = require('../../config');
  */
 const Triggers = require('../models/Triggers');
 const Messages = require('../models/Messages');
+const BotCalls = require('../models/BotCalls');
 
 /**
  * Load necessary Sequelize models
@@ -176,5 +177,55 @@ exports.checkTrigerWord = (req, res, next) => {
     .catch((err) => {
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
+    });
+};
+
+/**
+ * Update bot usage
+ */
+exports.setBotCall = () => {
+  /**
+   * Create current date string
+   * for usage input
+   */
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const dateString = `${day}.${month}.${year}`;
+
+  // Switch which sets insert or update
+  BotCalls.findAll({
+    where: { date: dateString },
+    raw: true,
+  })
+    .then((result) => {
+      if (result[0] === undefined) {
+        BotCalls.create({
+          date: dateString,
+          called: '1',
+        })
+          .then((jedan) => {
+            // Successful insert
+          })
+          .catch((err) => logger.logSQLError(err));
+      } else {
+        let temp = parseInt(result[0].called) + 1;
+        BotCalls.update(
+          {
+            called: temp,
+          },
+          {
+            where: { date: dateString },
+          }
+        )
+          .then((jedan) => {
+            // Successful update
+          })
+          .catch((err) => logger.logSQLError(err));
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
     });
 };
