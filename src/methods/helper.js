@@ -245,7 +245,7 @@ exports.setValueDeleted = (report_name) => {
   const year = date.getFullYear();
   const dateString = `${day}.${month}.${year}`;
 
-  Reports.findOne({
+  Reports.findAll({
     where: { report_name },
     raw: true,
   })
@@ -263,9 +263,11 @@ exports.setValueDeleted = (report_name) => {
         .then((result) => {
           // Successful update
         })
-        .catch((err) => logger.logSQLError(err));
+        .catch((err) => {
+          // Error
+        });
     })
     .catch((err) => {
-      logger.logSQLError(err);
+      // Error
     });
 };
