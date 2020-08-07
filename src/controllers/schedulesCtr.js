@@ -12,9 +12,13 @@ const ScheduleSchema = require('../models/validation/SchedulesSchema');
 /**
  * Load helpers and callbacks
  */
-const { encodeInsert, decodeOutput } = require('../methods/helper');
+const {
+  encodeInsert,
+  decodeOutput,
+  setValueDeleted,
+} = require('../methods/helper');
 const cronTasks = require('../methods/cronTasks');
-
+const { setReportCount } = require('../handlers/reportHandler');
 /**
  * Get schedules
  */
@@ -77,6 +81,7 @@ exports.insertNewSchedule = (req, res) => {
     Schedules.create(temp_obj)
       .then(() => {
         cronTasks.setTasks();
+        setReportCount('Schedules count', 'schedules');
         logger.logInput(JSON.stringify(temp_obj), 'schedule');
         res.status(201).end('Created');
       })
@@ -98,6 +103,9 @@ exports.deleteSchedule = (req, res) => {
     .then((deleted) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
+        cronTasks.setTasks();
+        setReportCount('Schedules count', 'schedules');
+        setValueDeleted('Schedules deleted');
         logger.logDelete(req.params.message, 'schedule');
         res.status(200).end('Deleted');
       } else {

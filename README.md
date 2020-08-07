@@ -6,6 +6,7 @@ Full-stack application for Slack Bot control. The application contains Admin ser
 Users don’t have much control of the app, but they will be able to use triggers through certain commands (if Admin specifies it) to prompt bot to send a message.
 
 ## Installation
+
 `npm install`
 
 ## Start
@@ -20,11 +21,13 @@ or using nodemon for development run:
 
 Development is running at http://localhost:5000 by default.
 
-API endpoints:
-  - `http://localhost:5000/api/messages`
-  - `http://localhost:5000/api/schedules`
-  - `http://localhost:5000/api/triggers`
+API endpoints (token verification needed):
+
+- `http://localhost:5000/api/messages`
+- `http://localhost:5000/api/schedules`
+- `http://localhost:5000/api/triggers`
 
 ## Misc
+
 Follow demonstration at [Link]{ https://welcome-bot-slack.herokuapp.com/api/messages } , or any other endpoint
 Connection to application might be slow since we've used free package from heroku.

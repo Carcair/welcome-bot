@@ -12,7 +12,12 @@ const TriggerSchema = require('../models/validation/TriggersSchema');
 /**
  * Load helpers
  */
-const { encodeInsert, decodeOutput } = require('../methods/helper');
+const {
+  encodeInsert,
+  decodeOutput,
+  setValueDeleted,
+} = require('../methods/helper');
+const { setReportCount } = require('../handlers/reportHandler');
 
 /**
  * Get triggers
@@ -76,6 +81,7 @@ exports.insertNewTrigger = (req, res) => {
 
     Triggers.create(temp_obj)
       .then(() => {
+        setReportCount('Triggers count', 'triggers');
         logger.logInput(JSON.stringify(temp_obj), 'trigger');
         res.status(201).end('Created');
       })
@@ -97,6 +103,8 @@ exports.deleteTrigger = (req, res) => {
     .then((deleted) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
+        setReportCount('Triggers count', 'triggers');
+        setValueDeleted('Triggers deleted');
         logger.logDelete(req.params.trigger_word, 'trigger');
         res.status(200).end('Deleted');
       } else {

@@ -6,13 +6,19 @@ const logger = require('../config/logger');
 /**
  * Load message model and validation schema
  */
+const Reports = require('../models/Reports');
 const Messages = require('../models/Messages');
 const MessageSchema = require('../models/validation/MessagesSchema');
 
 /**
  * Load helpers
  */
-const { encodeInsert, decodeOutput } = require('../methods/helper');
+const {
+  encodeInsert,
+  decodeOutput,
+  setValueDeleted,
+} = require('../methods/helper');
+const { setReportCount } = require('../handlers/reportHandler');
 
 /**
  * Get messages
@@ -77,6 +83,7 @@ exports.insertNewMessage = (req, res) => {
     Messages.create(temp_obj)
       .then(() => {
         logger.logInput(JSON.stringify(temp_obj), 'message');
+        setReportCount('Messages count', 'messages');
         res.status(201).end('Created');
       })
       .catch((err) => {
@@ -98,6 +105,8 @@ exports.deleteMessage = (req, res) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
         logger.logDelete(req.params.title, 'message');
+        setReportCount('Messages count', 'messages');
+        setValueDeleted('Messages deleted');
         res.status(200).end('Deleted');
       } else {
         res.status(404).end('Not Found');
