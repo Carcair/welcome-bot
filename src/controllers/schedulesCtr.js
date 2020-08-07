@@ -12,7 +12,11 @@ const ScheduleSchema = require('../models/validation/SchedulesSchema');
 /**
  * Load helpers and callbacks
  */
-const { encodeInsert, decodeOutput } = require('../methods/helper');
+const {
+  encodeInsert,
+  decodeOutput,
+  setValueDeleted,
+} = require('../methods/helper');
 const cronTasks = require('../methods/cronTasks');
 const { setReportCount } = require('../handlers/reportHandler');
 /**
@@ -101,6 +105,7 @@ exports.deleteSchedule = (req, res) => {
         //checking if the "result" is diffrent then 0 and responding accordingly
         cronTasks.setTasks();
         setReportCount('Schedules count', 'schedules');
+        setValueDeleted('Schedules deleted');
         logger.logDelete(req.params.message, 'schedule');
         res.status(200).end('Deleted');
       } else {
