@@ -163,17 +163,16 @@ bot.on('message', (data) => {
        * Sends back a message linked with trigger_word sent from Slack
        */
       let temp = data.text.split(' ');
-
       getMessage(temp[1])
         .then((message) => {
           /**
            * If channel is defined as private
-           * Message must be sent to user in PM
+           * Message must be sent to channel where message was triggered
            */
-          if (message.channel !== 'private') {
+          if (message.channel.toLowerCase() !== 'private') {
             // In case of no found messages under sent command
             bot.postMessageToChannel(
-              message.channel.toLowerCase(),
+              message.channel,
               decodeURIComponent(message.text)
             );
           } else {
@@ -181,11 +180,15 @@ bot.on('message', (data) => {
              * If message should be sent to channel where it is triggered
              * as oppossed to predefined channel
              */
-            let channelsArray = bot.getChannels()._value.channels;
-            channelsArray.forEach((channel) => {
-              if (channel.id == data.channel) {
-                bot.postMessageToChannel(channel.name, temp_output);
-              }
+            bot.getChannels().then((results) => {
+              results.channels.forEach((channelObj) => {
+                if (data.channel === channelObj.id) {
+                  bot.postMessageToChannel(
+                    channelObj.name,
+                    decodeURIComponent(message.text)
+                  );
+                }
+              });
             });
           }
         })
@@ -204,7 +207,6 @@ bot.on('message', (data) => {
             }
           });
         });
-      return;
     }
   }
 });
