@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "welcome-bot",
+      "script": "src/app.js",
+      "exec_mode": "fork",
+      "watch": false,
+      "ignore_watch": ["node_modules"],
+      "instances": 1
+    }
+  ]
+}

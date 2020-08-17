@@ -10,7 +10,13 @@
 /**
  * Loading env file / to be replaced with Transcrypt
  */
-const { port } = require('../config');
+const {
+  port,
+  port2,
+  location_key,
+  location_chain,
+  location_cert,
+} = require('../config');
 
 /**
  * loading dependencies
@@ -18,7 +24,9 @@ const { port } = require('../config');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const fs = require('fs');
 const rateLimit = require('express-rate-limit');
+const https = require('https');
 
 /**
  * Initialize cron tasks
@@ -96,6 +104,19 @@ app.use('/api/schedules/', schedules);
 app.use('/api/triggers/', triggers);
 app.use('/api/channels', channels);
 app.use('/api/reports', reports);
+
+https
+  .createServer(
+    {
+      key: fs.readFileSync(location_key),
+      cert: fs.readFileSync(location_cert),
+      ca: fs.readFileSync(location_chain),
+    },
+    app
+  )
+  .listen(port2, () => {
+    console.log(`Listening on ${port2}`);
+  });
 
 app.listen(port, () => {
   console.log(`Listening @${port}`);
