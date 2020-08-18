@@ -89,9 +89,9 @@ class Task {
         /**
          * Update local storage
          */
-        this.day = getDate();
-        this.month = getMonth();
-        this.year = getFullYear();
+        this.day = tempDate.getDate();
+        this.month = tempDate.getMonth();
+        this.year = tempDate.getFullYear();
 
         /**
          * Return for use
@@ -110,9 +110,9 @@ class Task {
         /**
          * Update local storage
          */
-        this.day = getDate();
-        this.month = getMonth();
-        this.year = getFullYear();
+        this.day = tempDate.getDate();
+        this.month = tempDate.getMonth();
+        this.year = tempDate.getFullYear();
 
         /**
          * Return for use
@@ -128,17 +128,16 @@ class Task {
     // Send message to Slack
     this.sendMessage = () => {
       // // Testin on channel slackbot-test
-      // bot.postMessageToChannel('slackbot-test', this.text);
+      bot.postMessageToChannel('slackbot-test', this.text);
       // Production;
-      bot.postMessageToChannel('general', this.text);
+      // bot.postMessageToChannel('general', this.text);
     };
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `0 9 ${this.initDay()} ${this.initMonth()} *`,
+      `0 12 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
-
         const self = this;
         // Update one time tasks to change active to false
         if (this.repeat_range === '0') {
@@ -155,7 +154,7 @@ class Task {
         } else {
           // Update task tick date
           const tempArray = self.updateDate(self.repeat_range);
-          const tempString = `0 9 ${tempArray[0]} ${tempArray[1]} *`;
+          const tempString = `40 11 ${tempArray[0]} ${tempArray[1]} *`;
           self.job.setTime(new CronTime(tempString));
           // Send message to Slack
           self.sendMessage();
@@ -164,7 +163,8 @@ class Task {
       // Message completed
       null,
       // True or False, defines if task is started after creation
-      this.active()
+      this.active(),
+      'Europe/Sarajevo'
     );
   }
 }
