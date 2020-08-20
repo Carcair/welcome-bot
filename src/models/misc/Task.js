@@ -49,18 +49,22 @@ class Task {
     this.day = 0;
     this.initDay = () => {
       let temp = this.run_date.split('/');
+      this.day = parseInt(temp[0]);
       return parseInt(temp[0]);
     };
     // month
     this.month = 0;
     this.initMonth = () => {
       let temp = this.run_date.split('/');
+      this.month = parseInt(temp[1] - 1);
+      this.initYear();
       return parseInt(temp[1]) - 1;
     };
     // year
     this.year = 0;
     this.initYear = () => {
       let temp = this.run_date.split('/');
+      this.year = parseInt(temp[2]);
       return parseInt(temp[2]);
     };
 
@@ -68,23 +72,11 @@ class Task {
     this.updateDate = (x) => {
       let temp, tempDate;
 
-      // Repeat ranges 1 for 1 day, 7 for 7 days
-      // 30 for 1 month
-
-      /**
-       * For testing when using first tick
-       * Turn off when changing to real first tick
-       */
-      // this.initDay();
-      // this.initMonth();
-      // this.initYear();
-      // /////////////////
-
       // Task repeat every 1 or 7 days
       if (x === '1' || x === '7') {
         temp = this.day + parseInt(x);
         // We want for Date class to process date changes automatically
-        tempDate = new Date(this.year, this.month - 1, temp);
+        tempDate = new Date(this.year, this.month + 1, temp);
 
         /**
          * Update local storage
@@ -135,7 +127,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `0 13 ${this.initDay()} ${this.initMonth()} *`,
+      `49 13 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -154,7 +146,16 @@ class Task {
         } else {
           // Update task tick date
           const tempArray = self.updateDate(self.repeat_range);
-          const tempString = `40 11 ${tempArray[0]} ${tempArray[1]} *`;
+          self.run_date = `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`;
+
+          let nextDate = encodeURIComponent(
+            `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`
+          );
+          Schedules.update(
+            { run_date: nextDate },
+            { where: { message: self.message } }
+          );
+          const tempString = `0 13 ${tempArray[0]} ${tempArray[1] - 1} *`;
           self.job.setTime(new CronTime(tempString));
           // Send message to Slack
           self.sendMessage();
