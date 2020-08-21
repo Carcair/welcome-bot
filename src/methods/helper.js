@@ -14,6 +14,7 @@ const { encKey } = require('../../config');
 /**
  * Load Sequelize models
  */
+const Schedules = require('../models/Schedules')
 const Triggers = require('../models/Triggers');
 const Messages = require('../models/Messages');
 const BotCalls = require('../models/BotCalls');
@@ -271,3 +272,50 @@ exports.setValueDeleted = (report_name) => {
       // Error
     });
 };
+exports.deleteTrigger = (req,res,next) =>{
+  // Encode title before checking
+  let title = encodeURIComponent(req.params.title);
+
+  Triggers.destroy({ where: { message : title } })
+    .then((deleted) => {
+      if (deleted !== 0) {
+        //checking if the "result" is diffrent then 0 and responding accordingly
+        logger.logDelete(req.params.title, 'trigger');
+        //setReportCount('Messages count', 'messages');
+     //   setValueDeleted('Messages deleted');
+        next();
+       // res.status(200).end('Deleted');
+      } else {
+        next();
+       // res.status(404).end('Not Found');
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(400).end('SQL Error');
+    });
+}
+
+exports.deleteSchedule = (req,res,next) =>{
+  // Encode title before checking
+  let title = encodeURIComponent(req.params.title);
+
+  Schedules.destroy({ where: { message : title } })
+    .then((deleted) => {
+      if (deleted !== 0) {
+        //checking if the "result" is diffrent then 0 and responding accordingly
+        logger.logDelete(req.params.title, 'schedule');
+        //setReportCount('Messages count', 'messages');
+     //   setValueDeleted('Messages deleted');
+        next();
+       // res.status(200).end('Deleted');
+      } else {
+        next();
+       // res.status(404).end('Not Found');
+      }
+    })
+    .catch((err) => {
+      logger.logSQLError(err);
+      res.status(400).end('SQL Error');
+    });
+}
