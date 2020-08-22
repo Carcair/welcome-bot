@@ -18,6 +18,8 @@ const {
   getBearerToken,
   verifyToken,
   checkTitle,
+  deleteTrigger,
+  deleteSchedule,
 } = require('../methods/helper');
 
 /**
@@ -43,7 +45,7 @@ router.post('/', getBearerToken, verifyToken, checkTitle, insertNewMessage);
 /**
  * Delete a message
  */
-router.delete('/:title', getBearerToken, verifyToken, deleteMessage);
+router.delete('/:title', getBearerToken , verifyToken , deleteSchedule , deleteTrigger , deleteMessage);
 
 /**
  * Edit a message

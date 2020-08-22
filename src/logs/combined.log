@@ -1,2 +1,15 @@
 {"level":"info","message":"message: \"aaaaa\" deleted from the Database.","timestamp":"2020-08-07T11:32:24.967Z"}
 {"level":"info","message":"message: \"test3\" deleted from the Database.","timestamp":"2020-08-07T11:34:32.634Z"}
+{"level":"info","message":"New message: {\"title\":\"test1\",\"text\":\"jkashfkjdhdfskjhdfskjdfhj\",\"cr_date\":\"21%2F08%2F2020\"} sent to the Database successfully.","timestamp":"2020-08-21T10:38:53.161Z"}
+{"level":"info","message":"schedule: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:44:32.297Z"}
+{"level":"info","message":"trigger: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:44:32.374Z"}
+{"level":"info","message":"message: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:44:32.447Z"}
+{"level":"info","message":"New message: {\"title\":\"test1\",\"text\":\"dfsjhfskjhdskjhdfskjh\",\"cr_date\":\"21%2F08%2F2020\"} sent to the Database successfully.","timestamp":"2020-08-21T10:46:13.971Z"}
+{"level":"info","message":"New message: {\"title\":\"test2\",\"text\":\"djlfhdfskljdfsklhjdgsklhjdsklh\",\"cr_date\":\"21%2F08%2F2020\"} sent to the Database successfully.","timestamp":"2020-08-21T10:46:28.458Z"}
+{"level":"info","message":"New schedule: {\"message\":\"test1\",\"run_date\":\"29%2F08%2F2020\",\"active\":\"false\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-08-21T10:46:47.877Z"}
+{"level":"info","message":"New schedule: {\"message\":\"test1\",\"run_date\":\"22%2F08%2F2020\",\"active\":\"false\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-08-21T10:47:14.244Z"}
+{"level":"info","message":"New trigger: {\"message\":\"test1\",\"trigger_word\":\"lorem\",\"channel\":\"general\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-08-21T10:47:39.843Z"}
+{"level":"info","message":"New trigger: {\"message\":\"test2\",\"trigger_word\":\"asdsad\",\"channel\":\"tim-1\",\"active\":\"false\"} sent to the Database successfully.","timestamp":"2020-08-21T10:48:24.167Z"}
+{"level":"info","message":"schedule: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:50:50.432Z"}
+{"level":"info","message":"trigger: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:50:50.505Z"}
+{"level":"info","message":"message: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:50:50.579Z"}
