@@ -34,11 +34,12 @@ let cronTasks = {
         messages.forEach((tempObj) => {
           // Decode before outputing
           tempObj = decodeOutput(tempObj);
+
           self.tasks[tempObj[0].message] = new Task(tempObj[0]);
         });
       })
       .catch((err) => {
-        logger.logSQLError(err);
+        logger.logBotError(err);
       });
   },
 };

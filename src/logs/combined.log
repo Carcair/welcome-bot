@@ -13,3 +13,7 @@
 {"level":"info","message":"schedule: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:50:50.432Z"}
 {"level":"info","message":"trigger: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:50:50.505Z"}
 {"level":"info","message":"message: \"test1\" deleted from the Database.","timestamp":"2020-08-21T10:50:50.579Z"}
+{"level":"info","message":"New schedule: {\"message\":\"nestonovo\",\"run_date\":\"22%2F08%2F2020\",\"active\":\"true\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-08-22T17:21:10.520Z"}
+{"level":"info","message":"New schedule: {\"message\":\"nestonovo\",\"run_date\":\"22%2F08%2F2020\",\"active\":\"true\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-08-22T17:22:30.271Z"}
+{"level":"info","message":"New schedule: {\"message\":\"nestonovo\",\"run_date\":\"22%2F08%2F2020\",\"active\":\"true\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-08-22T17:23:01.890Z"}
+{"level":"info","message":"New schedule: {\"message\":\"nestonovo\",\"run_date\":\"22%2F08%2F2020\",\"active\":\"true\",\"repeat_range\":\"1\"} sent to the Database successfully.","timestamp":"2020-08-22T17:25:37.403Z"}

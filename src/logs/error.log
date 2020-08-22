@@ -1,0 +1,1 @@
+{"level":"error","message":"TypeError: self.tasks[tempObj[0].message].stop is not a function","timestamp":"2020-08-22T17:23:01.996Z"}

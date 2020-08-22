@@ -76,7 +76,7 @@ class Task {
       if (x === '1' || x === '7') {
         temp = this.day + parseInt(x);
         // We want for Date class to process date changes automatically
-        tempDate = new Date(this.year, this.month + 1, temp);
+        tempDate = new Date(this.year, this.month, temp);
 
         /**
          * Update local storage
@@ -97,7 +97,7 @@ class Task {
       // Task repeat every month
       if (x === '30') {
         temp = this.month + 1;
-        tempDate = new Date(this.year, temp - 1, this.day);
+        tempDate = new Date(this.year, temp, this.day);
 
         /**
          * Update local storage
@@ -119,7 +119,7 @@ class Task {
 
     // Send message to Slack
     this.sendMessage = () => {
-      // // Testin on channel slackbot-test
+      // Testing on channel slackbot-test
       bot.postMessageToChannel('slackbot-test', this.text);
       // Production;
       // bot.postMessageToChannel('general', this.text);
@@ -127,7 +127,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `49 13 ${this.initDay()} ${this.initMonth()} *`,
+      `0 10 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -146,7 +146,8 @@ class Task {
         } else {
           // Update task tick date
           const tempArray = self.updateDate(self.repeat_range);
-          self.run_date = `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`;
+          self.run_date = `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`;
+          console.log(self.run_date);
 
           let nextDate = encodeURIComponent(
             `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`
@@ -154,11 +155,13 @@ class Task {
           Schedules.update(
             { run_date: nextDate },
             { where: { message: self.message } }
-          );
-          const tempString = `0 13 ${tempArray[0]} ${tempArray[1] - 1} *`;
-          self.job.setTime(new CronTime(tempString));
-          // Send message to Slack
-          self.sendMessage();
+          )
+            .then(() => {
+              const tempString = `0 10 ${tempArray[0]} ${tempArray[1]} *`;
+              self.job.setTime(new CronTime(tempString));
+              self.sendMessage();
+            })
+            .catch((err) => {});
         }
       },
       // Message completed
