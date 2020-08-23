@@ -24,7 +24,7 @@
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
-    "sequelize": "^6.3.3",
+    "sequelize": "^6.3.4",
     "slackbots": "^1.2.0",
     "snyk": "^1.367.0",
     "winston": "^3.3.3"
