@@ -127,7 +127,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `0 10 ${this.initDay()} ${this.initMonth()} *`,
+      `30 10 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -152,12 +152,14 @@ class Task {
           let nextDate = encodeURIComponent(
             `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`
           );
+          // Update next run_date in DB
           Schedules.update(
             { run_date: nextDate },
             { where: { message: self.message } }
           )
             .then(() => {
-              const tempString = `0 10 ${tempArray[0]} ${tempArray[1]} *`;
+              // Set new crontime for this task
+              const tempString = `30 10 ${tempArray[0]} ${tempArray[1]} *`;
               self.job.setTime(new CronTime(tempString));
               self.sendMessage();
             })
