@@ -132,7 +132,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `30 11 ${this.initDay()} ${this.initMonth()} *`,
+      `0 12 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
