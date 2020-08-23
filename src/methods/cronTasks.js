@@ -35,12 +35,28 @@ let cronTasks = {
           // Decode before outputing
           tempObj = decodeOutput(tempObj);
 
-          self.tasks[tempObj[0].message] = new Task(tempObj[0]);
+          // Check if tasks exists
+          if ((self.tasks = {})) {
+            // Initialize new tasks
+            self.tasks[tempObj[0].message] = new Task(tempObj[0]);
+          } else {
+            // Check if a specific task exists
+            Object.keys(self.tasks).forEach((key) => {
+              // Avoid initializing old tasks
+              if (key != tempObj[0].message)
+                self.tasks[tempObj[0].message] = new Task(tempObj[0]);
+            });
+          }
         });
       })
       .catch((err) => {
         logger.logBotError(err);
       });
+  },
+  getTasks() {
+    Object.keys(this.tasks).forEach((key) => {
+      console.log(key);
+    });
   },
 };
 

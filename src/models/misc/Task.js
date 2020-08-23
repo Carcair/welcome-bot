@@ -11,6 +11,11 @@ const CronTime = require('cron').CronTime;
 const logger = require('../../config/logger');
 
 /**
+ * Load cron tasks
+ */
+const cronTasks = require('../../methods/cronTasks');
+
+/**
  * Load secret variables
  */
 const { botConfig } = require('../../../config');
@@ -127,7 +132,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `30 10 ${this.initDay()} ${this.initMonth()} *`,
+      `30 11 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -147,7 +152,6 @@ class Task {
           // Update task tick date
           const tempArray = self.updateDate(self.repeat_range);
           self.run_date = `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`;
-          console.log(self.run_date);
 
           let nextDate = encodeURIComponent(
             `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`
