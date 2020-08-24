@@ -27,16 +27,16 @@ const helmet = require('helmet');
 const fs = require('fs');
 const rateLimit = require('express-rate-limit');
 const https = require('https');
-
+/**
+ * Initialize slack bot
+ */
+const bot = require('./handlers/botHandler');
 /**
  * Initialize cron tasks
  */
 const cronTasks = require('./methods/cronTasks');
 cronTasks.setTasks();
-/**
- * Initialize slack bot
- */
-const bot = require('./handlers/botHandler');
+
 /**
  * Loading helper files
  */
