@@ -33,23 +33,15 @@ const https = require('https');
  */
 const db = require('./config/dbConfig');
 
-// checking connection
-db.authenticate()
-  .then(() => {
-    // Connected to database
-    /**
-     * Initialize slack bot
-     */
-    const bot = require('./handlers/botHandler');
-    /**
-     * Initialize cron tasks
-     */
-    const cronTasks = require('./methods/cronTasks');
-    cronTasks.setTasks();
-  })
-  .catch((err) => {
-    logger.logSQLError(err);
-  });
+/**
+ * Initialize slack bot
+ */
+const bot = require('./handlers/botHandler');
+/**
+ * Initialize cron tasks
+ */
+const cronTasks = require('./methods/cronTasks');
+cronTasks.setTasks();
 
 /**
  * Loading helper files
@@ -95,6 +87,17 @@ app.use(cors());
 app.use(helmet());
 app.use(limiter);
 
+
+
+// checking connection
+db.authenticate()
+  .then(() => {
+    // Connected to database
+  })
+  .catch((err) => {
+    logger.logSQLError(err);
+  });
+
 /**
  * Initializing routes
  */
@@ -118,6 +121,6 @@ https
     console.log(`Listening on ${port2}`);
   });
 
-// app.listen(port, () => {
-//   console.log(`Listening @${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Listening @${port}`);
+});
