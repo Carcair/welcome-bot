@@ -1,7 +1,6 @@
 /**
  * Load modules
  */
-const SlackBot = require('slackbots');
 const CronJob = require('cron').CronJob;
 const CronTime = require('cron').CronTime;
 
@@ -16,11 +15,6 @@ const logger = require('../../config/logger');
 const cronTasks = require('../../methods/cronTasks');
 
 /**
- * Load secret variables
- */
-const { botConfig } = require('../../../config');
-
-/**
  * Load schedules model
  */
 const Schedules = require('../Schedules');
@@ -28,7 +22,7 @@ const Schedules = require('../Schedules');
 /**
  * Configure and initialize bot
  */
-const bot = new SlackBot(botConfig);
+const bot = require('../../handlers/botHandler');
 
 /**
  * Initialize class for Tasks
