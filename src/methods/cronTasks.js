@@ -31,24 +31,25 @@ let cronTasks = {
     )
       .then((messages) => {
         // Create a task from each query row
-        messages.forEach((tempObj) => {
-          // Decode before outputing
-          tempObj = decodeOutput(tempObj);
-
-          // Check if tasks exists
-          if (self.getLength() == 0) {
-            // Initialize new tasks
+        if (self.getLength() == 0) {
+          messages.forEach((tempObj) => {
+            // Decode before outputing
+            tempObj = decodeOutput(tempObj);
             self.tasks[tempObj[0].message] = new Task(tempObj[0]);
-          } else {
-            // Check if a specific task exists
-            Object.keys(self.tasks).forEach((key) => {
+          });
+        } else {
+          // Check if a specific task exists
+          Object.keys(self.tasks).forEach((key) => {
+            messages.forEach((tempObj) => {
+              // Decode before outputing
+              tempObj = decodeOutput(tempObj);
               // Avoid initializing old tasks
-              if (key != tempObj[0].message)
+              if (key != tempObj[0].message) {
                 self.tasks[tempObj[0].message] = new Task(tempObj[0]);
-              
+              }
             });
-          }
-        });
+          });
+        }
       })
       .catch((err) => {
         logger.logBotError(err);

@@ -126,7 +126,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `30 12 ${this.initDay()} ${this.initMonth()} *`,
+      `0 10 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -144,11 +144,13 @@ class Task {
             });
         } else {
           // Update task tick date
-          const tempArray = self.updateDate(self.repeat_range);
-          self.run_date = `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`;
+          let tempArray = self.updateDate(self.repeat_range);
+          self.run_date = `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`;
+
+          if (tempArray[1] == 11) tempArray = 0;
 
           let nextDate = encodeURIComponent(
-            `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`
+            `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`
           );
           // Update next run_date in DB
           Schedules.update(
@@ -157,7 +159,7 @@ class Task {
           )
             .then(() => {
               // Set new crontime for this task
-              const tempString = `30 12 ${tempArray[0]} ${tempArray[1]} *`;
+              const tempString = `0 10 ${tempArray[0]} ${tempArray[1]} *`;
               self.job.setTime(new CronTime(tempString));
               self.sendMessage();
             })
