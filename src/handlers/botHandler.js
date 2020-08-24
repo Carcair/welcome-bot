@@ -38,7 +38,11 @@ const bot = new SlackBot(botConfig);
 /**
  * Error handler
  */
-bot.on('error', (err) => logger.logBotError(err));
+bot.on('error', (err) => console.log(err));
+
+bot.on('close', () => {
+  const bot = new SlackBot(botConfig);
+});
 
 /**
  * Message handler
