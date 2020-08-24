@@ -43,8 +43,12 @@ let cronTasks = {
             // Check if a specific task exists
             Object.keys(self.tasks).forEach((key) => {
               // Avoid initializing old tasks
-              if (key != tempObj[0].message)
+              if (key != tempObj[0].message) {
+                console.log(
+                  `Key: ${key} | Message title: ${tempObj[0].message}`
+                );
                 self.tasks[tempObj[0].message] = new Task(tempObj[0]);
+              }
             });
           }
         });
