@@ -27,15 +27,29 @@ const helmet = require('helmet');
 const fs = require('fs');
 const rateLimit = require('express-rate-limit');
 const https = require('https');
+
 /**
- * Initialize slack bot
+ * Load DB connection
  */
-const bot = require('./handlers/botHandler');
-/**
- * Initialize cron tasks
- */
-const cronTasks = require('./methods/cronTasks');
-cronTasks.setTasks();
+const db = require('./config/dbConfig');
+
+// checking connection
+db.authenticate()
+  .then(() => {
+    // Connected to database
+    /**
+     * Initialize slack bot
+     */
+    const bot = require('./handlers/botHandler');
+    /**
+     * Initialize cron tasks
+     */
+    const cronTasks = require('./methods/cronTasks');
+    cronTasks.setTasks();
+  })
+  .catch((err) => {
+    logger.logSQLError(err);
+  });
 
 /**
  * Loading helper files
@@ -82,20 +96,6 @@ app.use(helmet());
 app.use(limiter);
 
 /**
- * Load DB connection
- */
-const db = require('./config/dbConfig');
-
-// checking connection
-db.authenticate()
-  .then(() => {
-    // Connected to database
-  })
-  .catch((err) => {
-    logger.logSQLError(err);
-  });
-
-/**
  * Initializing routes
  */
 app.use('/login', login);
@@ -118,6 +118,6 @@ https
     console.log(`Listening on ${port2}`);
   });
 
-app.listen(port, () => {
-  console.log(`Listening @${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Listening @${port}`);
+// });
