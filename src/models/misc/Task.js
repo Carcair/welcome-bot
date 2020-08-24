@@ -126,7 +126,7 @@ class Task {
 
     this.job = new CronJob(
       // '* * * * *', // Cron task for every min, for tests
-      `5 12 ${this.initDay()} ${this.initMonth()} *`,
+      `20 12 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -157,7 +157,7 @@ class Task {
           )
             .then(() => {
               // Set new crontime for this task
-              const tempString = `5 12 ${tempArray[0]} ${tempArray[1]} *`;
+              const tempString = `20 12 ${tempArray[0]} ${tempArray[1]} *`;
               self.job.setTime(new CronTime(tempString));
               self.sendMessage();
             })
