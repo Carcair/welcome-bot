@@ -27,6 +27,8 @@ const helmet = require('helmet');
 const fs = require('fs');
 const rateLimit = require('express-rate-limit');
 const https = require('https');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 /**
  * Load DB connection
@@ -105,6 +107,7 @@ app.use('/api/schedules/', schedules);
 app.use('/api/triggers/', triggers);
 app.use('/api/channels', channels);
 app.use('/api/reports', reports);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 https
   .createServer(

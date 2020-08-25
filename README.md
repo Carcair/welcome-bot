@@ -38,6 +38,9 @@ API endpoints (token verification needed):
 
 ## Login endpoints
 
+After starting local server visit [Link]{ http://localhost:5000/api-docs } for detailed endpoint description.
+Or visit api-docs from demonstration link [Link]{ https://praksans.dyndns.org:6000/api-docs }
+
 Gives back token for use if login successful (correct admin username & password)
 
 - `http://localhost:5000/login`

@@ -1,0 +1,797 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Backend server for Welcome Bot Application.",
+    "title": "Welcome Bot Backend",
+    "contact": "delic.emir90@gmail.com"
+  },
+  "host": "http://localhost:5000",
+  "schemes": ["https", "http"],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["login"],
+        "summary": "Login attempt from frontend",
+        "description": "Login attempt",
+        "operationId": "login",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Username",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "406": {
+            "description": "Login Denied"
+          },
+          "200": {
+            "description": "Login Successful"
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "get": {
+        "tags": ["Message"],
+        "summary": "Get all messages",
+        "description": "Get all messages from DB.",
+        "operationId": "getMessages",
+        "consumes": ["Authorization"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/message"
+              }
+            }
+          },
+          "400": {
+            "description": "SQL error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Message"],
+        "summary": "Insert new message",
+        "description": "Insert new message into DB.",
+        "operationId": "newMessage",
+        "consumes": ["Authorization", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "message",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/newMessage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "417": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/messages/{title}": {
+      "delete": {
+        "tags": ["Message"],
+        "summary": "Delete message",
+        "description": "Delete message from DB.",
+        "operationId": "delMessage",
+        "consumes": ["Authorization"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "title",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/title"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "404": {
+            "description": "Message not found"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Message"],
+        "summary": "Edit message",
+        "description": "Edit message from DB.",
+        "operationId": "editMessage",
+        "consumes": ["Authorization", "application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "title",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/title"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "message",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/newMessage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "404": {
+            "description": "Message not found"
+          },
+          "417": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/schedules": {
+      "get": {
+        "tags": ["Schedules"],
+        "summary": "Get all schedules",
+        "description": "Get all schedules from DB.",
+        "operationId": "getSchedules",
+        "consumes": ["Authorization"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/schedules"
+              }
+            }
+          },
+          "400": {
+            "description": "SQL error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Schedules"],
+        "summary": "Insert new schedule",
+        "description": "Insert new schedule into DB.",
+        "operationId": "newSchedule",
+        "consumes": ["Authorization", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "schedule",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/schedule"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "417": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/schedules/{title}": {
+      "delete": {
+        "tags": ["Schedule"],
+        "summary": "Delete schedule",
+        "description": "Delete schedule from DB.",
+        "operationId": "delSchedule",
+        "consumes": ["Authorization"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "title",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/title"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "404": {
+            "description": "Schedule not found"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Schedule"],
+        "summary": "Edit schedule",
+        "description": "Edit schedule from DB.",
+        "operationId": "editSchedule",
+        "consumes": ["Authorization", "application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "title",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/title"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "schedule",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/schedule"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "404": {
+            "description": "Message not found"
+          },
+          "417": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/triggers": {
+      "get": {
+        "tags": ["Trigger"],
+        "summary": "Get all triggers",
+        "description": "Get all triggers from DB.",
+        "operationId": "getTriggers",
+        "consumes": ["Authorization"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/triggers"
+              }
+            }
+          },
+          "400": {
+            "description": "SQL error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Trigger"],
+        "summary": "Insert new trigger",
+        "description": "Insert new trigger into DB.",
+        "operationId": "newTrigger",
+        "consumes": ["Authorization", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "trigger",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/triggers"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "417": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/triggers/{title}": {
+      "delete": {
+        "tags": ["Trigger"],
+        "summary": "Delete trigger",
+        "description": "Delete trigger from DB.",
+        "operationId": "delTrigger",
+        "consumes": ["Authorization"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "title",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/title"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "404": {
+            "description": "Message not found"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Trigger"],
+        "summary": "Edit trigger",
+        "description": "Edit trigger from DB.",
+        "operationId": "editTrigger",
+        "consumes": ["Authorization", "application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "title",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/title"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "message",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/triggers"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "SQL error"
+          },
+          "404": {
+            "description": "Message not found"
+          },
+          "417": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/channels": {
+      "get": {
+        "tags": ["Channels"],
+        "summary": "Get all channels",
+        "description": "Get all channels from DB.",
+        "operationId": "getChannels",
+        "consumes": ["Authorization"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/channels"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/reports": {
+      "get": {
+        "tags": ["Report"],
+        "summary": "Get report",
+        "description": "Get report from DB.",
+        "operationId": "getReport",
+        "consumes": ["Authorization"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/report"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/reports/usage": {
+      "get": {
+        "tags": ["Usage"],
+        "summary": "Get usage report",
+        "description": "Get usage report from DB.",
+        "operationId": "getUsage",
+        "consumes": ["Authorization"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "$ref": "#definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/use"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "title": {
+      "type": "string",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Message"
+        }
+      }
+    },
+    "token": {
+      "type": "object",
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "Bearer <token>"
+        }
+      },
+      "xml": {
+        "name": "token"
+      }
+    },
+    "user": {
+      "type": "object",
+      "required": ["username", "pass"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "keanu"
+        },
+        "pass": {
+          "type": "string",
+          "example": "reaves"
+        }
+      },
+      "xml": {
+        "name": "Credentials"
+      }
+    },
+    "message": {
+      "type": "object",
+      "required": ["id", "title", "text", "cr_date"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "title": {
+          "type": "string",
+          "example": "Message"
+        },
+        "text": {
+          "type": "string",
+          "example": "Lorem ipsum etc etc etc"
+        },
+        "cr_date": {
+          "type": "string",
+          "example": "01/01/2020"
+        }
+      },
+      "xml": {
+        "name": "Credentials"
+      }
+    },
+    "newMessage": {
+      "type": "object",
+      "required": ["title", "text", "cr_date"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Message"
+        },
+        "text": {
+          "type": "string",
+          "example": "Lorem ipsum etc etc etc"
+        },
+        "cr_date": {
+          "type": "string",
+          "example": "01/01/2020"
+        }
+      },
+      "xml": {
+        "name": "Credentials"
+      }
+    },
+    "schedules": {
+      "type": "object",
+      "required": ["message", "run_date", "active", "repeat_range"],
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Message"
+        },
+        "run_date": {
+          "type": "string",
+          "example": "01/01/2020"
+        },
+        "active": {
+          "type": "string",
+          "example": "true"
+        },
+        "repeat_range": {
+          "type": "string",
+          "example": "1"
+        }
+      }
+    },
+    "triggers": {
+      "type": "object",
+      "required": ["message", "trigger_word", "channel", "active"],
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Message"
+        },
+        "trigger_word": {
+          "type": "string",
+          "example": "hello"
+        },
+        "channel": {
+          "type": "string",
+          "example": "general"
+        },
+        "active": {
+          "type": "string",
+          "example": "true"
+        }
+      }
+    },
+    "channels": {
+      "type": "object",
+      "required": ["tempArray"],
+      "properties": {
+        "tempArray": {
+          "type": "array",
+          "example": ["general", "random"]
+        }
+      }
+    },
+    "report": {
+      "type": "object",
+      "required": ["reports"],
+      "properties": {
+        "reports": {
+          "type": "string",
+          "example": "[{'id': 1,'report_name': 'Messages count','report_value': '5','last_update': '25.8.2020'}]"
+        }
+      }
+    },
+    "use": {
+      "type": "object",
+      "required": ["usage"],
+      "properties": {
+        "usage": {
+          "type": "string",
+          "example": "{'id': 1,'date': '5.8.2020','called': '5'}"
+        }
+      }
+    }
+  }
+}
