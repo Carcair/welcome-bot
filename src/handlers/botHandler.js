@@ -17,6 +17,7 @@ const { botConfig } = require('../../config');
 let bot;
 const startBot = () => {
   bot = new SlackBot(botConfig);
+  bot.on('open', () => console.log('Websocket connection is open'));
 };
 startBot();
 
