@@ -14,7 +14,11 @@ const { botConfig } = require('../../config');
 /**
  * Initialize Slack Bot
  */
-const bot = new SlackBot(botConfig);
+let bot;
+const startBot = () => {
+  bot = new SlackBot(botConfig);
+};
+startBot();
 
 /**
  * Test slackbot connection
@@ -38,10 +42,14 @@ const bot = new SlackBot(botConfig);
 /**
  * Error handler
  */
-bot.on('error', (err) => console.log(err));
+bot.on('error', (err) => {
+  console.log(err);
+  startBot();
+});
 
 bot.on('close', () => {
-  const bot = new SlackBot(botConfig);
+  console.log('Connection closed.');
+  startBot();
 });
 
 /**

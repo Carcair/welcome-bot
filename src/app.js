@@ -87,8 +87,6 @@ app.use(cors());
 app.use(helmet());
 app.use(limiter);
 
-
-
 // checking connection
 db.authenticate()
   .then(() => {
@@ -121,6 +119,6 @@ https
     console.log(`Listening on ${port2}`);
   });
 
-app.listen(port, () => {
-  console.log(`Listening @${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Listening @${port}`);
+// });
