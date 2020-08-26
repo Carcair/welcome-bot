@@ -124,8 +124,8 @@
         "consumes": ["Authorization"],
         "parameters": [
           {
-            "in": "query",
-            "name": "query",
+            "in": "path",
+            "name": "path",
             "description": "title",
             "required": true,
             "schema": {
@@ -162,8 +162,8 @@
         "consumes": ["Authorization", "application/json"],
         "parameters": [
           {
-            "in": "query",
-            "name": "query",
+            "in": "path",
+            "name": "path",
             "description": "title",
             "required": true,
             "schema": {
@@ -287,8 +287,8 @@
         "consumes": ["Authorization"],
         "parameters": [
           {
-            "in": "query",
-            "name": "query",
+            "in": "path",
+            "name": "path",
             "description": "title",
             "required": true,
             "schema": {
@@ -325,8 +325,8 @@
         "consumes": ["Authorization", "application/json"],
         "parameters": [
           {
-            "in": "query",
-            "name": "query",
+            "in": "path",
+            "name": "path",
             "description": "title",
             "required": true,
             "schema": {
@@ -450,8 +450,8 @@
         "consumes": ["Authorization"],
         "parameters": [
           {
-            "in": "query",
-            "name": "query",
+            "in": "path",
+            "name": "path",
             "description": "title",
             "required": true,
             "schema": {
@@ -488,8 +488,8 @@
         "consumes": ["Authorization", "application/json"],
         "parameters": [
           {
-            "in": "query",
-            "name": "query",
+            "in": "path",
+            "name": "path",
             "description": "title",
             "required": true,
             "schema": {
