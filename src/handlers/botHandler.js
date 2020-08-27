@@ -16,10 +16,28 @@ const { botConfig } = require('../../config');
  */
 let bot;
 const startBot = () => {
-  bot = new SlackBot(botConfig);
-  bot.on('open', () => console.log('Websocket connection is open'));
+  return new Promise((resolve, reject) => {
+    bot = new SlackBot(botConfig);
+    bot.on('open', () => console.log('Websocket connection is open'));
+    resolve(true);
+    reject(false);
+  });
 };
-startBot();
+startBot()
+  .then((result) => {
+    const life = new CronJob(
+      '0 * * * *',
+      () => {
+        bot.postMessageToChannel(
+          'slackbot-test-2',
+          'Message to keep bot online/ in life.'
+        );
+      },
+      null,
+      true
+    );
+  })
+  .catch((err) => console.log(err));
 
 /**
  * Test slackbot connection
