@@ -16,47 +16,27 @@ const { botConfig } = require('../../config');
  */
 let bot;
 const startBot = () => {
-  return new Promise((resolve, reject) => {
-    bot = new SlackBot(botConfig);
-    bot.on('open', () => console.log('Websocket connection is open'));
-    resolve(true);
-    reject(false);
-  });
+  let date = new Date();
+  bot = new SlackBot(botConfig);
+  bot.on('open', () => console.log('Websocket connection is open. || ' + date));
 };
-startBot()
-  .then((result) => {
-    const life = new CronJob(
-      '0 * * * *',
-      () => {
-        bot.postMessageToChannel(
-          'slackbot-test-2',
-          'Message to keep bot online/ in life.'
-        );
-      },
-      null,
-      true
-    );
-  })
-  .catch((err) => console.log(err));
+startBot();
+
+const life = new CronJob(
+  '0 * * * *',
+  () => {
+    startBot();
+  },
+  null,
+  true
+);
 
 /**
  * Test slackbot connection
- * general chat can be changed to whatever chat bot joins
- * then we can use it as reusable
  */
-// bot.on('start', () => {
-//   const test = new CronJob(
-//     '* * * * *',
-//     () => {
-//       bot.postMessageToChannel(
-//         'slackbot-test',
-//         'Testing message sent every minute. :punch:'
-//       );
-//     },
-//     null,
-//     true
-//   );
-// });
+bot.on('start', () => {
+  console.log('Web Connection maintained.');
+});
 
 /**
  * Error handler
