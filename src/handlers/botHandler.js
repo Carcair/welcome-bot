@@ -23,7 +23,7 @@ const startBot = () => {
 startBot();
 
 const life = new CronJob(
-  '0 * * * *',
+  '10 * * * *',
   () => {
     startBot();
   },
