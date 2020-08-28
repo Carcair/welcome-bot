@@ -50,6 +50,7 @@ let cronTasks = {
             });
           });
         }
+        this.getTasks();
       })
       .catch((err) => {
         logger.logBotError(err);
