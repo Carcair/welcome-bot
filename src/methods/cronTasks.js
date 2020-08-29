@@ -57,7 +57,7 @@ let cronTasks = {
   },
   stopTasks() {
     Object.keys(this.tasks).forEach((key) => {
-      this.tasks.key.job.stop();
+      this.tasks[`${key}`].job.stop();
     });
     this.tasks = {};
   },
