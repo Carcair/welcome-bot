@@ -87,6 +87,7 @@ exports.insertNewSchedule = (req, res) => {
         res.status(201).end('Created');
       })
       .catch((err) => {
+        console.log(err);
         logger.logBotError(err);
         res.status(400).end('SQL Error');
       });
@@ -115,6 +116,7 @@ exports.deleteSchedule = (req, res) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       logger.logBotError(err);
       res.status(400).end('SQL Error');
     });
@@ -159,6 +161,7 @@ exports.editSchedule = (req, res) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         logger.logBotError(err);
         res.status(400).end('SQL Error');
       });
