@@ -125,8 +125,8 @@ class Task {
     };
 
     this.job = new CronJob(
-      '* * * * *', // Cron task for every min, for tests
-      // `0 10 ${this.initDay()} ${this.initMonth()} *`,
+      // '* * * * *', // Cron task for every min, for tests
+      `0 10 ${this.initDay()} ${this.initMonth()} *`,
       () => {
         // On tick
         const self = this;
@@ -153,19 +153,18 @@ class Task {
             `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`
           );
           self.sendMessage();
-          self.job.setTime(new CronTime('* * * * *'));
           // Update next run_date in DB
-          // Schedules.update(
-          //   { run_date: nextDate },
-          //   { where: { message: self.message } }
-          // )
-          //   .then(() => {
-          //     // Set new crontime for this task
-          //     const tempString = `0 10 ${tempArray[0]} ${tempArray[1]} *`;
-          //     self.job.setTime(new CronTime(tempString));
-          //     self.sendMessage();
-          //   })
-          //   .catch((err) => {});
+          Schedules.update(
+            { run_date: nextDate },
+            { where: { message: self.message } }
+          )
+            .then(() => {
+              // Set new crontime for this task
+              const tempString = `0 10 ${tempArray[0]} ${tempArray[1]} *`;
+              self.job.setTime(new CronTime(tempString));
+              self.sendMessage();
+            })
+            .catch((err) => {});
         }
       },
       // Message completed
