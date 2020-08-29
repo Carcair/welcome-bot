@@ -50,11 +50,16 @@ let cronTasks = {
             });
           });
         }
-        this.getTasks();
       })
       .catch((err) => {
         logger.logBotError(err);
       });
+  },
+  stopTasks() {
+    Object.keys(this.tasks).forEach((key) => {
+      this.tasks.key.job.stop();
+    });
+    this.tasks = {};
   },
   getTasks() {
     Object.keys(this.tasks).forEach((key) => {

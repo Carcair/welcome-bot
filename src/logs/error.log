@@ -1,3 +1,4 @@
 {"level":"error","message":"TypeError: self.tasks[tempObj[0].message].stop is not a function","timestamp":"2020-08-22T17:23:01.996Z"}
 {"level":"error","message":"Attempted login by {}","timestamp":"2020-08-26T06:33:43.098Z"}
 {"level":"error","message":"Attempted login by {\"username\":\"test\",\"pass\":\"test\"}","timestamp":"2020-08-26T06:44:32.984Z"}
+{"level":"error","message":"TypeError: this.tasks.TestOneMoreTime.job.sendAt is not a function","timestamp":"2020-08-29T08:23:03.986Z"}

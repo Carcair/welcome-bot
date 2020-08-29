@@ -80,6 +80,7 @@ exports.insertNewSchedule = (req, res) => {
     temp_obj = encodeInsert(temp_obj);
     Schedules.create(temp_obj)
       .then(() => {
+        cronTasks.stopTasks();
         cronTasks.setTasks();
         setReportCount('Schedules count', 'schedules');
         logger.logInput(JSON.stringify(temp_obj), 'schedule');
@@ -103,6 +104,7 @@ exports.deleteSchedule = (req, res) => {
     .then((deleted) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
+        cronTasks.stopTasks();
         cronTasks.setTasks();
         setReportCount('Schedules count', 'schedules');
         setValueDeleted('Schedules deleted');
@@ -144,6 +146,7 @@ exports.editSchedule = (req, res) => {
       .then((updated) => {
         if (updated[0] !== 0) {
           //checking if the "result" is diffrent then 0 and responding accordingly
+          cronTasks.stopTasks();
           cronTasks.setTasks();
           logger.logUpdate(
             JSON.stringify(temp_obj),
