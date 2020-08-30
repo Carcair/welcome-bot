@@ -152,7 +152,7 @@ class Task {
           let nextDate = encodeURIComponent(
             `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`
           );
-          self.sendMessage();
+
           // Update next run_date in DB
           Schedules.update(
             { run_date: nextDate },

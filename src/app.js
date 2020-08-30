@@ -8,7 +8,7 @@
 // TODO:
 // FIXME:
 /**
- * Loading env file / to be replaced with Transcrypt
+ * Loading secret variables
  */
 const {
   port,
@@ -43,6 +43,7 @@ const bot = require('./handlers/botHandler');
  * Initialize cron tasks
  */
 const cronTasks = require('./methods/cronTasks');
+cronTasks.stopTasks();
 cronTasks.setTasks();
 
 /**
