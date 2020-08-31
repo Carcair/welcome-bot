@@ -55,17 +55,20 @@ let cronTasks = {
         logger.logBotError(err);
       });
   },
+  // Stoping all tasks in progress
   stopTasks() {
     Object.keys(this.tasks).forEach((key) => {
       this.tasks[`${key}`].job.stop();
     });
     this.tasks = {};
   },
+  // Getting names from task objects
   getTasks() {
     Object.keys(this.tasks).forEach((key) => {
       console.log(key);
     });
   },
+  // tasks object size for comparison
   getLength() {
     let size = 0;
     Object.keys(this.tasks).forEach((key) => {

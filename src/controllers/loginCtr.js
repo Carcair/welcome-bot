@@ -12,7 +12,7 @@ const logger = require('../config/logger');
 /**
  * Load config file / changed to transcrypt
  */
-const { encKey } = require('../../config');
+const { encKey, NODE_ENV } = require('../../config');
 
 /**
  * Load Sequelize and JOI schema models
@@ -67,34 +67,37 @@ exports.setToken = (req, res) => {
 
 /**
  * Helper callback for registering admin
- * To be kept commented unless needed in emergency
+ * only in development environment
  */
-// exports.regAdmin = (req, res) => {
-//   let temp = {
-//     username: req.body.username,
-//     pass: req.body.pass,
-//   };
 
-//   // Validate input
-//   const { error } = UsersSchema.validate(temp);
-//   if (error) {
-//     // Loger output
-//     res.sendStatus(406);
-//   } else {
-//     // Password encryption
-//     bcrypt.hash(temp.pass, 10, (err, hash) => {
-//       temp.pass = hash;
+if (NODE_ENV === 'development') {
+  exports.regAdmin = (req, res) => {
+    let temp = {
+      username: req.body.username,
+      pass: req.body.pass,
+    };
 
-//       // Inputing new admin user into DB
-//       Users.create(temp)
-//         .then((result) => {
-//           // Logger output
-//           res.sendStatus(201);
-//         })
-//         .catch((err) => {
-//           logger.logSQLError(err);
-//           res.status(406).end(err.parent.sqlMessage);
-//         });
-//     });
-//   }
-// };
+    // Validate input
+    const { error } = UsersSchema.validate(temp);
+    if (error) {
+      // Loger output
+      res.sendStatus(406);
+    } else {
+      // Password encryption
+      bcrypt.hash(temp.pass, 10, (err, hash) => {
+        temp.pass = hash;
+
+        // Inputing new admin user into DB
+        Users.create(temp)
+          .then((result) => {
+            // Logger output
+            res.sendStatus(201);
+          })
+          .catch((err) => {
+            logger.logSQLError(err);
+            res.status(406).end(err.parent.sqlMessage);
+          });
+      });
+    }
+  };
+}

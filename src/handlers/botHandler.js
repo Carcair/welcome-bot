@@ -22,6 +22,7 @@ const startBot = () => {
 };
 startBot();
 
+// Maintaining bot connection in life
 const life = new CronJob(
   '10 * * * *',
   () => {
@@ -46,6 +47,9 @@ bot.on('error', (err) => {
   startBot();
 });
 
+/**
+ * In case of lost connection, reconnect
+ */
 bot.on('close', () => {
   console.log('Connection closed.');
   startBot();
@@ -55,8 +59,9 @@ bot.on('close', () => {
  * Message handler
  */
 bot.on('message', (data) => {
-  // Continue only if user sent a MESSAGE directed at BOT
+  // Continue only in case of data type sent is message
   // Blocks message sent back by bot from being registered
+  // Continue only if user sent a MESSAGE directed at BOT
   if (
     data.type === 'message' &&
     data.username !== 'Welcome Bot' &&
@@ -66,6 +71,7 @@ bot.on('message', (data) => {
      * Username is contained in metadata only if the sender is Bot
      * In other cases metadata contains only user ID's and channel ID's
      * Necessary comparisons to get username and channel names
+     * not necessary in App goals
      */
 
     /**
@@ -95,6 +101,7 @@ bot.on('message', (data) => {
             .getChannels()
             .then((results) => {
               results.channels.forEach((channelObj) => {
+                // Respond to channel with same ID as sender
                 if (data.channel === channelObj.id) {
                   bot.postMessageToChannel(
                     channelObj.name,

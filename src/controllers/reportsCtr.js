@@ -9,6 +9,9 @@ const logger = require('../config/logger');
 const Reports = require('../models/Reports');
 const BotCalls = require('../models/BotCalls');
 
+/**
+ * Fetches list of reports
+ */
 exports.getReports = (req, res) => {
   Reports.findAll()
     .then((reports) => {
@@ -20,6 +23,10 @@ exports.getReports = (req, res) => {
     });
 };
 
+/**
+ * Fetches the number of times a message
+ * got called by command
+ */
 exports.getUsage = (req, res) => {
   BotCalls.findAll()
     .then((usage) => {

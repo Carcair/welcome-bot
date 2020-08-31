@@ -4,12 +4,20 @@
 const express = require('express');
 
 /**
+ * Load secret variables
+ */
+const { NODE_ENV } = require('../../config');
+
+/**
  * Load helpers and callbacks
  */
 const { getBearerToken, verifyToken } = require('../methods/helper');
 const { setToken } = require('../controllers/loginCtr');
+
 // Helper for registering, to be kept commented
-// const { regAdmin } = require('../controllers/login');
+if (NODE_ENV === 'development') {
+  const { regAdmin } = require('../controllers/login');
+}
 
 /**
  * Initialize router middleware
@@ -32,6 +40,6 @@ router.post('/test', getBearerToken, verifyToken, (req, res) => {
  * Helper endpoint for registering admin
  * To be kept commented unless needed in emergency
  */
-// router.post('/hidden/reg', regAdmin);
+if (NODE_ENV === 'development') router.post('/hidden/reg', regAdmin);
 
 module.exports = router;

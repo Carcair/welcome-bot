@@ -7,6 +7,7 @@
 
 // TODO:
 // FIXME:
+
 /**
  * Loading secret variables
  */
@@ -47,7 +48,7 @@ cronTasks.stopTasks();
 cronTasks.setTasks();
 
 /**
- * Loading helper files
+ * Loading helper and logger files
  */
 const logger = require('./config/logger');
 const { setReportCount } = require('./handlers/reportHandler');
@@ -61,9 +62,10 @@ setReportCount('Triggers count', 'triggers');
 
 /**
  * Config for limiter
+ * DOS/DDOS protect
  */
 const limiter = rateLimit({
-  windowMs: 60 * 100,
+  windowMs: 60 * 1,
   max: 100,
 });
 
@@ -73,7 +75,7 @@ const limiter = rateLimit({
 const app = express();
 
 /**
- * Loading routes
+ * Loading routes/endpoints
  */
 const login = require('./routes/login');
 const messages = require('./routes/messages');
@@ -96,6 +98,7 @@ db.authenticate()
     // Connected to database
   })
   .catch((err) => {
+    console.log(err);
     logger.logSQLError(err);
   });
 
@@ -110,6 +113,7 @@ app.use('/api/channels', channels);
 app.use('/api/reports', reports);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Create https, SSL protected server
 https
   .createServer(
     {
@@ -123,6 +127,7 @@ https
     console.log(`Listening on ${port2}`);
   });
 
+// Create http server
 app.listen(port, () => {
   console.log(`Listening @${port}`);
 });

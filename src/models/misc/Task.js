@@ -149,6 +149,7 @@ class Task {
 
           if (tempArray[1] == 11) tempArray = 0;
 
+          // We need encoded date string to update DB table
           let nextDate = encodeURIComponent(
             `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`
           );

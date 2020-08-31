@@ -13,6 +13,9 @@ const { botConfig } = require('../../config');
  */
 const bot = new SlackBot(botConfig);
 
+/**
+ * Fetches the list of all channels from Slack WS
+ */
 exports.getChannels = (req, res) => {
   bot
     .getChannels()
