@@ -50,6 +50,7 @@ cronTasks.setTasks();
 /**
  * Loading helper and logger files
  */
+const { newError } = require('./methods/helper');
 const logger = require('./config/logger');
 const { setReportCount } = require('./handlers/reportHandler');
 
@@ -98,7 +99,7 @@ db.authenticate()
     // Connected to database
   })
   .catch((err) => {
-    console.log(err);
+    newError(err);
     logger.logSQLError(err);
   });
 

@@ -16,6 +16,7 @@ const {
   encodeInsert,
   decodeOutput,
   setValueDeleted,
+  newError,
 } = require('../methods/helper');
 const cronTasks = require('../methods/cronTasks');
 const { setReportCount } = require('../handlers/reportHandler');
@@ -30,6 +31,7 @@ exports.getSchedules = (req, res) => {
       res.status(200).end(JSON.stringify(schedules));
     })
     .catch((err) => {
+      newError(err);
       logger.logError(err);
       res.status(400).end('SQL Error');
     });
@@ -54,6 +56,7 @@ exports.getSchedulesByMessage = (req, res) => {
       }
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -87,7 +90,7 @@ exports.insertNewSchedule = (req, res) => {
         res.status(201).end('Created');
       })
       .catch((err) => {
-        console.log(err);
+        newError(err);
         logger.logBotError(err);
         res.status(400).end('SQL Error');
       });
@@ -116,7 +119,7 @@ exports.deleteSchedule = (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      newError(err);
       logger.logBotError(err);
       res.status(400).end('SQL Error');
     });
@@ -161,7 +164,7 @@ exports.editSchedule = (req, res) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        newError(err);
         logger.logBotError(err);
         res.status(400).end('SQL Error');
       });

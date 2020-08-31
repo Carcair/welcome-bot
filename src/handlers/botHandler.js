@@ -7,7 +7,12 @@ const CronJob = require('cron').CronJob;
 /**
  * Load helpers and logger files
  */
-const { getMessage, getTriggers, setBotCall } = require('../methods/helper');
+const {
+  getMessage,
+  getTriggers,
+  setBotCall,
+  newError,
+} = require('../methods/helper');
 const logger = require('../config/logger');
 
 /**
@@ -47,6 +52,7 @@ bot.on('start', () => {
  * Error handler
  */
 bot.on('error', (err) => {
+  newError(err);
   console.log(err);
   startBot();
 });
@@ -119,10 +125,12 @@ bot.on('message', (data) => {
               });
             })
             .catch((err) => {
+              newError(err);
               logger.logBotError(err);
             });
         })
         .catch((err) => {
+          newError(err);
           logger.logSQLError(err);
           bot.postMessageToChannel(
             'slackbot-test',
@@ -219,6 +227,7 @@ bot.on('message', (data) => {
            * We need response only in channel
            * where command is sent
            */
+          newError(err);
           let channelsArray = bot.getChannels()._value.channels;
           channelsArray.forEach((channel) => {
             if (channel.id == data.channel) {

@@ -25,6 +25,11 @@ const Schedules = require('../schemas/Schedules');
 const bot = require('../../handlers/botHandler');
 
 /**
+ * Load helper methods
+ */
+const { newError } = require('../../methods/helper');
+
+/**
  * Initialize class for Tasks
  */
 class Task {
@@ -140,6 +145,7 @@ class Task {
               this.job.stop();
             })
             .catch((err) => {
+              newError(err);
               logger.logSQLError(err);
             });
         } else {
@@ -165,7 +171,9 @@ class Task {
               self.job.setTime(new CronTime(tempString));
               self.sendMessage();
             })
-            .catch((err) => {});
+            .catch((err) => {
+              newError(err);
+            });
         }
       },
       // Message completed

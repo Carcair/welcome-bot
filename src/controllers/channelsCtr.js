@@ -9,6 +9,11 @@ const SlackBot = require('slackbots');
 const { botConfig } = require('../../config');
 
 /**
+ * Load helper methods
+ */
+const { newError } = require('../methods/helper');
+
+/**
  * Initialize slackbot
  */
 const bot = new SlackBot(botConfig);
@@ -27,6 +32,7 @@ exports.getChannels = (req, res) => {
       res.json({ tempArray });
     })
     .catch((err) => {
+      newError(err);
       console.log(err);
       res.status(400).end('Bad Request');
     });

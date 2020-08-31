@@ -20,6 +20,7 @@ const Messages = require('../models/schemas/Messages');
 const BotCalls = require('../models/schemas/BotCalls');
 const Reports = require('../models/schemas/Reports');
 const Users = require('../models/schemas/Users');
+const Errors = require('../models/schemas/Errors');
 
 /**
  * Encode input
@@ -92,6 +93,7 @@ exports.verifyToken = (req, res, next) => {
           }
         })
         .catch((err) => {
+          this.newError(err);
           logger.logSQLError(err);
           res.status(400).end('SQL Error');
         });
@@ -114,6 +116,7 @@ exports.getMessage = (trigger_word) => {
         resolve(message[0]);
       })
       .catch((err) => {
+        this.newError(err);
         reject(err);
       });
   });
@@ -129,6 +132,7 @@ exports.getTriggers = () => {
         resolve(triggers);
       })
       .catch((err) => {
+        this.newError(err);
         reject('SQL Error');
       });
   });
@@ -151,6 +155,7 @@ exports.checkTitle = (req, res, next) => {
       }
     })
     .catch((err) => {
+      this.newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -173,6 +178,7 @@ exports.checkTrigerWord = (req, res, next) => {
       }
     })
     .catch((err) => {
+      this.newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -206,7 +212,10 @@ exports.setBotCall = () => {
           .then((jedan) => {
             // Successful insert
           })
-          .catch((err) => logger.logSQLError(err));
+          .catch((err) => {
+            this.newError(err);
+            logger.logSQLError(err);
+          });
       } else {
         let temp = parseInt(result[0].called) + 1;
         BotCalls.update(
@@ -220,10 +229,14 @@ exports.setBotCall = () => {
           .then((result) => {
             // Successful update
           })
-          .catch((err) => logger.logSQLError(err));
+          .catch((err) => {
+            this.newError(err);
+            logger.logSQLError(err);
+          });
       }
     })
     .catch((err) => {
+      this.newError(err);
       logger.logSQLError(err);
     });
 };
@@ -261,10 +274,12 @@ exports.setValueDeleted = (report_name) => {
           // Successful update
         })
         .catch((err) => {
+          this.newError(err);
           // Error
         });
     })
     .catch((err) => {
+      this.newError(err);
       // Error
     });
 };
@@ -287,6 +302,7 @@ exports.deleteTrigger = (req, res, next) => {
       }
     })
     .catch((err) => {
+      this.newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -311,7 +327,19 @@ exports.deleteSchedule = (req, res, next) => {
       }
     })
     .catch((err) => {
+      this.newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
+};
+
+exports.newError = (err) => {
+  Errors.create({
+    error_message: `${err}`,
+    timestamp: new Date(),
+  })
+    .then(() => {
+      // Error sent to DB
+    })
+    .catch((error) => console.log(err));
 };

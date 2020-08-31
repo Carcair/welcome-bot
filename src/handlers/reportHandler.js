@@ -1,7 +1,8 @@
 /**
- * Loading logger
+ * Loading logger and helper methods
  */
 const logger = require('../config/logger');
+const { newError } = require('../methods/helper');
 
 /**
  * Loading db config
@@ -31,6 +32,7 @@ exports.setReportCount = (report_name, table_name) => {
       // Counts updated
     })
     .catch((err) => {
+      newError(err);
       console.log(err);
     });
 };

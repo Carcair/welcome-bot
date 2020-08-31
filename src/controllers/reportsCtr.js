@@ -1,7 +1,8 @@
 /**
- * Loading logger
+ * Loading logger and helper methods
  */
 const logger = require('../config/logger');
+const { newError } = require('../methods/helper');
 
 /**
  * Loading table models
@@ -18,6 +19,7 @@ exports.getReports = (req, res) => {
       res.status(200).json({ reports });
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -33,6 +35,7 @@ exports.getUsage = (req, res) => {
       res.status(200).json({ usage });
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });

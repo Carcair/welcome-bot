@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
  * Loading logger configuration
  */
 const logger = require('../config/logger');
+const { newError } = require('../methods/helper');
 
 /**
  * Load config file / changed to transcrypt
@@ -59,6 +60,7 @@ exports.setToken = (req, res) => {
         }
       })
       .catch((err) => {
+        newError(err);
         logger.logSQLError(err);
         res.status(406).end(err.parent.sqlMessage);
       });
@@ -94,6 +96,7 @@ if (NODE_ENV === 'development') {
             res.sendStatus(201);
           })
           .catch((err) => {
+            newError(err);
             logger.logSQLError(err);
             res.status(406).end(err.parent.sqlMessage);
           });

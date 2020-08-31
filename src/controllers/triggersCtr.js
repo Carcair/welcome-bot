@@ -16,6 +16,7 @@ const {
   encodeInsert,
   decodeOutput,
   setValueDeleted,
+  newError,
 } = require('../methods/helper');
 const { setReportCount } = require('../handlers/reportHandler');
 
@@ -29,6 +30,7 @@ exports.getTriggers = (req, res) => {
       res.status(200).end(JSON.stringify(triggers));
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -54,6 +56,7 @@ exports.getOneTrigger = (req, res) => {
       }
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -86,6 +89,7 @@ exports.insertNewTrigger = (req, res) => {
         res.status(201).end('Created');
       })
       .catch((err) => {
+        newError(err);
         logger.logSQLError(err);
         res.status(400).end('SQL Error');
       });
@@ -112,6 +116,7 @@ exports.deleteTrigger = (req, res) => {
       }
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -153,6 +158,7 @@ exports.editTrigger = (req, res) => {
         }
       })
       .catch((err) => {
+        newError(err);
         logger.logSQLError(err);
         res.status(400).end('SQL Error');
       });

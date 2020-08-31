@@ -16,6 +16,7 @@ const {
   encodeInsert,
   decodeOutput,
   setValueDeleted,
+  newError,
 } = require('../methods/helper');
 const { setReportCount } = require('../handlers/reportHandler');
 
@@ -30,6 +31,7 @@ exports.getMessages = (req, res) => {
       res.status(200).end(JSON.stringify(messages));
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -56,6 +58,7 @@ exports.getOneMessage = (req, res) => {
       }
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -86,6 +89,7 @@ exports.insertNewMessage = (req, res) => {
         res.status(201).end('Created');
       })
       .catch((err) => {
+        newError(err);
         logger.logSQLError(err);
         res.status(400).end('SQL Error');
       });
@@ -112,6 +116,7 @@ exports.deleteMessage = (req, res) => {
       }
     })
     .catch((err) => {
+      newError(err);
       logger.logSQLError(err);
       res.status(400).end('SQL Error');
     });
@@ -150,6 +155,7 @@ exports.editMessage = (req, res) => {
         }
       })
       .catch((err) => {
+        newError(err);
         logger.logSQLError(err);
         res.status(400).end('SQL Error');
       });
