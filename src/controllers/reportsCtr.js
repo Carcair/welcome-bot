@@ -6,8 +6,8 @@ const logger = require('../config/logger');
 /**
  * Loading table models
  */
-const Reports = require('../models/Reports');
-const BotCalls = require('../models/BotCalls');
+const Reports = require('../models/schemas/Reports');
+const BotCalls = require('../models/schemas/BotCalls');
 
 /**
  * Fetches list of reports

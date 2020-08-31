@@ -6,8 +6,7 @@ const logger = require('../config/logger');
 /**
  * Load message model and validation schema
  */
-const Reports = require('../models/Reports');
-const Messages = require('../models/Messages');
+const Messages = require('../models/schemas/Messages');
 const MessageSchema = require('../models/validation/MessagesSchema');
 
 /**

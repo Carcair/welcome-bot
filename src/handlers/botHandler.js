@@ -3,6 +3,10 @@
  */
 const SlackBot = require('slackbots');
 const CronJob = require('cron').CronJob;
+
+/**
+ * Load helpers and logger files
+ */
 const { getMessage, getTriggers, setBotCall } = require('../methods/helper');
 const logger = require('../config/logger');
 

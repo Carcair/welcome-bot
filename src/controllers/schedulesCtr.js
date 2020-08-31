@@ -6,7 +6,7 @@ const logger = require('../config/logger');
 /**
  * Load schedule model and validation schema
  */
-const Schedules = require('../models/Schedules');
+const Schedules = require('../models/schemas/Schedules');
 const ScheduleSchema = require('../models/validation/SchedulesSchema');
 
 /**

@@ -17,7 +17,7 @@ const { encKey, NODE_ENV } = require('../../config');
 /**
  * Load Sequelize and JOI schema models
  */
-const Users = require('../models/Users');
+const Users = require('../models/schemas/Users');
 const UsersSchema = require('../models/validation/UsersSchema');
 
 /**

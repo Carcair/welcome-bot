@@ -17,7 +17,7 @@ const cronTasks = require('../../methods/cronTasks');
 /**
  * Load schedules model
  */
-const Schedules = require('../Schedules');
+const Schedules = require('../schemas/Schedules');
 
 /**
  * Configure and initialize bot

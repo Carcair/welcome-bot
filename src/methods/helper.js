@@ -14,16 +14,12 @@ const { encKey } = require('../../config');
 /**
  * Load Sequelize models
  */
-const Schedules = require('../models/Schedules');
-const Triggers = require('../models/Triggers');
-const Messages = require('../models/Messages');
-const BotCalls = require('../models/BotCalls');
-const Reports = require('../models/Reports');
-
-/**
- * Load necessary Sequelize models
- */
-const Users = require('../models/Users');
+const Schedules = require('../models/schemas/Schedules');
+const Triggers = require('../models/schemas/Triggers');
+const Messages = require('../models/schemas/Messages');
+const BotCalls = require('../models/schemas/BotCalls');
+const Reports = require('../models/schemas/Reports');
+const Users = require('../models/schemas/Users');
 
 /**
  * Encode input

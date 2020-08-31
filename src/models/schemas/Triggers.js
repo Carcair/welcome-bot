@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = require('../config/dbConfig');
+const db = require('../../config/dbConfig');
 
 /**
  * Define model for table triggers

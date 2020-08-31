@@ -6,7 +6,7 @@ const logger = require('../config/logger');
 /**
  * Load trigger model and validation schema
  */
-const Triggers = require('../models/Triggers');
+const Triggers = require('../models/schemas/Triggers');
 const TriggerSchema = require('../models/validation/TriggersSchema');
 
 /**
