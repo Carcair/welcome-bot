@@ -28,6 +28,7 @@ const startBot = () => {
   let date = new Date();
   bot = new SlackBot(botConfig);
   bot.on('open', () => console.log('Websocket connection is open. || ' + date));
+  bot.postMessageToChannel('slackbot-test-2', 'Maintaining Bot lifecycle.');
 };
 startBot();
 
