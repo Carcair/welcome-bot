@@ -292,13 +292,9 @@ exports.deleteTrigger = (req, res, next) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
         logger.logDelete(req.params.title, 'trigger');
-        //setReportCount('Messages count', 'messages');
-        //   setValueDeleted('Messages deleted');
         next();
-        // res.status(200).end('Deleted');
       } else {
         next();
-        // res.status(404).end('Not Found');
       }
     })
     .catch((err) => {
@@ -317,13 +313,9 @@ exports.deleteSchedule = (req, res, next) => {
       if (deleted !== 0) {
         //checking if the "result" is diffrent then 0 and responding accordingly
         logger.logDelete(req.params.title, 'schedule');
-        //setReportCount('Messages count', 'messages');
-        //   setValueDeleted('Messages deleted');
         next();
-        // res.status(200).end('Deleted');
       } else {
         next();
-        // res.status(404).end('Not Found');
       }
     })
     .catch((err) => {

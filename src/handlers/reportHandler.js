@@ -20,6 +20,7 @@ exports.setReportCount = (report_name, table_name) => {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
   const dateString = `${day}.${month}.${year}`;
+  // Update DB
   db.query(
     `UPDATE reports 
       SET report_value=(SELECT COUNT(*) FROM ${table_name}), last_update='${dateString}' 

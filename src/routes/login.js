@@ -32,9 +32,11 @@ router.post('/', setToken);
 /**
  * Verify token
  */
-router.post('/test', getBearerToken, verifyToken, (req, res) => {
-  res.end('true');
-});
+if (NODE_ENV === 'development') {
+  router.post('/test', getBearerToken, verifyToken, (req, res) => {
+    res.end('true');
+  });
+}
 
 /**
  * Helper endpoint for registering admin

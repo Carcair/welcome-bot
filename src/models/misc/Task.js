@@ -5,9 +5,10 @@ const CronJob = require('cron').CronJob;
 const CronTime = require('cron').CronTime;
 
 /**
- * Logger configuration
+ * Logger configurations
  */
 const logger = require('../../config/logger');
+const { NODE_ENV } = require('../../../config');
 
 /**
  * Load cron tasks
@@ -83,50 +84,36 @@ class Task {
         tempDate = new Date(this.year, this.month, temp);
 
         /**
-         * Update local storage
+         * Update object variables
          */
         this.day = tempDate.getDate();
         this.month = tempDate.getMonth();
         this.year = tempDate.getFullYear();
-
-        /**
-         * Return for use
-         */
-        return [
-          tempDate.getDate(),
-          tempDate.getMonth(),
-          tempDate.getFullYear(),
-        ];
       }
       // Task repeat every month
       if (x === '30') {
         temp = this.month + 1;
+        // Date class processing new date changes
         tempDate = new Date(this.year, temp, this.day);
 
         /**
-         * Update local storage
+         * Update object variables
          */
         this.day = tempDate.getDate();
         this.month = tempDate.getMonth();
         this.year = tempDate.getFullYear();
-
-        /**
-         * Return for use
-         */
-        return [
-          tempDate.getDate(),
-          tempDate.getMonth(),
-          tempDate.getFullYear(),
-        ];
       }
     };
 
     // Send message to Slack
     this.sendMessage = () => {
       // Testing on channel slackbot-test
-      bot.postMessageToChannel('slackbot-test', this.text);
+      if (NODE_ENV === 'development')
+        bot.postMessageToChannel('slackbot-test', this.text);
+
       // Production;
-      // bot.postMessageToChannel('general', this.text);
+      if (NODE_ENV === 'production')
+        bot.postMessageToChannel('general', this.text);
     };
 
     this.job = new CronJob(
@@ -150,14 +137,18 @@ class Task {
             });
         } else {
           // Update task tick date
-          let tempArray = self.updateDate(self.repeat_range);
-          self.run_date = `${tempArray[0]}/${tempArray[1]}/${tempArray[2]}`;
+          this.updateDate(self.repeat_range);
+          let tempMonth = 0;
+          this.run_date = `${this.day}/${this.month}/${this.year}`;
 
-          if (tempArray[1] == 11) tempArray = 0;
+          // Prepare month for DB entry
+          // In DB 1-12, in BE 0-11
+          if (this.month == 11) tempMonth = 0;
+          else tempMonth = this.month + 1;
 
           // We need encoded date string to update DB table
           let nextDate = encodeURIComponent(
-            `${tempArray[0]}/${tempArray[1] + 1}/${tempArray[2]}`
+            `${this.day}/${tempMonth}/${this.year}`
           );
 
           // Update next run_date in DB
@@ -167,7 +158,7 @@ class Task {
           )
             .then(() => {
               // Set new crontime for this task
-              const tempString = `0 10 ${tempArray[0]} ${tempArray[1]} *`;
+              const tempString = `0 10 ${self.day} ${self.month} *`;
               self.job.setTime(new CronTime(tempString));
               self.sendMessage();
             })

@@ -62,7 +62,7 @@ let cronTasks = {
     });
     this.tasks = {};
   },
-  // Getting names from task objects
+  // Getting log of names from task objects
   getTasks() {
     Object.keys(this.tasks).forEach((key) => {
       console.log(key);
