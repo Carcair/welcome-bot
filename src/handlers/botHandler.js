@@ -75,7 +75,6 @@ bot.on('message', (data) => {
   // Continue only in case of data type sent is message
   // Blocks message sent back by bot from being registered
   // Continue only if user sent a MESSAGE directed at BOT
-  console.log(data);
   if (
     data.type === 'message' &&
     data.username !== 'Welcome Bot' &&
