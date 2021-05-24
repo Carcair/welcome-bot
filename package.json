@@ -23,7 +23,7 @@
     "express-rate-limit": "^5.1.3",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.1.0",
+    "mysql2": "^2.2.1",
     "sequelize": "^6.3.4",
     "slackbots": "^1.2.0",
     "snyk": "^1.369.2",
