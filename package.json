@@ -26,8 +26,8 @@
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.4",
     "slackbots": "^1.2.0",
-    "snyk": "^1.369.2",
-    "swagger-ui-express": "^4.1.4",
+    "snyk": "^1.518.0",
+    "swagger-ui-express": "^4.2.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
