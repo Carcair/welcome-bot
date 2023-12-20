@@ -16,7 +16,7 @@
     "@hapi/joi": "^17.1.1",
     "@hapi/joi-date": "^2.0.1",
     "axios": "^0.19.2",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
     "express": "^4.17.1",
@@ -26,7 +26,7 @@
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.4",
     "slackbots": "^1.2.0",
-    "snyk": "^1.369.2",
+    "snyk": "^1.996.0",
     "swagger-ui-express": "^4.1.4",
     "winston": "^3.3.3"
   },
